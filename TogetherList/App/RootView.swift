@@ -4,20 +4,42 @@ import TogetherListCore
 struct RootView: View {
     @Environment(AppModel.self) private var app
 
+    private var isLaunching: Bool {
+        if case .launching = app.phase { true } else { false }
+    }
+
     var body: some View {
-        switch app.phase {
-        case .launching:
-            ProgressView()
-                .controlSize(.large)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color(.systemGroupedBackground))
-        case .misconfigured:
-            BackendSetupView()
-        case .signedOut:
-            WelcomeView()
-        case let .signedIn(engine):
-            SignedInView(engine: engine)
+        ZStack {
+            switch app.phase {
+            case .launching:
+                Color.clear
+            case .misconfigured:
+                BackendSetupView()
+            case .signedOut:
+                WelcomeView()
+            case let .signedIn(engine):
+                SignedInView(engine: engine)
+            }
+            if isLaunching {
+                SplashView().transition(.opacity)
+            }
         }
+        .animation(.easeOut(duration: 0.3), value: isLaunching)
+    }
+}
+
+/// Same picture as the system launch screen (Info.plist → UILaunchScreen), shown
+/// while the saved session is restored, then faded out.
+struct SplashView: View {
+    var body: some View {
+        // Centered on the whole screen, like the launch screen
+        // (UIImageRespectsSafeAreaInsets = false), so the handover doesn't jump.
+        ZStack {
+            Color("LaunchBackground")
+            Image("LaunchLogo")
+                .accessibilityLabel("TogetherList")
+        }
+        .ignoresSafeArea()
     }
 }
 

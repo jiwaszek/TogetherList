@@ -57,11 +57,12 @@ struct WelcomeView: View {
 
     private var hero: some View {
         VStack(spacing: 16) {
-            Image(systemName: "cart.fill.badge.plus")
-                .font(.system(size: 56, weight: .medium))
-                .foregroundStyle(.white)
+            // The app icon: the launch logo on the brand green.
+            Image("LaunchLogo")
+                .resizable()
+                .scaledToFit()
                 .frame(width: 112, height: 112)
-                .background(Color.accentColor.gradient, in: RoundedRectangle(cornerRadius: 30, style: .continuous))
+                .background(Color("LaunchBackground"), in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                 .accessibilityHidden(true)
             Text("TogetherList")
                 .font(.largeTitle.bold())

@@ -38,11 +38,11 @@ struct SyncStatusPill: View {
         switch engine.activity {
         case .offline:
             let pending = engine.pendingCount
-            return ("wifi.slash", pending > 0 ? "Offline · \(pending) change\(pending == 1 ? "" : "s") saved on this device" : "Offline · showing saved lists", .orange)
+            return ("wifi.slash", pending > 0 ? L("Offline · %lld changes saved on this device", pending) : L("Offline · showing saved lists"), .orange)
         case let .failed(message):
-            return ("exclamationmark.triangle.fill", "Sync problem · \(message)", .red)
+            return ("exclamationmark.triangle.fill", L("Sync problem · %@", message), .red)
         case .syncing where engine.pendingCount > 0:
-            return ("arrow.triangle.2.circlepath", "Syncing \(engine.pendingCount) change\(engine.pendingCount == 1 ? "" : "s")…", .secondary)
+            return ("arrow.triangle.2.circlepath", L("Syncing %lld changes…", engine.pendingCount), .secondary)
         case .syncing, .idle:
             return nil
         }
@@ -159,7 +159,7 @@ extension Decimal {
 
 /// The text field used for amounts: big digits, the currency symbol, decimal keyboard.
 struct AmountField: View {
-    let title: String
+    let title: LocalizedStringKey
     @Binding var text: String
     let currency: String
     var focus: FocusState<Bool>.Binding
@@ -177,7 +177,7 @@ struct AmountField: View {
                 .keyboardType(.decimalPad)
                 .font(.system(.largeTitle, design: .rounded).weight(.semibold).monospacedDigit())
                 .focused(focus)
-                .accessibilityLabel("\(title) in \(currency)")
+                .accessibilityLabel(Text(title) + Text(verbatim: ", \(currency)"))
             Text(symbol)
                 .font(.title2.weight(.medium))
                 .foregroundStyle(.secondary)

@@ -226,7 +226,7 @@ extension SyncSnapshot {
                 purchasedAt: draft.isPurchased ? date : nil, purchasedBy: draft.isPurchased ? user.id : nil,
                 createdBy: user.id, createdAt: date, updatedBy: user.id, updatedAt: date,
                 // Version 0: any copy from the server (version >= 1) supersedes it.
-                version: 0
+                version: 0, category: draft.category
             )
 
         case let .updateItem(id, _, patch):

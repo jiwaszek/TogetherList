@@ -51,9 +51,9 @@ public actor InMemoryServer {
     func signUp(email: String, password: String, displayName: String) throws -> AuthUser {
         let email = email.lowercased()
         guard !accounts.values.contains(where: { $0.email == email }) else {
-            throw AppError.validation("An account with this email already exists.")
+            throw AppError.accountExists
         }
-        guard password.count >= 6 else { throw AppError.validation("Password must be at least 6 characters.") }
+        guard password.count >= 6 else { throw AppError.weakPassword }
         let id = UUID()
         accounts[id] = Account(email: email, password: password,
                                profile: UserProfile(id: id, displayName: displayName.nilIfBlank ?? "New user"))
@@ -169,7 +169,8 @@ public actor InMemoryServer {
         let item = ShoppingItem(
             id: d.id, listID: d.listID, name: d.name, quantity: d.quantity, unit: d.unit, note: d.note,
             isPurchased: d.isPurchased, purchasedAt: d.isPurchased ? t : nil, purchasedBy: d.isPurchased ? uid : nil,
-            createdBy: uid, createdAt: t, updatedBy: uid, updatedAt: t, deletedAt: nil, version: 1)
+            createdBy: uid, createdAt: t, updatedBy: uid, updatedAt: t, deletedAt: nil, version: 1,
+            category: d.category)
         items[d.id] = item
         broadcast(item)
     }
@@ -210,13 +211,13 @@ public actor InMemoryServer {
 
     func removeMember(_ uid: UUID, listID: UUID, userID: UUID) throws {
         guard isOwner(uid, listID) else { throw AppError.permissionDenied }
-        guard userID != uid else { throw AppError.validation("The owner can't be removed.") }
+        guard userID != uid else { throw AppError.ownerCannotBeRemoved }
         removeMemberRow(userID, from: listID)
         broadcastResync()
     }
 
     func leaveList(_ uid: UUID, listID: UUID) throws {
-        guard !isOwner(uid, listID) else { throw AppError.validation("Owners can't leave their own list.") }
+        guard !isOwner(uid, listID) else { throw AppError.ownerCannotLeave }
         removeMemberRow(uid, from: listID)
         broadcastResync()
     }
@@ -224,7 +225,7 @@ public actor InMemoryServer {
     func transferOwnership(_ uid: UUID, listID: UUID, to newOwner: UUID) throws {
         guard isOwner(uid, listID) else { throw AppError.permissionDenied }
         guard members[listID]?[newOwner]?.role == .member else {
-            throw AppError.validation("The new owner must be a member of the list.")
+            throw AppError.newOwnerNotMember
         }
         members[listID]![uid]!.role = .member
         members[listID]![newOwner]!.role = .owner
@@ -424,7 +425,7 @@ public actor InMemoryServer {
         for (listID, newOwner) in transfers {
             guard isOwner(uid, listID) else { throw AppError.permissionDenied }
             guard members[listID]?[newOwner]?.role == .member else {
-                throw AppError.validation("The new owner must be a member of the list.")
+                throw AppError.newOwnerNotMember
             }
         }
         for (listID, newOwner) in transfers {

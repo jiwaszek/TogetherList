@@ -106,12 +106,14 @@ public struct ShoppingItem: Codable, Hashable, Identifiable, Sendable {
     public var deletedAt: Date?
     /// Server-incremented on every write. Used to ignore stale realtime events.
     public var version: Int
+    /// A `ProductCategory` raw value picked by hand; nil means "guess from the name".
+    public var category: String?
 
     public init(
         id: UUID, listID: UUID, name: String, quantity: Decimal? = nil, unit: String? = nil,
         note: String? = nil, isPurchased: Bool = false, purchasedAt: Date? = nil, purchasedBy: UUID? = nil,
         createdBy: UUID?, createdAt: Date, updatedBy: UUID? = nil, updatedAt: Date,
-        deletedAt: Date? = nil, version: Int = 1
+        deletedAt: Date? = nil, version: Int = 1, category: String? = nil
     ) {
         self.id = id
         self.listID = listID
@@ -128,6 +130,7 @@ public struct ShoppingItem: Codable, Hashable, Identifiable, Sendable {
         self.updatedAt = updatedAt
         self.deletedAt = deletedAt
         self.version = version
+        self.category = category
     }
 
     public var isDeleted: Bool { deletedAt != nil }

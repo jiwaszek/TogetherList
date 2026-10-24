@@ -163,23 +163,23 @@ struct ListRow: View {
         }
         .padding(.vertical, 6)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(list.name), \(unfinished) item\(unfinished == 1 ? "" : "s") left, \(subtitle)")
+        .accessibilityLabel("\(list.name), \(L("%lld items left", unfinished)), \(subtitle)")
     }
 
     private var subtitle: String {
-        guard list.isShared else { return "Private" }
+        guard list.isShared else { return L("Private") }
         if isOwner {
             let names = list.members.filter { $0.role != .owner }.map(\.displayName)
-            return "Shared with " + ListFormatter.localizedString(byJoining: names)
+            return L("Shared with %@", names.formatted(.list(type: .and).locale(Localizer.shared.locale)))
         }
-        let owner = list.members.first { $0.role == .owner }?.displayName ?? "someone"
-        return "Shared by \(owner)"
+        guard let owner = list.members.first(where: { $0.role == .owner })?.displayName else { return L("Shared") }
+        return L("Shared by %@", owner)
     }
 }
 
 /// Create / rename sheet.
 struct ListNameSheet: View {
-    let title: String
+    let title: LocalizedStringKey
     let initialName: String
     let onSave: (String) throws -> Void
 
@@ -201,7 +201,7 @@ struct ListNameSheet: View {
                 }
                 if initialName.isEmpty {
                     Section("Suggestions") {
-                        ForEach(["Groceries", "Weekend market", "Pharmacy", "Hardware store"], id: \.self) { suggestion in
+                        ForEach([L("Groceries"), L("Weekend market"), L("Pharmacy"), L("Hardware store")], id: \.self) { suggestion in
                             Button(suggestion) { name = suggestion; save() }
                         }
                     }

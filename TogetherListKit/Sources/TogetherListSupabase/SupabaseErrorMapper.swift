@@ -16,7 +16,7 @@ enum SupabaseErrorMapper {
             switch auth.errorCode {
             case .invalidCredentials: return .invalidCredentials
             case .emailNotConfirmed: return .emailConfirmationRequired
-            case .userAlreadyExists, .emailExists: return .validation("An account with this email already exists. Try signing in.")
+            case .userAlreadyExists, .emailExists: return AppError.accountExists
             case .weakPassword: return .validation(auth.message)
             case .sessionNotFound, .refreshTokenNotFound, .refreshTokenAlreadyUsed: return .notAuthenticated
             default: break
@@ -53,9 +53,9 @@ enum SupabaseErrorMapper {
             ("invalid_participants", AppError.invalidParticipants),
             ("expense_not_found", .notFound),
             ("settlement_not_found", .notFound),
-            ("owner_cannot_leave", .validation("You own this list. Transfer ownership or delete it instead.")),
-            ("owner_cannot_be_removed", .validation("The owner can't be removed from their list.")),
-            ("new_owner_not_member", .validation("The new owner must be a member of the list.")),
+            ("owner_cannot_leave", AppError.ownerCannotLeave),
+            ("owner_cannot_be_removed", AppError.ownerCannotBeRemoved),
+            ("new_owner_not_member", AppError.newOwnerNotMember),
             ("item_deleted", .itemDeleted),
             ("not_authenticated", .notAuthenticated),
         ]
@@ -65,7 +65,7 @@ enum SupabaseErrorMapper {
         case "42501": return .permissionDenied          // RLS / privilege
         case "PGRST116": return .notFound               // .single() matched no row
         case "PGRST301", "PGRST302", "PGRST303": return .notAuthenticated   // JWT problems
-        case "23514", "22001", "22003": return .validation("Some of the values aren't allowed.")
+        case "23514", "22001", "22003": return AppError.invalidValues
         case "23503": return .notFound                  // parent list gone
         default: return .server(message)
         }

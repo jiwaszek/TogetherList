@@ -29,7 +29,7 @@ struct InvitationPreviewView: View {
                     case let .failed(error):
                         message(icon: error == .offline ? "wifi.slash" : "exclamationmark.triangle",
                                 title: error == .offline ? "You're offline" : "Couldn't open invitation",
-                                text: error.localizedDescription,
+                                text: Text(verbatim: error.localizedDescription),
                                 retry: true)
                     case let .loaded(preview):
                         content(preview)
@@ -91,19 +91,22 @@ struct InvitationPreviewView: View {
 
         case .ownInvitation:
             message(icon: "person.crop.circle.badge.checkmark", title: "This is your invitation",
-                    text: "Share it with someone else so they can join “\(preview.listName ?? "your list")”.", retry: false)
+                    text: preview.listName.map { Text("Share it with someone else so they can join “\($0)”.") }
+                        ?? Text("Share it with someone else so they can join your list."), retry: false)
 
         case .expired:
             message(icon: "clock.badge.xmark", title: "Invitation expired",
-                    text: "Ask \(preview.inviterName ?? "the list owner") for a new code. Invitations last 48 hours.", retry: false)
+                    text: preview.inviterName.map { Text("Ask \($0) for a new code. Invitations last 48 hours.") }
+                        ?? Text("Ask the list owner for a new code. Invitations last 48 hours."), retry: false)
 
         case .revoked:
             message(icon: "xmark.seal", title: "Invitation cancelled",
-                    text: "\(preview.inviterName ?? "The list owner") cancelled this invitation. Ask them for a new one.", retry: false)
+                    text: preview.inviterName.map { Text("\($0) cancelled this invitation. Ask them for a new one.") }
+                        ?? Text("The list owner cancelled this invitation. Ask them for a new one."), retry: false)
 
         case .invalid:
             message(icon: "questionmark.diamond", title: "Invitation not found",
-                    text: "This code isn't valid. Check that you scanned the right QR code or copied the full link.", retry: false)
+                    text: Text("This code isn't valid. Check that you scanned the right QR code or copied the full link."), retry: false)
         }
     }
 
@@ -113,19 +116,19 @@ struct InvitationPreviewView: View {
                 Avatar(name: name, id: inviterID, size: 72)
             }
             VStack(spacing: 4) {
-                Text("\(preview.inviterName ?? "Someone") invited you to")
+                (preview.inviterName.map { Text("\($0) invited you to") } ?? Text("You've been invited to"))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                Text(preview.listName ?? "a list")
+                (preview.listName.map { Text(verbatim: $0) } ?? Text("a list"))
                     .font(.title.bold())
                     .multilineTextAlignment(.center)
             }
             HStack(spacing: 20) {
                 if let items = preview.itemCount {
-                    Label("\(items) item\(items == 1 ? "" : "s")", systemImage: "cart")
+                    Label("\(items) items", systemImage: "cart")
                 }
                 if let members = preview.memberCount {
-                    Label("\(members) member\(members == 1 ? "" : "s")", systemImage: "person.2")
+                    Label("\(members) members", systemImage: "person.2")
                 }
             }
             .font(.subheadline)
@@ -137,14 +140,14 @@ struct InvitationPreviewView: View {
         .accessibilityElement(children: .combine)
     }
 
-    private func message(icon: String, title: String, text: String, retry: Bool) -> some View {
+    private func message(icon: String, title: LocalizedStringKey, text: Text, retry: Bool) -> some View {
         VStack(spacing: 12) {
             Image(systemName: icon)
                 .font(.system(size: 48))
                 .foregroundStyle(.secondary)
                 .accessibilityHidden(true)
             Text(title).font(.title2.bold()).multilineTextAlignment(.center)
-            Text(text).foregroundStyle(.secondary).multilineTextAlignment(.center)
+            text.foregroundStyle(.secondary).multilineTextAlignment(.center)
             if retry {
                 Button("Try again") { Task { await load() } }
                     .buttonStyle(.borderedProminent)

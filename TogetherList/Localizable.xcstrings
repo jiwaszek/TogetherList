@@ -1,0 +1,4039 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    " ago": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " temu"
+          }
+        }
+      }
+    },
+    "%@ cancelled this invitation. Ask them for a new one.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaproszenie zostało anulowane (%@). Poproś o nowe."
+          }
+        }
+      }
+    },
+    "%@ invited you to": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ zaprasza cię do listy"
+          }
+        }
+      }
+    },
+    "%@ owes you": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ma ci oddać"
+          }
+        }
+      }
+    },
+    "%@ paid": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zakup: %@"
+          }
+        }
+      }
+    },
+    "%@ paid %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ paid %2$@"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpłata: %@ → %@"
+          }
+        }
+      }
+    },
+    "%@ paid you": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpłata od: %@"
+          }
+        }
+      }
+    },
+    "%@ will lose access to %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ straci dostęp do %@."
+          }
+        }
+      }
+    },
+    "%@ will lose access to “%@”. You'll stay connected, and other shared lists aren't affected.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ will lose access to “%2$@”. You'll stay connected, and other shared lists aren't affected."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ straci dostęp do „%@”. Pozostaniecie połączeni, a inne wspólne listy się nie zmienią."
+          }
+        }
+      }
+    },
+    "%@ will manage members and can delete the list. You'll stay on the list as a member.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ będzie zarządzać osobami na liście i będzie mogło ją usunąć. Ty zostaniesz na liście."
+          }
+        }
+      }
+    },
+    "%@, %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@, %2$@, %3$@"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@, %@"
+          }
+        }
+      }
+    },
+    "%lld changes haven't synced yet and will be lost. Connect to the internet first to keep them.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld change hasn't synced yet and will be lost. Connect to the internet first to keep it."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld changes haven't synced yet and will be lost. Connect to the internet first to keep them."
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld zmiany nie są jeszcze zsynchronizowane i zostaną utracone. Najpierw połącz się z internetem, aby je zachować."
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld zmian nie jest jeszcze zsynchronizowanych i zostanie utraconych. Najpierw połącz się z internetem, aby je zachować."
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld zmiana nie jest jeszcze zsynchronizowana i zostanie utracona. Najpierw połącz się z internetem, aby ją zachować."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld zmian nie jest jeszcze zsynchronizowanych i zostanie utraconych. Najpierw połącz się z internetem, aby je zachować."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld items": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld item"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld items"
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produkty"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produktów"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produkt"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produktów"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld items left": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld item left"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld items left"
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produkty do kupienia"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produktów do kupienia"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produkt do kupienia"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produktów do kupienia"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld items selected. Change the currency in Settings.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld item selected. Change the currency in Settings."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld items selected. Change the currency in Settings."
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Wybrano %lld produkty. Walutę zmienisz w Ustawieniach."
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Wybrano %lld produktów. Walutę zmienisz w Ustawieniach."
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Wybrano %lld produkt. Walutę zmienisz w Ustawieniach."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Wybrano %lld produktów. Walutę zmienisz w Ustawieniach."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld lists will be deleted. This can't be undone.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld list will be deleted. This can't be undone."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld lists will be deleted. This can't be undone."
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld listy zostaną usunięte. Tego nie można cofnąć."
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld list zostanie usuniętych. Tego nie można cofnąć."
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld lista zostanie usunięta. Tego nie można cofnąć."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld list zostanie usuniętych. Tego nie można cofnąć."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld members": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld member"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld members"
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld osoby"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld osób"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld osoba"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld osób"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld of %lld selected": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld of %2$lld selected"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybrano %lld z %lld"
+          }
+        }
+      }
+    },
+    "%lld to buy": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld to buy"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld to buy"
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produkty do kupienia"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produktów do kupienia"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produkt do kupienia"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld produktu do kupienia"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Account": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konto"
+          }
+        }
+      }
+    },
+    "Account ID": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ID konta"
+          }
+        }
+      }
+    },
+    "Add": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dodaj"
+          }
+        }
+      }
+    },
+    "Add an item": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dodaj produkt"
+          }
+        }
+      }
+    },
+    "Add item": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dodaj produkt"
+          }
+        }
+      }
+    },
+    "Added": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dodano"
+          }
+        }
+      }
+    },
+    "Added by": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dodane przez"
+          }
+        }
+      }
+    },
+    "Added by %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dodane przez: %@"
+          }
+        }
+      }
+    },
+    "Alcohol": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alkohol"
+          }
+        }
+      }
+    },
+    "All currencies": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wszystkie waluty"
+          }
+        }
+      }
+    },
+    "All lists": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wszystkie listy"
+          }
+        }
+      }
+    },
+    "All settled up": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wszystko rozliczone"
+          }
+        }
+      }
+    },
+    "All time": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Od początku"
+          }
+        }
+      }
+    },
+    "Already have an account? Sign in": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masz już konto? Zaloguj się"
+          }
+        }
+      }
+    },
+    "Always in sync": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zawsze aktualne"
+          }
+        }
+      }
+    },
+    "Amount": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kwota"
+          }
+        }
+      }
+    },
+    "Ask %@ for a new code. Invitations last 48 hours.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poproś o nowy kod: %@. Zaproszenia są ważne 48 godzin."
+          }
+        }
+      }
+    },
+    "Ask the list owner for a new code. Invitations last 48 hours.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poproś właściciela listy o nowy kod. Zaproszenia są ważne 48 godzin."
+          }
+        }
+      }
+    },
+    "Ask them to scan this with TogetherList or their iPhone camera.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poproś o zeskanowanie kodu w TogetherList albo aparatem iPhone’a."
+          }
+        }
+      }
+    },
+    "Automatic (%@)": {
+      "comment": "Category picker: let the app guess the store section. The argument is the guessed section.",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatycznie (%@)"
+          }
+        }
+      }
+    },
+    "Baby": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dla dziecka"
+          }
+        }
+      }
+    },
+    "Back to My Lists": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wróć do moich list"
+          }
+        }
+      }
+    },
+    "Backend not configured": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serwer nie jest skonfigurowany"
+          }
+        }
+      }
+    },
+    "Bakery": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pieczywo"
+          }
+        }
+      }
+    },
+    "Balances": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozliczenia"
+          }
+        }
+      }
+    },
+    "Balances will be recalculated for everyone in the split.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozliczenia zostaną przeliczone dla wszystkich osób w podziale."
+          }
+        }
+      }
+    },
+    "Bought": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kupione"
+          }
+        }
+      }
+    },
+    "Bought from “%@”": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kupione z listy „%@”"
+          }
+        }
+      }
+    },
+    "Camera access is off": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dostęp do aparatu jest wyłączony"
+          }
+        }
+      }
+    },
+    "Camera viewfinder. Point at a TogetherList QR code.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podgląd aparatu. Skieruj go na kod QR TogetherList."
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anuluj"
+          }
+        }
+      }
+    },
+    "Cancel this invitation": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anuluj to zaproszenie"
+          }
+        }
+      }
+    },
+    "Category": {
+      "comment": "Item editor: store section picker",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoria"
+          }
+        }
+      }
+    },
+    "Changes the app right away. Screens drawn by iOS, like the share sheet, follow the next time you open the app.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Język aplikacji zmienia się od razu. Ekrany systemu iOS, np. arkusz udostępniania, zmienią się przy następnym otwarciu aplikacji."
+          }
+        }
+      }
+    },
+    "Check Out…": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozlicz zakupy…"
+          }
+        }
+      }
+    },
+    "Check out after shopping to start keeping track of who paid.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Po zakupach rozlicz je na liście, żeby śledzić, kto płacił."
+          }
+        }
+      }
+    },
+    "Checking invitation…": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sprawdzanie zaproszenia…"
+          }
+        }
+      }
+    },
+    "Choose at least one person.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz co najmniej jedną osobę."
+          }
+        }
+      }
+    },
+    "Clear": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń"
+          }
+        }
+      }
+    },
+    "Clear %lld completed items?": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Clear %lld completed item?"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Clear %lld completed items?"
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Usunąć %lld kupione produkty?"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Usunąć %lld kupionych produktów?"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Usunąć %lld kupiony produkt?"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Usunąć %lld kupionych produktów?"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Clear Completed": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń kupione"
+          }
+        }
+      }
+    },
+    "Clear completed items": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń kupione produkty"
+          }
+        }
+      }
+    },
+    "Close": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zamknij"
+          }
+        }
+      }
+    },
+    "Coffee & tea": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kawa i herbata"
+          }
+        }
+      }
+    },
+    "Connect once": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Połącz się raz"
+          }
+        }
+      }
+    },
+    "Connected since %@": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Połączeni od %@"
+          }
+        }
+      }
+    },
+    "Connections": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Połączenia"
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dalej"
+          }
+        }
+      }
+    },
+    "Copied": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skopiowano"
+          }
+        }
+      }
+    },
+    "Copy": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopiuj"
+          }
+        }
+      }
+    },
+    "Copy **Config/Secrets.example.xcconfig** to **Config/Secrets.xcconfig**, add your Supabase project URL and publishable key, then build again. See README → Backend setup.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skopiuj **Config/Secrets.example.xcconfig** do **Config/Secrets.xcconfig**, dodaj adres projektu Supabase i klucz publiczny, a potem zbuduj aplikację ponownie. Zobacz README → Backend setup."
+          }
+        }
+      }
+    },
+    "Copy account ID": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopiuj ID konta"
+          }
+        }
+      }
+    },
+    "Couldn't create an invitation": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się utworzyć zaproszenia"
+          }
+        }
+      }
+    },
+    "Couldn't open invitation": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się otworzyć zaproszenia"
+          }
+        }
+      }
+    },
+    "Create a list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utwórz listę"
+          }
+        }
+      }
+    },
+    "Create a list for your next shop, or scan a partner's QR code to join theirs.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utwórz listę na następne zakupy albo zeskanuj kod QR bliskiej osoby, żeby dołączyć do jej listy."
+          }
+        }
+      }
+    },
+    "Create account": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utwórz konto"
+          }
+        }
+      }
+    },
+    "Creating invitation…": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tworzenie zaproszenia…"
+          }
+        }
+      }
+    },
+    "Currency": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waluta"
+          }
+        }
+      }
+    },
+    "Dairy & eggs": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nabiał i jajka"
+          }
+        }
+      }
+    },
+    "Delete": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń"
+          }
+        }
+      }
+    },
+    "Delete Account": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń konto"
+          }
+        }
+      }
+    },
+    "Delete Item": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń produkt"
+          }
+        }
+      }
+    },
+    "Delete List": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń listę"
+          }
+        }
+      }
+    },
+    "Delete My Account": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń moje konto"
+          }
+        }
+      }
+    },
+    "Delete Payment": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń wpłatę"
+          }
+        }
+      }
+    },
+    "Delete Purchase": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń zakup"
+          }
+        }
+      }
+    },
+    "Delete account": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń konto"
+          }
+        }
+      }
+    },
+    "Delete list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń listę"
+          }
+        }
+      }
+    },
+    "Delete this payment?": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usunąć tę wpłatę?"
+          }
+        }
+      }
+    },
+    "Delete this purchase?": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usunąć ten zakup?"
+          }
+        }
+      }
+    },
+    "Delete your account permanently?": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usunąć konto na zawsze?"
+          }
+        }
+      }
+    },
+    "Delete “%@”?": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usunąć „%@”?"
+          }
+        }
+      }
+    },
+    "Deleting your account removes your profile, connections and memberships from TogetherList's servers. This can't be undone.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usunięcie konta usuwa z serwerów TogetherList twój profil, połączenia i dostęp do list. Tego nie można cofnąć."
+          }
+        }
+      }
+    },
+    "Deselect All": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odznacz wszystko"
+          }
+        }
+      }
+    },
+    "Disconnect": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozłącz"
+          }
+        }
+      }
+    },
+    "Disconnect from %@": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozłącz się: %@"
+          }
+        }
+      }
+    },
+    "Disconnect from %@?": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozłączyć się: %@?"
+          }
+        }
+      }
+    },
+    "Dismiss": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zamknij"
+          }
+        }
+      }
+    },
+    "Display name": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nazwa wyświetlana"
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gotowe"
+          }
+        }
+      }
+    },
+    "Done shopping? Check out %lld items": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Done shopping? Check out %lld item"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Done shopping? Check out %lld items"
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Koniec zakupów? Rozlicz %lld produkty"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Koniec zakupów? Rozlicz %lld produktów"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Koniec zakupów? Rozlicz %lld produkt"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Koniec zakupów? Rozlicz %lld produktów"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Double-tap to toggle. Use actions to edit or delete.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stuknij dwukrotnie, aby odhaczyć. Użyj czynności, aby edytować lub usunąć."
+          }
+        }
+      }
+    },
+    "Drinks": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Napoje"
+          }
+        }
+      }
+    },
+    "Edit": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edytuj"
+          }
+        }
+      }
+    },
+    "Edit item": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edytuj produkt"
+          }
+        }
+      }
+    },
+    "Email": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail"
+          }
+        }
+      }
+    },
+    "Enter a name.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpisz nazwę."
+          }
+        }
+      }
+    },
+    "Enter the total and who paid. The items move to History.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpisz kwotę i kto płacił. Produkty trafią do Historii."
+          }
+        }
+      }
+    },
+    "Everyone can add, edit and check off items. Only you can invite or remove people, rename or delete the list.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Każdy może dodawać, edytować i odhaczać produkty. Tylko ty możesz zapraszać i usuwać osoby oraz zmieniać nazwę listy lub ją usunąć."
+          }
+        }
+      }
+    },
+    "Everyone can add, edit and check off items. The owner manages members.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Każdy może dodawać, edytować i odhaczać produkty. Osobami na liście zarządza jej właściciel."
+          }
+        }
+      }
+    },
+    "Expires %@": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wygasa za %@"
+          }
+        }
+      }
+    },
+    "Filter by list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filtruj według listy"
+          }
+        }
+      }
+    },
+    "Fish & seafood": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ryby i owoce morza"
+          }
+        }
+      }
+    },
+    "Former member": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieznana osoba"
+          }
+        }
+      }
+    },
+    "Frozen": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mrożonki"
+          }
+        }
+      }
+    },
+    "Fruit": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Owoce"
+          }
+        }
+      }
+    },
+    "Give to %@": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przekaż: %@"
+          }
+        }
+      }
+    },
+    "Groceries": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zakupy spożywcze"
+          }
+        }
+      }
+    },
+    "Group by Category": {
+      "comment": "List menu: show items grouped by store section",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grupuj według kategorii"
+          }
+        }
+      }
+    },
+    "Hand a list over so the others can keep using it, or delete it for everyone.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przekaż listę, żeby inni mogli dalej z niej korzystać, albo usuń ją dla wszystkich."
+          }
+        }
+      }
+    },
+    "Hardware store": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Market budowlany"
+          }
+        }
+      }
+    },
+    "Have a link instead?": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masz link?"
+          }
+        }
+      }
+    },
+    "History": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historia"
+          }
+        }
+      }
+    },
+    "Household & cleaning": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chemia i dom"
+          }
+        }
+      }
+    },
+    "I already have an account": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mam już konto"
+          }
+        }
+      }
+    },
+    "In the basket": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "W koszyku"
+          }
+        }
+      }
+    },
+    "In the basket · %lld": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "W koszyku · %lld"
+          }
+        }
+      }
+    },
+    "Invitation": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaproszenie"
+          }
+        }
+      }
+    },
+    "Invitation QR code for %@": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kod QR zaproszenia do listy %@"
+          }
+        }
+      }
+    },
+    "Invitation cancelled": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaproszenie anulowane"
+          }
+        }
+      }
+    },
+    "Invitation expired": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaproszenie wygasło"
+          }
+        }
+      }
+    },
+    "Invitation not found": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie znaleziono zaproszenia"
+          }
+        }
+      }
+    },
+    "Invite people": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaproś osoby"
+          }
+        }
+      }
+    },
+    "Items added or checked off show up on everyone's phone instantly.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dodane i odhaczone produkty od razu pojawiają się na telefonach wszystkich."
+          }
+        }
+      }
+    },
+    "Items, lists, notes or people": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Produkty, listy, notatki lub osoby"
+          }
+        }
+      }
+    },
+    "Join list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dołącz do listy"
+          }
+        }
+      }
+    },
+    "Join my list on TogetherList": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dołącz do mojej listy w TogetherList"
+          }
+        }
+      }
+    },
+    "Join my “%@” list on TogetherList:": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dołącz do mojej listy „%@” w TogetherList:"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "Join “%@” on TogetherList": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dołącz do „%@” w TogetherList"
+          }
+        }
+      }
+    },
+    "Joined %@": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dołączenie: %@"
+          }
+        }
+      }
+    },
+    "Joining connects you with %@ and gives you access to this list only — none of your other lists are shared. You can leave the list or disconnect any time in Settings.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dołączenie połączy cię z: %@ i da ci dostęp tylko do tej listy — żadne inne twoje listy nie zostaną udostępnione. W każdej chwili możesz opuścić listę lub się rozłączyć w Ustawieniach."
+          }
+        }
+      }
+    },
+    "Keep this screen open and hold your iPhone near theirs, both unlocked. Tap Share when it appears — the invitation opens in TogetherList on their iPhone.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie zamykaj tego ekranu i zbliż swój iPhone do iPhone’a drugiej osoby (oba odblokowane). Stuknij Udostępnij, gdy się pojawi — zaproszenie otworzy się w TogetherList."
+          }
+        }
+      }
+    },
+    "Language": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Język"
+          }
+        }
+      }
+    },
+    "Last changed by": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ostatnia zmiana"
+          }
+        }
+      }
+    },
+    "Last synced": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ostatnia synchronizacja"
+          }
+        }
+      }
+    },
+    "Leave": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opuść"
+          }
+        }
+      }
+    },
+    "Leave List": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opuść listę"
+          }
+        }
+      }
+    },
+    "Leave list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opuść listę"
+          }
+        }
+      }
+    },
+    "Leave “%@”?": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opuścić „%@”?"
+          }
+        }
+      }
+    },
+    "List": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lista"
+          }
+        }
+      }
+    },
+    "List name": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nazwa listy"
+          }
+        }
+      }
+    },
+    "List options": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opcje listy"
+          }
+        }
+      }
+    },
+    "List unavailable": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lista niedostępna"
+          }
+        }
+      }
+    },
+    "Lists": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listy"
+          }
+        }
+      }
+    },
+    "Lists owned by other people (%@) aren't affected.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listy innych osób (%@) się nie zmienią."
+          }
+        }
+      }
+    },
+    "Loading your lists…": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wczytywanie list…"
+          }
+        }
+      }
+    },
+    "Make %@ the owner?": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przekazać listę? Nowy właściciel: %@"
+          }
+        }
+      }
+    },
+    "Make Owner": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przekaż listę"
+          }
+        }
+      }
+    },
+    "Make owner": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przekaż listę"
+          }
+        }
+      }
+    },
+    "Meat & cold cuts": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mięso i wędliny"
+          }
+        }
+      }
+    },
+    "Members": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Osoby"
+          }
+        }
+      }
+    },
+    "My Lists": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moje listy"
+          }
+        }
+      }
+    },
+    "Name": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nazwa"
+          }
+        }
+      }
+    },
+    "Nearby? Bring your iPhones together": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obok siebie? Zbliż iPhone’y"
+          }
+        }
+      }
+    },
+    "New here? Create an account": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie masz konta? Utwórz je"
+          }
+        }
+      }
+    },
+    "New list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nowa lista"
+          }
+        }
+      }
+    },
+    "Next": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dalej"
+          }
+        }
+      }
+    },
+    "No camera available": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brak aparatu"
+          }
+        }
+      }
+    },
+    "No connections yet": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brak połączeń"
+          }
+        }
+      }
+    },
+    "No items selected": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie wybrano produktów"
+          }
+        }
+      }
+    },
+    "No items were selected at checkout.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przy rozliczeniu nie wybrano produktów."
+          }
+        }
+      }
+    },
+    "No lists yet": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie masz jeszcze list"
+          }
+        }
+      }
+    },
+    "No purchases this month yet.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "W tym miesiącu nie było jeszcze zakupów."
+          }
+        }
+      }
+    },
+    "No purchases yet": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brak zakupów"
+          }
+        }
+      }
+    },
+    "Nobody owes anybody anything.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nikt nikomu nic nie jest winien."
+          }
+        }
+      }
+    },
+    "Not bought": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niekupione"
+          }
+        }
+      }
+    },
+    "Not now": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie teraz"
+          }
+        }
+      }
+    },
+    "Note": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notatka"
+          }
+        }
+      }
+    },
+    "Nothing on this list yet": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lista jest pusta"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Offline": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline"
+          }
+        }
+      }
+    },
+    "Offline · %lld changes saved on this device": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Offline · %lld change saved on this device"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Offline · %lld changes saved on this device"
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Offline · %lld zmiany zapisane na tym urządzeniu"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Offline · %lld zmian zapisanych na tym urządzeniu"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Offline · %lld zmiana zapisana na tym urządzeniu"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Offline · %lld zmian zapisanych na tym urządzeniu"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Offline · showing saved lists": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline · zapisane listy"
+          }
+        }
+      }
+    },
+    "Only the lists you choose are shared. Everything else stays yours.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Udostępniasz tylko wybrane listy. Reszta zostaje tylko dla ciebie."
+          }
+        }
+      }
+    },
+    "Open Settings": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otwórz Ustawienia"
+          }
+        }
+      }
+    },
+    "Open list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otwórz listę"
+          }
+        }
+      }
+    },
+    "Optional, e.g. Biedronka": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opcjonalnie, np. Biedronka"
+          }
+        }
+      }
+    },
+    "Other": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inne"
+          }
+        }
+      }
+    },
+    "Owner": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Właściciel"
+          }
+        }
+      }
+    },
+    "Owner: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Właściciel: %@"
+          }
+        }
+      }
+    },
+    "Paid by": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kto płacił?"
+          }
+        }
+      }
+    },
+    "Paid by %@": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapłacone przez: %@"
+          }
+        }
+      }
+    },
+    "Paid by you": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapłacone przez ciebie"
+          }
+        }
+      }
+    },
+    "Pantry": {
+      "comment": "Store section: pasta, rice, flour, cans",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spiżarnia"
+          }
+        }
+      }
+    },
+    "Password": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hasło"
+          }
+        }
+      }
+    },
+    "Paste invitation link or code": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wklej link lub kod zaproszenia"
+          }
+        }
+      }
+    },
+    "Paste the invitation link or code below instead.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zamiast tego wklej poniżej link lub kod zaproszenia."
+          }
+        }
+      }
+    },
+    "Payment": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Płatność"
+          }
+        }
+      }
+    },
+    "Payments": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpłaty"
+          }
+        }
+      }
+    },
+    "People": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Osoby"
+          }
+        }
+      }
+    },
+    "People you're already connected with can be added directly — no new code needed.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Osoby, z którymi masz już połączenie, możesz dodać od razu — bez nowego kodu."
+          }
+        }
+      }
+    },
+    "Period": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okres"
+          }
+        }
+      }
+    },
+    "Personal care": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kosmetyki i higiena"
+          }
+        }
+      }
+    },
+    "Pets": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dla zwierząt"
+          }
+        }
+      }
+    },
+    "Pharmacy": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apteka"
+          }
+        }
+      }
+    },
+    "Private": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prywatna"
+          }
+        }
+      }
+    },
+    "Private by default": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Domyślnie prywatne"
+          }
+        }
+      }
+    },
+    "Problem": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Problem"
+          }
+        }
+      }
+    },
+    "Profile": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profil"
+          }
+        }
+      }
+    },
+    "Purchase deleted": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zakup usunięty"
+          }
+        }
+      }
+    },
+    "Quantity": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ilość"
+          }
+        }
+      }
+    },
+    "Quantity must be a positive number.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ilość musi być liczbą dodatnią."
+          }
+        }
+      }
+    },
+    "QuotedListName %@": {
+      "comment": "A list name in quotation marks, inside a sentence",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@”"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„%@”"
+          }
+        }
+      }
+    },
+    "Record": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapisz"
+          }
+        }
+      }
+    },
+    "Record a payment to settle up": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapisz wpłatę, żeby się rozliczyć"
+          }
+        }
+      }
+    },
+    "Record this after the money has been sent. Both of you will see it under Payments.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapisz to po przelaniu pieniędzy. Obie strony zobaczą to w sekcji Wpłaty."
+          }
+        }
+      }
+    },
+    "Remove": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń"
+          }
+        }
+      }
+    },
+    "Remove %@?": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usunąć z listy: %@?"
+          }
+        }
+      }
+    },
+    "Remove from List": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń z listy"
+          }
+        }
+      }
+    },
+    "Remove from list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń z listy"
+          }
+        }
+      }
+    },
+    "Removes it from History and Balances for everyone. The items don't go back on the list.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuwa zakup z Historii i Rozliczeń dla wszystkich. Produkty nie wrócą na listę."
+          }
+        }
+      }
+    },
+    "Rename": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zmień nazwę"
+          }
+        }
+      }
+    },
+    "Rename list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zmień nazwę listy"
+          }
+        }
+      }
+    },
+    "Save": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapisz"
+          }
+        }
+      }
+    },
+    "Scan a QR code or open a link. You stay connected until you decide otherwise.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeskanuj kod QR albo otwórz link. Połączenie zostaje, dopóki go nie zmienisz."
+          }
+        }
+      }
+    },
+    "Scan an invitation": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeskanuj zaproszenie"
+          }
+        }
+      }
+    },
+    "Scan invitation": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skanuj zaproszenie"
+          }
+        }
+      }
+    },
+    "Search currencies": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Szukaj walut"
+          }
+        }
+      }
+    },
+    "Select All": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaznacz wszystko"
+          }
+        }
+      }
+    },
+    "Send with AirDrop": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyślij przez AirDrop"
+          }
+        }
+      }
+    },
+    "Settings": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ustawienia"
+          }
+        }
+      }
+    },
+    "Settings and connections": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ustawienia i połączenia"
+          }
+        }
+      }
+    },
+    "Settle up": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozlicz się"
+          }
+        }
+      }
+    },
+    "Share a list with a QR code or link. When someone joins, you're connected — no need to scan again next time.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Udostępnij listę kodem QR albo linkiem. Gdy ktoś dołączy, będziecie połączeni — następnym razem nie trzeba już skanować."
+          }
+        }
+      }
+    },
+    "Share it with someone else so they can join your list.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyślij je komuś innemu, żeby ta osoba mogła dołączyć do twojej listy."
+          }
+        }
+      }
+    },
+    "Share it with someone else so they can join “%@”.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyślij je komuś innemu, żeby ta osoba mogła dołączyć do „%@”."
+          }
+        }
+      }
+    },
+    "Share link": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Udostępnij"
+          }
+        }
+      }
+    },
+    "Share list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Udostępnij listę"
+          }
+        }
+      }
+    },
+    "Share “%@”": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Udostępnij „%@”"
+          }
+        }
+      }
+    },
+    "Shared": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Udostępniona"
+          }
+        }
+      }
+    },
+    "Shared by %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Udostępnia: %@"
+          }
+        }
+      }
+    },
+    "Shared lists": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wspólne listy"
+          }
+        }
+      }
+    },
+    "Shared lists you own": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoje wspólne listy"
+          }
+        }
+      }
+    },
+    "Shared with %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Udostępniona: %@"
+          }
+        }
+      }
+    },
+    "Share…": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Udostępnij…"
+          }
+        }
+      }
+    },
+    "Shopping": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zakupy"
+          }
+        }
+      }
+    },
+    "Shopping lists you share with the people you live with.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listy zakupów, które dzielisz z domownikami."
+          }
+        }
+      }
+    },
+    "Shown to people you share lists with": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widoczna dla osób, z którymi dzielisz listy"
+          }
+        }
+      }
+    },
+    "Sign Out": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyloguj się"
+          }
+        }
+      }
+    },
+    "Sign Out and Discard Changes": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyloguj i odrzuć zmiany"
+          }
+        }
+      }
+    },
+    "Sign in": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaloguj się"
+          }
+        }
+      }
+    },
+    "Sign out?": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wylogować się?"
+          }
+        }
+      }
+    },
+    "Someone else's list": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lista innej osoby"
+          }
+        }
+      }
+    },
+    "Something went wrong": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coś poszło nie tak"
+          }
+        }
+      }
+    },
+    "Spices & sauces": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przyprawy i sosy"
+          }
+        }
+      }
+    },
+    "Split": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podział"
+          }
+        }
+      }
+    },
+    "Split equally between": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podziel po równo między"
+          }
+        }
+      }
+    },
+    "Status": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stan"
+          }
+        }
+      }
+    },
+    "Still on the list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeszcze na liście"
+          }
+        }
+      }
+    },
+    "Suggested": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Proponowane"
+          }
+        }
+      }
+    },
+    "Suggestions": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Propozycje"
+          }
+        }
+      }
+    },
+    "Sweets & snacks": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Słodycze i przekąski"
+          }
+        }
+      }
+    },
+    "Sync": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronizacja"
+          }
+        }
+      }
+    },
+    "Sync now": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronizuj teraz"
+          }
+        }
+      }
+    },
+    "Sync problem · %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Problem z synchronizacją · %@"
+          }
+        }
+      }
+    },
+    "Syncing %lld changes…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Syncing %lld change…"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Syncing %lld changes…"
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Synchronizacja %lld zmian…"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Synchronizacja %lld zmian…"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Synchronizacja %lld zmiany…"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Synchronizacja %lld zmian…"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Syncing…": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Synchronizowanie…"
+          }
+        }
+      }
+    },
+    "System (%@)": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Systemowy (%@)"
+          }
+        }
+      }
+    },
+    "Tap someone to record a payment once the money has been sent, for example by bank transfer or BLIK.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stuknij osobę, żeby zapisać wpłatę, gdy pieniądze zostaną wysłane, np. przelewem lub BLIKIEM."
+          }
+        }
+      }
+    },
+    "That isn't a TogetherList invitation.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To nie jest zaproszenie TogetherList."
+          }
+        }
+      }
+    },
+    "The amount goes back into the balance for both of you.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kwota wróci do rozliczenia po obu stronach."
+          }
+        }
+      }
+    },
+    "The category is guessed from the name. Pick one to move this item for everyone on the list.": {
+      "comment": "Item editor footer under the category picker",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kategoria jest rozpoznawana po nazwie. Wybierz inną, aby przenieść produkt dla wszystkich na liście."
+          }
+        }
+      }
+    },
+    "The code only grants access to this list. It stops working when it expires or you cancel it — people who already joined stay members until you remove them.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kod daje dostęp tylko do tej listy. Przestaje działać, gdy wygaśnie lub go anulujesz — osoby, które już dołączyły, zostają na liście, dopóki ich nie usuniesz."
+          }
+        }
+      }
+    },
+    "The list and all items will be deleted for everyone.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lista i wszystkie produkty zostaną usunięte dla wszystkich."
+          }
+        }
+      }
+    },
+    "The list and all items will be deleted.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lista i wszystkie produkty zostaną usunięte."
+          }
+        }
+      }
+    },
+    "The list and its items will be deleted for everyone it's shared with.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lista i jej produkty zostaną usunięte dla wszystkich, którym ją udostępniono."
+          }
+        }
+      }
+    },
+    "The list and its items will be deleted.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lista i jej produkty zostaną usunięte."
+          }
+        }
+      }
+    },
+    "The list owner cancelled this invitation. Ask them for a new one.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaproszenie zostało anulowane przez właściciela listy. Poproś o nowe."
+          }
+        }
+      }
+    },
+    "These lists belong to other people and stay with them. Items you added remain, shown as from a former member.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Te listy należą do innych osób i u nich zostaną. Dodane przez ciebie produkty pozostaną, oznaczone jako dodane przez nieznaną osobę."
+          }
+        }
+      }
+    },
+    "They'll be removed for everyone on this list.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zostaną usunięte dla wszystkich na tej liście."
+          }
+        }
+      }
+    },
+    "They'll be removed from the list.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zostaną usunięte z listy."
+          }
+        }
+      }
+    },
+    "This can't be undone.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tego nie można cofnąć."
+          }
+        }
+      }
+    },
+    "This code isn't valid. Check that you scanned the right QR code or copied the full link.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ten kod jest nieprawidłowy. Sprawdź, czy to właściwy kod QR i czy skopiowano cały link."
+          }
+        }
+      }
+    },
+    "This is your invitation": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To twoje zaproszenie"
+          }
+        }
+      }
+    },
+    "This item was deleted by someone else.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ten produkt został usunięty przez kogoś innego."
+          }
+        }
+      }
+    },
+    "This list is empty. You can still record what you spent.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lista jest pusta. Nadal możesz zapisać, ile wydano."
+          }
+        }
+      }
+    },
+    "This list was deleted or you no longer have access to it.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lista została usunięta albo nie masz już do niej dostępu."
+          }
+        }
+      }
+    },
+    "This month": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ten miesiąc"
+          }
+        }
+      }
+    },
+    "This purchase is no longer in your history.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tego zakupu nie ma już w historii."
+          }
+        }
+      }
+    },
+    "To buy": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Do kupienia"
+          }
+        }
+      }
+    },
+    "To scan invitation codes, allow camera access in Settings. You can also paste an invitation link below.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aby skanować kody zaproszeń, zezwól na dostęp do aparatu w Ustawieniach. Możesz też wkleić link zaproszenia poniżej."
+          }
+        }
+      }
+    },
+    "To share another of your lists, open it and tap Share — %@ appears under Your connections.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aby udostępnić inną swoją listę, otwórz ją i stuknij Udostępnij — %@ pojawi się w sekcji Twoje połączenia."
+          }
+        }
+      }
+    },
+    "TogetherList": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TogetherList"
+          }
+        }
+      }
+    },
+    "TogetherList %@": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TogetherList %@"
+          }
+        }
+      }
+    },
+    "Total": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kwota"
+          }
+        }
+      }
+    },
+    "Total paid": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapłacona kwota"
+          }
+        }
+      }
+    },
+    "Transfer Ownership": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przekaż listę"
+          }
+        }
+      }
+    },
+    "Try again": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spróbuj ponownie"
+          }
+        }
+      }
+    },
+    "Type an item and press return. You can add several in a row.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpisz produkt i naciśnij Enter. Możesz dodać kilka po kolei."
+          }
+        }
+      }
+    },
+    "Type below to add items. Try “2 kg apples” or “6 eggs”.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpisz poniżej, żeby dodać produkty. Spróbuj „2 kg jabłek” albo „6 jajek”."
+          }
+        }
+      }
+    },
+    "Unit (kg, l, pcs…)": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jednostka (kg, l, szt.…)"
+          }
+        }
+      }
+    },
+    "Up to date": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktualne"
+          }
+        }
+      }
+    },
+    "Used for new purchases and payments. Amounts already recorded keep their currency.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Używana przy nowych zakupach i wpłatach. Zapisane kwoty zachowują swoją walutę."
+          }
+        }
+      }
+    },
+    "Vegetables": {
+      "comment": "Store section",
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warzywa"
+          }
+        }
+      }
+    },
+    "Waiting to sync": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Czeka na synchronizację"
+          }
+        }
+      }
+    },
+    "We sent a confirmation link to **%@**. Open it, then sign in here.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wysłaliśmy link potwierdzający na adres **%@**. Otwórz go, a potem zaloguj się tutaj."
+          }
+        }
+      }
+    },
+    "Weekend market": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Targ"
+          }
+        }
+      }
+    },
+    "What did you buy?": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Co kupiono?"
+          }
+        }
+      }
+    },
+    "When you finish shopping, tap **Check out** in a list to record what you bought and who paid.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Po zakupach stuknij **Rozlicz** na liście, żeby zapisać, co kupiono i kto płacił."
+          }
+        }
+      }
+    },
+    "Who's been paying": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kto płacił"
+          }
+        }
+      }
+    },
+    "Will be deleted": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zostanie usunięta"
+          }
+        }
+      }
+    },
+    "You": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ty"
+          }
+        }
+      }
+    },
+    "You can reconnect later with a new invitation.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Możecie połączyć się ponownie nowym zaproszeniem."
+          }
+        }
+      }
+    },
+    "You don't share any lists right now.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie dzielicie teraz żadnych list."
+          }
+        }
+      }
+    },
+    "You need to be online to change the currency.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aby zmienić walutę, musisz być online."
+          }
+        }
+      }
+    },
+    "You need to be online to create an invitation.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aby utworzyć zaproszenie, musisz być online."
+          }
+        }
+      }
+    },
+    "You need to be online to record a payment.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aby zapisać wpłatę, musisz być online."
+          }
+        }
+      }
+    },
+    "You no longer have access to this list.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie masz już dostępu do tej listy."
+          }
+        }
+      }
+    },
+    "You owe": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Do oddania"
+          }
+        }
+      }
+    },
+    "You owe %@": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masz oddać: %@"
+          }
+        }
+      }
+    },
+    "You paid": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twój zakup"
+          }
+        }
+      }
+    },
+    "You paid %@": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoja wpłata dla: %@"
+          }
+        }
+      }
+    },
+    "You'll be removed from": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stracisz dostęp do:"
+          }
+        }
+      }
+    },
+    "You'll lose access to %@.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stracisz dostęp do %@."
+          }
+        }
+      }
+    },
+    "You'll lose access to this list. The owner can invite you again.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stracisz dostęp do tej listy. Właściciel może zaprosić cię ponownie."
+          }
+        }
+      }
+    },
+    "You'll lose access until the owner invites you again.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stracisz dostęp, dopóki właściciel nie zaprosi cię ponownie."
+          }
+        }
+      }
+    },
+    "You'll no longer be connected.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie będziecie już połączeni."
+          }
+        }
+      }
+    },
+    "You're already a member of this list.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Już jesteś na tej liście."
+          }
+        }
+      }
+    },
+    "You're offline": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jesteś offline"
+          }
+        }
+      }
+    },
+    "You're owed": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Należy ci się"
+          }
+        }
+      }
+    },
+    "You've been invited to": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaproszenie do listy"
+          }
+        }
+      }
+    },
+    "You've been invited to a list. Sign in or create an account to see it.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masz zaproszenie do listy. Zaloguj się lub utwórz konto, żeby ją zobaczyć."
+          }
+        }
+      }
+    },
+    "Your connections": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoje połączenia"
+          }
+        }
+      }
+    },
+    "Your list": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoja lista"
+          }
+        }
+      }
+    },
+    "Your lists stay safe in your account. Data saved on this device will be removed.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoje listy zostają bezpieczne na koncie. Dane zapisane na tym urządzeniu zostaną usunięte."
+          }
+        }
+      }
+    },
+    "Your name": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoje imię"
+          }
+        }
+      }
+    },
+    "Your name is shown to people you share lists with. Passwords need at least 6 characters.": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoje imię widzą osoby, z którymi dzielisz listy. Hasło musi mieć co najmniej 6 znaków."
+          }
+        }
+      }
+    },
+    "a list": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(bez nazwy)"
+          }
+        }
+      }
+    },
+    "owes you": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ma ci oddać"
+          }
+        }
+      }
+    },
+    "waiting to sync": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "czeka na synchronizację"
+          }
+        }
+      }
+    },
+    "you owe": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "masz oddać"
+          }
+        }
+      }
+    },
+    "· %lld purchases": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "· %lld purchase"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "· %lld purchases"
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "· %lld zakupy"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "· %lld zakupów"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "· %lld zakup"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "· %lld zakupów"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

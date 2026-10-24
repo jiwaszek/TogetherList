@@ -1,0 +1,411 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "%lld unsynced changes were discarded.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld unsynced change was discarded."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld unsynced changes were discarded."
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Odrzucono %lld niezsynchronizowaną zmianę."
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Odrzucono %lld niezsynchronizowane zmiany."
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Odrzucono %lld niezsynchronizowanych zmian."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Odrzucono %lld niezsynchronizowanej zmiany."
+                }
+              }
+            }
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "A change couldn't be saved and was discarded (%@).": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się zapisać zmiany, więc została odrzucona (%@)."
+          }
+        }
+      }
+    },
+    "A change couldn't be saved: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się zapisać zmiany: %@"
+          }
+        }
+      }
+    },
+    "An account with this email already exists. Try signing in.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konto z tym adresem e-mail już istnieje. Spróbuj się zalogować."
+          }
+        }
+      }
+    },
+    "Check your inbox and confirm your email address, then sign in.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sprawdź skrzynkę i potwierdź adres e-mail, a potem się zaloguj."
+          }
+        }
+      }
+    },
+    "Choose a valid currency.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz prawidłową walutę."
+          }
+        }
+      }
+    },
+    "Choose who the cost is split between.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz, między kogo podzielić koszt."
+          }
+        }
+      }
+    },
+    "Display names must be 1–60 characters.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nazwa wyświetlana musi mieć od 1 do 60 znaków."
+          }
+        }
+      }
+    },
+    "Enter a list name.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpisz nazwę listy."
+          }
+        }
+      }
+    },
+    "Enter an amount greater than zero, with at most two decimal places.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpisz kwotę większą od zera, z najwyżej dwoma miejscami po przecinku."
+          }
+        }
+      }
+    },
+    "Enter an item name.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wpisz nazwę produktu."
+          }
+        }
+      }
+    },
+    "Everyone in the split must be on the list.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wszystkie osoby w podziale muszą być na liście."
+          }
+        }
+      }
+    },
+    "Item names can be up to 200 characters.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nazwa produktu może mieć najwyżej 200 znaków."
+          }
+        }
+      }
+    },
+    "List names can be up to 80 characters.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nazwa listy może mieć najwyżej 80 znaków."
+          }
+        }
+      }
+    },
+    "Notes can be up to 200 characters.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notatka może mieć najwyżej 200 znaków."
+          }
+        }
+      }
+    },
+    "Password must be at least 6 characters.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hasło musi mieć co najmniej 6 znaków."
+          }
+        }
+      }
+    },
+    "Please sign in again.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaloguj się ponownie."
+          }
+        }
+      }
+    },
+    "Some of the values aren't allowed.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niektóre wartości są niedozwolone."
+          }
+        }
+      }
+    },
+    "Something went wrong: %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coś poszło nie tak: %@"
+          }
+        }
+      }
+    },
+    "That email and password don't match.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieprawidłowy e-mail lub hasło."
+          }
+        }
+      }
+    },
+    "The new owner must be a member of the list.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nowy właściciel musi być członkiem listy."
+          }
+        }
+      }
+    },
+    "The owner can't be removed from their list.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można usunąć właściciela listy."
+          }
+        }
+      }
+    },
+    "This invitation code isn't valid.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ten kod zaproszenia jest nieprawidłowy."
+          }
+        }
+      }
+    },
+    "This invitation has expired. Ask for a new one.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To zaproszenie wygasło. Poproś o nowe."
+          }
+        }
+      }
+    },
+    "This invitation was cancelled by the list owner.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To zaproszenie zostało anulowane przez właściciela listy."
+          }
+        }
+      }
+    },
+    "This is no longer available.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To nie jest już dostępne."
+          }
+        }
+      }
+    },
+    "This is your own invitation.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To twoje własne zaproszenie."
+          }
+        }
+      }
+    },
+    "This item was deleted by someone else.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ten produkt został usunięty przez kogoś innego."
+          }
+        }
+      }
+    },
+    "You can only do this with people you're connected with.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Możesz to zrobić tylko z osobami, z którymi masz połączenie."
+          }
+        }
+      }
+    },
+    "You don't have permission to do that.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie masz uprawnień, żeby to zrobić."
+          }
+        }
+      }
+    },
+    "You no longer have access to “%@”.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie masz już dostępu do „%@”."
+          }
+        }
+      }
+    },
+    "You own this list. Transfer ownership or delete it instead.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta lista należy do ciebie. Przekaż ją komuś innemu albo ją usuń."
+          }
+        }
+      }
+    },
+    "You're offline. Changes will sync when you're back online.": {
+      "extractionState": "manual",
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jesteś offline. Zmiany zsynchronizują się, gdy wrócisz do sieci."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

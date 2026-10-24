@@ -1,0 +1,125 @@
+{
+  "language": "pl",
+  "categories": {
+    "vegetables": [
+      "warzyw*", "ogór*", "pomidor*", "ziemniak*", "kartof*", "młode ziemniaki", "marchew", "marchewk*", "marchwi",
+      "cebul*", "czosn*", "papryk*", "sałat*", "kapust*", "brokuł*", "kalafior*", "cukini*", "bakłażan*",
+      "por", "pory", "pora", "seler*", "pietruszk*", "koperek", "koperk*", "szczypior*", "rzodkiew*", "burak*",
+      "buraczk*", "fasolka szparagowa", "szparag*", "groszek", "groszk*", "kukurydz*", "dyni*", "dynia", "szpinak*",
+      "rukol*", "roszponk*", "jarmuż*", "pieczark*", "grzyb*", "boczniak*", "kiełk*", "imbir*", "natk*",
+      "rzeżuch*", "botwin*", "brukselk*", "kalarep*", "pasternak*", "awokado", "bataty", "batat*", "szalotk*",
+      "kolendr*", "bazylia świeża", "mix sałat", "warzywa na zupę", "włoszczyzn*", "rabarbar*", "fenkuł*", "karczoch*"
+    ],
+    "fruit": [
+      "owoc*", "jabłk*", "jabłek", "gruszk*", "gruszek", "banan*", "pomarańcz*", "mandaryn*", "klementyn*",
+      "cytryn*", "limonk*", "grejpfrut*", "winogron*", "truskaw*", "malin*", "borówk*", "jagod*", "jagód",
+      "porzeczk*", "wiśni*", "czereśni*", "śliwk*", "śliwek", "brzoskwi*", "nektaryn*", "morel*", "arbuz*",
+      "melon*", "ananas*", "kiwi", "mango", "granat*", "figi", "figa", "agrest*", "żurawin*", "pomelo", "liczi",
+      "marakuj*", "kaki", "papaj*", "jeżyn*"
+    ],
+    "bakery": [
+      "chleb*", "pieczyw*", "bułk*", "bułek", "bułeczk*", "bagietk*", "bagietek", "rogal*", "croissant*",
+      "tortill*", "wrap*", "pita", "pity", "chałk*", "drożdżówk*", "pączek", "pączk*", "ciasto", "ciasta",
+      "sernik*", "kajzerk*", "grahamk*", "ciabatt*", "focacci*", "naan", "lawasz*", "obwarzan*", "precel",
+      "bajgl*", "pumpernikiel", "babk*", "makowiec", "szarlotk*", "muffin*", "babeczk*", "placek", "tost", "tosty"
+    ],
+    "dairy": [
+      "mleko", "mleka", "mleczko", "ser", "sera", "sery", "serek", "serki", "serka", "twaróg", "twarog*",
+      "twarożek", "twarożk*", "jogurt*", "kefir*", "maślank*", "śmietan*", "masło", "masła", "masełko",
+      "margaryn*", "jajk*", "jaja", "jajek", "mozzarell*", "parmezan*", "feta", "fety", "halloumi", "mascarpone",
+      "ricott*", "gouda", "goudy", "edam*", "camembert", "brie", "skyr", "danonk*", "zsiadłe", "bryndz*",
+      "oscypek", "oscypk*", "mleko owsiane", "mleko sojowe", "mleko migdałowe", "napój owsiany", "napój sojowy",
+      "napój roślinny", "serek wiejski", "ser żółty", "kremówka"
+    ],
+    "meat": [
+      "mięso", "mięsa", "mielone", "mielonego", "kurczak*", "kurczę", "kurczęcia", "udk*", "udziec", "skrzydeł*",
+      "skrzydełk*", "wołowin*", "wieprzowin*", "cielęcin*", "jagnięcin*", "indyk*", "kaczk*", "kacz*", "schab*",
+      "karkówk*", "boczek", "boczk*", "szynk*", "kiełbas*", "parówk*", "salami", "wędlin*", "polędwic*",
+      "kabanos*", "pasztet*", "kaszank*", "salceson*", "golonk*", "żeberk*", "łopatk*", "mortadel*", "chorizo",
+      "bekon*", "kotlet*", "gulasz*", "baleron*", "klops*", "pieczeń", "rostbef*", "antrykot*", "stek*",
+      "wątróbk*", "serca drobiowe", "żołądki", "filet z kurczaka", "pierś z kurczaka", "prosciutto", "pepperoni"
+    ],
+    "fish": [
+      "ryb*", "łoso*", "dorsz*", "tuńczyk*", "śledź", "śledzi*", "śledzik*", "makrel*", "pstrąg*", "mintaj*",
+      "halibut*", "sardyn*", "szprot*", "krewet*", "kalmar*", "małż*", "ostryg*", "owoce morza", "paluszki rybne",
+      "surimi", "karp*", "pangasius", "tilapi*", "morszczuk*", "dorad*", "okoń", "sandacz*", "węgorz*", "anchois",
+      "kawior*", "homar*", "krab*", "paluszki krabowe"
+    ],
+    "pantry": [
+      "makaron*", "spaghetti", "penne", "fusilli", "tagliatelle", "lasagne", "farfalle", "ryż*", "kasz*",
+      "kuskus*", "bulgur*", "komos*", "quinoa", "mąka", "mąki", "mąkę", "cukier", "cukru", "płatki", "płatki owsiane",
+      "płatki kukurydziane", "musli", "granol*", "owsiank*", "olej*", "oliw*", "ocet*", "octu", "drożdż*",
+      "proszek do pieczenia", "soda oczyszczona", "budyń", "budyni*", "kisiel*", "galaretk*", "konserw*",
+      "fasol*", "ciecierzyc*", "soczewic*", "groch*", "mleko kokosowe", "mleczko kokosowe", "koncentrat*",
+      "passat*", "pomidory w puszce", "krojone pomidory", "pomidory krojone", "zupa", "zupy", "zupk*", "bułka tarta",
+      "miód", "miodu", "dżem*", "konfitur*", "powidł*", "nutell*", "krem czekoladowy", "masło orzechowe",
+      "siemię*", "chia", "żelatyn*", "skrobi*", "hummus", "kukurydza w puszce", "makaron ryżowy", "sos do makaronu",
+      "syrop klonowy", "wiórki kokosowe", "cukier puder", "cukier wanilinowy", "kakao do pieczenia", "tuńczyk w puszce"
+    ],
+    "condiments": [
+      "sól", "soli", "pieprz*", "przypraw*", "ketchup*", "keczup*", "majonez*", "musztard*", "chrzan*", "sos*",
+      "sos sojowy", "pesto", "bazyli*", "oregano", "tymian*", "rozmaryn*", "kminek", "kmink*", "cynamon*",
+      "curry", "kurkum*", "papryka słodka", "papryka ostra", "papryka wędzona", "chili", "gałka muszkatołowa",
+      "liść laurowy", "liście laurowe", "ziele angielskie", "vegeta", "kostka rosołowa", "kostki rosołowe",
+      "bulion*", "majeranek", "majerank*", "czosnek granulowany", "imbir mielony", "tabasco", "sriracha",
+      "wasabi", "dressing*", "ajvar", "ziół*", "zioła prowansalskie", "wanili*"
+    ],
+    "snacks": [
+      "słodycz*", "czekolad*", "cukierk*", "batonik*", "baton*", "ciastk*", "ciasteczk*", "herbatnik*",
+      "wafel*", "wafelk*", "wafle ryżowe", "chips*", "czipsy", "paluszki", "krakers*", "precelk*", "żelk*",
+      "lizak*", "guma do żucia", "orzech*", "orzeszk*", "migdał*", "pistacj*", "nerkowc*", "rodzynk*",
+      "bakali*", "popcorn*", "nachos", "draże", "pralin*", "trufl*", "mieszanka studencka", "delicje",
+      "piernik*", "michałk*", "krówk*", "chałw*", "sezamk*", "przekąsk*", "suszone owoce", "daktyl*",
+      "pestki dyni", "słonecznik*"
+    ],
+    "drinks": [
+      "woda", "wody", "wodę", "woda gazowana", "woda niegazowana", "woda mineralna", "sok", "soki", "soku",
+      "soczek", "soczk*", "napój", "napoje", "napoju", "cola", "coca", "pepsi", "sprite", "fanta",
+      "oranżad*", "lemoniad*", "kompot*", "nektar*", "izotonik*", "energetyk*", "red bull", "tonic*",
+      "smoothie", "kwas chlebowy", "syrop*", "mrożona herbata", "ice tea", "kombucha"
+    ],
+    "coffee_tea": [
+      "kawa", "kawy", "kawę", "kawka", "kawa ziarnista", "kawa mielona", "kawa rozpuszczalna", "espresso",
+      "cappuccino", "herbat*", "herbatk*", "yerba", "kakao", "rooibos", "matcha", "kapsułki do kawy",
+      "melis*", "mięt*", "rumian*", "czekolada do picia"
+    ],
+    "alcohol": [
+      "piwo", "piwa", "piwko", "wino", "wina", "winko", "wódk*", "whisky", "whiskey", "rum", "gin", "tequila",
+      "likier*", "nalewk*", "szampan*", "prosecco", "cydr*", "aperol", "martini", "bourbon", "koniak*",
+      "brandy", "radler*", "sake", "wermut*", "spirytus*", "bimber", "miód pitny"
+    ],
+    "frozen": [
+      "lody", "lodów", "lód", "lodu", "kostki lodu", "frytki", "frytek", "pierogi", "pierog*", "kopytk*",
+      "kluski śląskie", "pyzy", "nuggets*", "warzywa na patelnię", "sorbet*", "pizz*", "zapiekank*"
+    ],
+    "household": [
+      "papier toaletowy", "ręcznik papierowy", "ręczniki papierowe", "proszek do prania", "płyn do prania",
+      "żel do prania", "płyn do naczyń", "kapsułki do prania", "kapsułki do zmywarki", "tabletki do zmywarki",
+      "sól do zmywarki", "zmywak*", "gąbk*", "ścierk*", "worki na śmieci", "worki", "folia aluminiowa",
+      "folia spożywcza", "folia", "folii", "domestos", "ajax", "cif", "płyn do mycia", "odplamiacz*",
+      "płyn do płukania", "wybielacz*", "żarówk*", "baterie", "bateri*", "świeczk*", "świec*", "zapałk*",
+      "zapalniczk*", "odświeżacz*", "środek czyszczący", "mop*", "miotł*", "nabłyszczacz*", "detergent*",
+      "vanish", "persil", "fairy", "ludwik", "papier do pieczenia", "serwetk*", "rękawiczk*", "kret", "worek"
+    ],
+    "personal_care": [
+      "szampon*", "odżywk*", "mydł*", "żel pod prysznic", "żel do mycia", "pasta do zębów", "szczoteczk*",
+      "nić dentystyczna", "płyn do płukania jamy ustnej", "dezodorant*", "antyperspirant*", "krem*", "balsam*",
+      "chusteczk*", "podpask*", "tampon*", "wkładk*", "maszynk*", "żyletk*", "pianka do golenia",
+      "płatki kosmetyczne", "patyczki higieniczne", "wacik*", "plaster*", "plastry", "perfum*", "tusz do rzęs",
+      "pomadk*", "płyn micelarny", "krem do rąk", "witamin*", "apap", "ibuprom", "tabletki przeciwbólowe",
+      "kosmetyk*", "lakier do paznokci"
+    ],
+    "baby": [
+      "pieluch*", "pieluszk*", "chusteczki nawilżane", "kaszk*", "mleko modyfikowane", "słoiczk*", "smoczek",
+      "smoczk*", "butelka dla dziecka", "pampers*", "zupka dla dziecka", "bobofrut*", "gerber", "hipp",
+      "dla dziecka", "dla niemowląt"
+    ],
+    "pets": [
+      "karma", "karmy", "karm*", "dla kota", "dla psa", "dla kotów", "dla psów", "żwirek", "żwirk*", "whiskas",
+      "pedigree", "felix", "friskies", "przysmaki dla psa", "przysmaki dla kota"
+    ]
+  },
+  "strong": {
+    "frozen": ["mrożon*", "mrożonk*"]
+  }
+}

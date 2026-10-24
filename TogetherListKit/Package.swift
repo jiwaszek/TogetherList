@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "TogetherListKit",
+    defaultLocalization: "en",
     platforms: [.iOS(.v17), .macOS(.v14)],
     products: [
         .library(name: "TogetherListCore", targets: ["TogetherListCore"]),
@@ -13,7 +14,7 @@ let package = Package(
     ],
     targets: [
         // Domain models, backend protocol, offline sync engine. No third-party deps.
-        .target(name: "TogetherListCore"),
+        .target(name: "TogetherListCore", resources: [.process("Resources")]),
         // Supabase implementation of `BackendService`.
         .target(
             name: "TogetherListSupabase",

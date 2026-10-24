@@ -108,7 +108,7 @@ private struct MonthHeader: View {
 
     var body: some View {
         HStack {
-            Text(start.formatted(.dateTime.month(.wide).year()))
+            Text(start.appFormatted(.dateTime.month(.wide).year()).capitalized(with: Localizer.shared.locale))
             Spacer()
             Text(totals).monospacedDigit()
         }
@@ -121,13 +121,14 @@ struct ExpenseRow: View {
     let expense: Expense
 
     private var payer: String {
-        guard let paidBy = expense.paidBy else { return "Former member" }
-        return paidBy == engine.userID ? "You" : engine.displayName(for: paidBy) ?? "Former member"
+        guard let paidBy = expense.paidBy else { return L("Former member") }
+        return paidBy == engine.userID ? L("You") : engine.displayName(for: paidBy) ?? L("Former member")
     }
 
     private var subtitle: String {
-        var parts = ["\(payer) paid", expense.createdAt.formatted(.dateTime.day().month(.abbreviated))]
-        if !expense.items.isEmpty { parts.insert("\(expense.items.count) item\(expense.items.count == 1 ? "" : "s")", at: 1) }
+        let paid = expense.paidBy == engine.userID ? L("You paid") : L("%@ paid", payer)
+        var parts = [paid, expense.createdAt.appFormatted(.dateTime.day().month(.abbreviated))]
+        if !expense.items.isEmpty { parts.insert(L("%lld items", expense.items.count), at: 1) }
         return parts.joined(separator: " · ")
     }
 
@@ -185,9 +186,9 @@ struct ExpenseDetailView: View {
     }
 
     private func name(_ userID: UUID?, fallback: String?) -> String {
-        guard let userID else { return "Former member" }
-        if userID == engine.userID { return "You" }
-        return engine.displayName(for: userID) ?? fallback ?? "Former member"
+        guard let userID else { return L("Former member") }
+        if userID == engine.userID { return L("You") }
+        return engine.displayName(for: userID) ?? fallback ?? L("Former member")
     }
 
     private func content(_ expense: Expense) -> some View {
@@ -196,9 +197,11 @@ struct ExpenseDetailView: View {
                 VStack(spacing: 6) {
                     Text(expense.amount.money(expense.currency))
                         .font(.system(.largeTitle, design: .rounded).weight(.bold).monospacedDigit())
-                    Text("Paid by \(name(expense.paidBy, fallback: expense.payerName))")
+                    (expense.paidBy == engine.userID
+                        ? Text("Paid by you")
+                        : Text("Paid by \(name(expense.paidBy, fallback: expense.payerName))"))
                         .font(.headline)
-                    Text(expense.createdAt.formatted(date: .long, time: .shortened))
+                    Text(expense.createdAt.appFormatted(date: .long, time: .shortened))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                     if engine.pendingExpenseIDs.contains(expense.id) {

@@ -193,6 +193,14 @@ struct LiveSupabaseTests {
             try await alice.renameList(id: sharedID, name: "Weekend groceries")
             #expect(try await bob.fetchLists().first?.name == "Weekend groceries")
 
+            // A category picked by hand syncs; nil goes back to the automatic guess
+            try await bob.updateItem(id: bread.id, patch: ItemPatch(category: .some(ProductCategory.pantry.rawValue)))
+            let recategorized = try #require(try await alice.fetchItems(since: nil).first { $0.id == bread.id })
+            #expect(recategorized.category == "pantry")
+            #expect(recategorized.effectiveCategory == .pantry)
+            try await bob.updateItem(id: bread.id, patch: ItemPatch(category: .some(nil)))
+            #expect(try await alice.fetchItems(since: nil).first { $0.id == bread.id }?.effectiveCategory == .bakery)
+
             // Checkout: Alice pays for the bread and splits it with Bob
             #expect(try await alice.fetchProfile().currency == "PLN")
             let purchase = PurchaseDraft(listID: sharedID, amount: Decimal(string: "45.50")!, currency: "PLN",

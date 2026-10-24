@@ -234,7 +234,7 @@ struct ListInsert: Encodable {
 }
 
 struct ItemRow: Decodable {
-    static let columns = "id,list_id,name,quantity,unit,note,is_purchased,purchased_at,purchased_by,created_by,created_at,updated_by,updated_at,deleted_at,version"
+    static let columns = "id,list_id,name,quantity,unit,note,is_purchased,purchased_at,purchased_by,created_by,created_at,updated_by,updated_at,deleted_at,version,category"
 
     let id: UUID
     let listId: UUID
@@ -251,12 +251,13 @@ struct ItemRow: Decodable {
     let updatedAt: Date
     let deletedAt: Date?
     let version: Int
+    let category: String?
 
     enum CodingKeys: String, CodingKey {
         case id, listId = "list_id", name, quantity, unit, note, isPurchased = "is_purchased",
              purchasedAt = "purchased_at", purchasedBy = "purchased_by", createdBy = "created_by",
              createdAt = "created_at", updatedBy = "updated_by", updatedAt = "updated_at",
-             deletedAt = "deleted_at", version
+             deletedAt = "deleted_at", version, category
     }
 
     init(from decoder: any Decoder) throws {
@@ -283,13 +284,14 @@ struct ItemRow: Decodable {
         updatedAt = try c.decode(Date.self, forKey: .updatedAt)
         deletedAt = try c.decodeIfPresent(Date.self, forKey: .deletedAt)
         version = try c.decode(Int.self, forKey: .version)
+        category = try c.decodeIfPresent(String.self, forKey: .category)
     }
 
     var model: ShoppingItem {
         ShoppingItem(id: id, listID: listId, name: name, quantity: quantity, unit: unit, note: note,
                      isPurchased: isPurchased, purchasedAt: purchasedAt, purchasedBy: purchasedBy,
                      createdBy: createdBy, createdAt: createdAt, updatedBy: updatedBy, updatedAt: updatedAt,
-                     deletedAt: deletedAt, version: version)
+                     deletedAt: deletedAt, version: version, category: category)
     }
 }
 
@@ -301,6 +303,7 @@ struct ItemInsert: Encodable {
     let unit: String?
     let note: String?
     let isPurchased: Bool
+    let category: String?
 
     init(_ d: ItemDraft) {
         id = d.id
@@ -310,10 +313,11 @@ struct ItemInsert: Encodable {
         unit = d.unit
         note = d.note
         isPurchased = d.isPurchased
+        category = d.category
     }
 
     enum CodingKeys: String, CodingKey {
-        case id, listId = "list_id", name, quantity, unit, note, isPurchased = "is_purchased"
+        case id, listId = "list_id", name, quantity, unit, note, isPurchased = "is_purchased", category
     }
 
     func encode(to encoder: any Encoder) throws {
@@ -325,6 +329,7 @@ struct ItemInsert: Encodable {
         try c.encode(unit, forKey: .unit)
         try c.encode(note, forKey: .note)
         try c.encode(isPurchased, forKey: .isPurchased)
+        try c.encode(category, forKey: .category)
     }
 }
 
@@ -333,7 +338,7 @@ struct ItemPatchBody: Encodable {
     let patch: ItemPatch
     init(_ patch: ItemPatch) { self.patch = patch }
 
-    enum CodingKeys: String, CodingKey { case name, quantity, unit, note, isPurchased = "is_purchased" }
+    enum CodingKeys: String, CodingKey { case name, quantity, unit, note, isPurchased = "is_purchased", category }
 
     func encode(to encoder: any Encoder) throws {
         var c = encoder.container(keyedBy: CodingKeys.self)
@@ -342,6 +347,7 @@ struct ItemPatchBody: Encodable {
         if let unit = patch.unit { try c.encode(unit, forKey: .unit) }
         if let note = patch.note { try c.encode(note, forKey: .note) }
         if let isPurchased = patch.isPurchased { try c.encode(isPurchased, forKey: .isPurchased) }
+        if let category = patch.category { try c.encode(category, forKey: .category) }
     }
 }
 

@@ -91,9 +91,10 @@ public struct ItemDraft: Codable, Hashable, Sendable {
     public var unit: String?
     public var note: String?
     public var isPurchased: Bool
+    public var category: String?
 
     public init(id: UUID = UUID(), listID: UUID, name: String, quantity: Decimal? = nil,
-                unit: String? = nil, note: String? = nil, isPurchased: Bool = false) {
+                unit: String? = nil, note: String? = nil, isPurchased: Bool = false, category: String? = nil) {
         self.id = id
         self.listID = listID
         self.name = name
@@ -101,6 +102,7 @@ public struct ItemDraft: Codable, Hashable, Sendable {
         self.unit = unit
         self.note = note
         self.isPurchased = isPurchased
+        self.category = category
     }
 }
 
@@ -112,18 +114,21 @@ public struct ItemPatch: Codable, Hashable, Sendable {
     public var unit: String??
     public var note: String??
     public var isPurchased: Bool?
+    /// `.some(nil)` goes back to the automatic category.
+    public var category: String??
 
     public init(name: String? = nil, quantity: Decimal?? = nil, unit: String?? = nil,
-                note: String?? = nil, isPurchased: Bool? = nil) {
+                note: String?? = nil, isPurchased: Bool? = nil, category: String?? = nil) {
         self.name = name
         self.quantity = quantity
         self.unit = unit
         self.note = note
         self.isPurchased = isPurchased
+        self.category = category
     }
 
     public var isEmpty: Bool {
-        name == nil && quantity == nil && unit == nil && note == nil && isPurchased == nil
+        name == nil && quantity == nil && unit == nil && note == nil && isPurchased == nil && category == nil
     }
 
     /// `other` wins for every field it sets.
@@ -133,7 +138,8 @@ public struct ItemPatch: Codable, Hashable, Sendable {
             quantity: other.quantity ?? quantity,
             unit: other.unit ?? unit,
             note: other.note ?? note,
-            isPurchased: other.isPurchased ?? isPurchased
+            isPurchased: other.isPurchased ?? isPurchased,
+            category: other.category ?? category
         )
     }
 
@@ -143,6 +149,7 @@ public struct ItemPatch: Codable, Hashable, Sendable {
         if let quantity { copy.quantity = quantity }
         if let unit { copy.unit = unit }
         if let note { copy.note = note }
+        if let category { copy.category = category }
         if let isPurchased, isPurchased != item.isPurchased {
             copy.isPurchased = isPurchased
             copy.purchasedAt = isPurchased ? now : nil
@@ -158,11 +165,12 @@ public struct ItemPatch: Codable, Hashable, Sendable {
         if let unit { copy.unit = unit }
         if let note { copy.note = note }
         if let isPurchased { copy.isPurchased = isPurchased }
+        if let category { copy.category = category }
         return copy
     }
 
     // Custom coding so `.some(nil)` survives a round trip through the offline cache.
-    private enum CodingKeys: String, CodingKey { case name, quantity, unit, note, isPurchased, cleared }
+    private enum CodingKeys: String, CodingKey { case name, quantity, unit, note, isPurchased, category, cleared }
 
     public init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -172,6 +180,7 @@ public struct ItemPatch: Codable, Hashable, Sendable {
         quantity = cleared.contains("quantity") ? .some(nil) : try c.decodeIfPresent(Decimal.self, forKey: .quantity).map { $0 }
         unit = cleared.contains("unit") ? .some(nil) : try c.decodeIfPresent(String.self, forKey: .unit).map { $0 }
         note = cleared.contains("note") ? .some(nil) : try c.decodeIfPresent(String.self, forKey: .note).map { $0 }
+        category = cleared.contains("category") ? .some(nil) : try c.decodeIfPresent(String.self, forKey: .category).map { $0 }
     }
 
     public func encode(to encoder: any Encoder) throws {
@@ -182,6 +191,7 @@ public struct ItemPatch: Codable, Hashable, Sendable {
         switch quantity { case let .some(v?): try c.encode(v, forKey: .quantity); case .some(nil): cleared.insert("quantity"); case nil: break }
         switch unit { case let .some(v?): try c.encode(v, forKey: .unit); case .some(nil): cleared.insert("unit"); case nil: break }
         switch note { case let .some(v?): try c.encode(v, forKey: .note); case .some(nil): cleared.insert("note"); case nil: break }
+        switch category { case let .some(v?): try c.encode(v, forKey: .category); case .some(nil): cleared.insert("category"); case nil: break }
         if !cleared.isEmpty { try c.encode(cleared, forKey: .cleared) }
     }
 }

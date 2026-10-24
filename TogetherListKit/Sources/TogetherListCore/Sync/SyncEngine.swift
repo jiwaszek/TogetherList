@@ -223,8 +223,8 @@ public final class SyncEngine {
 
     @discardableResult
     public func addItem(to listID: UUID, name: String, quantity: Decimal? = nil, unit: String? = nil, note: String? = nil) throws -> UUID {
-        guard let name = name.nilIfBlank else { throw AppError.validation("Enter an item name.") }
-        guard name.count <= 200 else { throw AppError.validation("Item names can be up to 200 characters.") }
+        guard let name = name.nilIfBlank else { throw AppError.validation(L("Enter an item name.")) }
+        guard name.count <= 200 else { throw AppError.validation(L("Item names can be up to 200 characters.")) }
         guard list(id: listID) != nil else { throw AppError.notFound }
         let draft = ItemDraft(listID: listID, name: name, quantity: quantity, unit: unit?.nilIfBlank, note: note?.nilIfBlank)
         enqueue(.insertItem(draft))
@@ -265,7 +265,7 @@ public final class SyncEngine {
         guard !people.isEmpty else { throw AppError.invalidParticipants }
         let memberIDs = Set(list.members.map(\.userID))
         guard people.union([paidBy]).isSubset(of: memberIDs) else { throw AppError.participantNotMember }
-        if let note, note.count > 200 { throw AppError.validation("Notes can be up to 200 characters.") }
+        if let note, note.count > 200 { throw AppError.validation(L("Notes can be up to 200 characters.")) }
         let draft = PurchaseDraft(
             listID: listID, amount: amount, currency: currency, paidBy: paidBy,
             participants: people.sorted { $0.uuidString < $1.uuidString },
@@ -354,7 +354,7 @@ public final class SyncEngine {
 
     public func updateDisplayName(_ name: String) async throws {
         guard let name = name.nilIfBlank, name.count <= 60 else {
-            throw AppError.validation("Display names must be 1–60 characters.")
+            throw AppError.validation(L("Display names must be 1–60 characters."))
         }
         profile = try await perform { try await $0.updateDisplayName(name) }
         persist()
@@ -427,7 +427,7 @@ public final class SyncEngine {
                 case let .server(message):
                     if outbox.incrementAttempts(id: op.id) >= 5 {
                         outbox.remove(id: op.id)
-                        post(.warning, "A change couldn't be saved and was discarded (\(message)).")
+                        post(.warning, L("A change couldn't be saved and was discarded (%@).", message))
                         needsRefresh = true
                         persist()
                         recompute()
@@ -443,7 +443,7 @@ public final class SyncEngine {
                     await pull()
                     if lastAttemptWasOffline { scheduleRetry(); return }
                     if outbox.remove(id: op.id) != nil, appError == .permissionDenied {
-                        post(.warning, "A change couldn't be saved: \(appError.localizedDescription)")
+                        post(.warning, L("A change couldn't be saved: %@", appError.localizedDescription))
                     }
                     persist()
                     recompute()
@@ -451,7 +451,7 @@ public final class SyncEngine {
                     // Permanent: item deleted (delete wins), validation...
                     outbox.remove(id: op.id)
                     if appError != .itemDeleted && appError != .notFound {
-                        post(.warning, "A change couldn't be saved: \(appError.localizedDescription)")
+                        post(.warning, L("A change couldn't be saved: %@", appError.localizedDescription))
                     }
                     needsRefresh = true
                     persist()
@@ -607,9 +607,9 @@ public final class SyncEngine {
             let dropped = outbox.removeAll(forList: id, except: inFlightOperationID)
             snapshot.items = snapshot.items.filter { $0.value.listID != id }
             if intentionallyRemovedLists.remove(id) == nil {
-                var message = "You no longer have access to “\(old.name)”."
+                var message = L("You no longer have access to “%@”.", old.name)
                 if dropped > 0 {
-                    message += " \(dropped) unsynced change\(dropped == 1 ? " was" : "s were") discarded."
+                    message += " " + L("%lld unsynced changes were discarded.", dropped)
                 }
                 post(.warning, message)
             }
@@ -771,8 +771,8 @@ public final class SyncEngine {
     // MARK: - Validation
 
     static func validatedListName(_ name: String) throws -> String {
-        guard let name = name.nilIfBlank else { throw AppError.validation("Enter a list name.") }
-        guard name.count <= 80 else { throw AppError.validation("List names can be up to 80 characters.") }
+        guard let name = name.nilIfBlank else { throw AppError.validation(L("Enter a list name.")) }
+        guard name.count <= 80 else { throw AppError.validation(L("List names can be up to 80 characters.")) }
         return name
     }
 }

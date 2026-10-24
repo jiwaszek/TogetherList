@@ -11,6 +11,7 @@ struct ItemEditorSheet: View {
     @State private var unit = ""
     @State private var note = ""
     @State private var isPurchased = false
+    @State private var category: String?
     @State private var errorMessage: String?
 
     /// The live copy (may have been changed or deleted by someone else meanwhile).
@@ -40,11 +41,22 @@ struct ItemEditorSheet: View {
                     InlineError(message: errorMessage)
                 }
                 Section {
+                    Picker("Category", selection: $category) {
+                        Text("Automatic (\(ProductCategorizer.shared.category(for: name).label))")
+                            .tag(String?.none)
+                        ForEach(ProductCategory.allCases, id: \.self) { option in
+                            Text(verbatim: option.label).tag(String?.some(option.rawValue))
+                        }
+                    }
+                } footer: {
+                    Text("The category is guessed from the name. Pick one to move this item for everyone on the list.")
+                }
+                Section {
                     Toggle("In the basket", isOn: $isPurchased)
                 }
                 Section {
-                    LabeledContent("Added by", value: engine.displayName(for: item.createdBy) ?? "Former member")
-                    LabeledContent("Added", value: item.createdAt.formatted(date: .abbreviated, time: .shortened))
+                    LabeledContent("Added by", value: engine.displayName(for: item.createdBy) ?? L("Former member"))
+                    LabeledContent("Added", value: item.createdAt.appFormatted(date: .abbreviated, time: .shortened))
                     if item.version > 1, let updatedBy = engine.displayName(for: item.updatedBy) {
                         LabeledContent("Last changed by", value: updatedBy)
                     }
@@ -76,15 +88,17 @@ struct ItemEditorSheet: View {
         unit = item.unit ?? ""
         note = item.note ?? ""
         isPurchased = item.isPurchased
+        // Unknown values (from a newer app version) show as automatic.
+        category = item.category.flatMap(ProductCategory.init(rawValue:))?.rawValue
     }
 
     private func save() {
         guard let base = current else { return }
-        guard let trimmedName = name.nilIfBlank else { errorMessage = "Enter a name."; return }
+        guard let trimmedName = name.nilIfBlank else { errorMessage = L("Enter a name."); return }
         var quantity: Decimal?
         if let text = quantityText.nilIfBlank {
             guard let parsed = try? Decimal(text, format: .number), parsed > 0 else {
-                errorMessage = "Quantity must be a positive number."
+                errorMessage = L("Quantity must be a positive number.")
                 return
             }
             quantity = parsed
@@ -97,6 +111,7 @@ struct ItemEditorSheet: View {
         if unit.nilIfBlank != base.unit { patch.unit = .some(unit.nilIfBlank) }
         if note.nilIfBlank != base.note { patch.note = .some(note.nilIfBlank) }
         if isPurchased != base.isPurchased { patch.isPurchased = isPurchased }
+        if category != base.category { patch.category = .some(category) }
         engine.updateItem(base, patch: patch)
         dismiss()
     }

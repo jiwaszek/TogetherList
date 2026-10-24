@@ -1,0 +1,109 @@
+{
+  "language": "en",
+  "categories": {
+    "vegetables": [
+      "vegetable", "veg", "veggies", "cucumber", "tomato", "cherry tomatoes", "potato", "carrot", "onion", "red onion",
+      "spring onion", "scallion", "shallot", "garlic", "pepper", "bell pepper", "capsicum", "lettuce", "salad",
+      "cabbage", "broccoli", "cauliflower", "zucchini", "courgette", "eggplant", "aubergine", "leek", "celery",
+      "celeriac", "parsley", "dill", "chive", "radish", "beet", "beetroot", "green beans", "asparagus", "pea",
+      "peas", "corn", "sweetcorn", "pumpkin", "squash", "spinach", "rocket", "arugula", "kale", "mushroom",
+      "sprouts", "brussels sprouts", "ginger", "avocado", "sweet potato", "turnip", "parsnip", "fennel",
+      "artichoke", "coriander", "cilantro", "rhubarb", "chard", "okra", "watercress", "bok choy"
+    ],
+    "fruit": [
+      "fruit", "apple", "pear", "banana", "orange", "mandarin", "clementine", "tangerine", "lemon", "lime",
+      "grapefruit", "grape", "strawberry", "raspberry", "blueberry", "blackberry", "berry", "cherry", "plum",
+      "peach", "nectarine", "apricot", "watermelon", "melon", "pineapple", "kiwi", "mango", "pomegranate", "fig",
+      "papaya", "passion fruit", "lychee", "cranberry", "currant", "gooseberry", "persimmon"
+    ],
+    "bakery": [
+      "bread", "loaf", "roll", "bun", "bagel", "baguette", "croissant", "tortilla", "wrap", "pita", "naan",
+      "ciabatta", "focaccia", "brioche", "muffin", "donut", "doughnut", "pastry", "cake", "pie", "sourdough",
+      "rye", "toast", "english muffin", "crumpet", "flatbread", "scone", "danish"
+    ],
+    "dairy": [
+      "milk", "cheese", "cheddar", "mozzarella", "parmesan", "feta", "halloumi", "mascarpone", "ricotta", "gouda",
+      "brie", "camembert", "yogurt", "yoghurt", "kefir", "buttermilk", "cream", "sour cream", "creme fraiche",
+      "whipping cream", "double cream", "butter", "margarine", "egg", "cottage cheese", "cream cheese", "skyr",
+      "oat milk", "almond milk", "soy milk", "quark"
+    ],
+    "meat": [
+      "meat", "chicken", "beef", "pork", "lamb", "turkey", "duck", "veal", "mince", "minced meat", "ground beef",
+      "steak", "bacon", "ham", "sausage", "salami", "pepperoni", "chorizo", "prosciutto", "hot dog", "frankfurter",
+      "burger", "ribs", "drumstick", "wing", "chicken breast", "cold cuts", "pate", "meatball", "liver", "kebab",
+      "brisket", "pork chop", "gammon"
+    ],
+    "fish": [
+      "fish", "salmon", "cod", "tuna", "herring", "mackerel", "trout", "pollock", "halibut", "sardine", "anchovy",
+      "prawn", "shrimp", "squid", "calamari", "mussel", "oyster", "clam", "crab", "lobster", "seafood",
+      "fish fingers", "fish sticks", "tilapia", "hake", "sea bass", "sole", "carp", "scallop", "crab sticks"
+    ],
+    "pantry": [
+      "pasta", "spaghetti", "penne", "fusilli", "macaroni", "noodle", "lasagne", "lasagna", "rice", "couscous",
+      "bulgur", "quinoa", "flour", "sugar", "oats", "oatmeal", "porridge", "cereal", "muesli", "granola",
+      "cornflakes", "oil", "olive oil", "vinegar", "yeast", "baking powder", "baking soda", "beans", "bean",
+      "chickpea", "lentil", "canned", "tinned", "tomato paste", "passata", "canned tomatoes", "chopped tomatoes",
+      "soup", "breadcrumbs", "bread crumbs", "honey", "jam", "marmalade", "peanut butter", "nutella",
+      "chocolate spread", "coconut milk", "gelatin", "cornstarch", "custard", "pudding", "maple syrup",
+      "pasta sauce", "olives", "canned tuna", "rice noodles"
+    ],
+    "condiments": [
+      "salt", "black pepper", "peppercorns", "spice", "seasoning", "ketchup", "mayo", "mayonnaise", "mustard",
+      "horseradish", "sauce", "soy sauce", "pesto", "basil", "oregano", "thyme", "rosemary", "cinnamon", "curry",
+      "turmeric", "paprika", "chili", "chilli", "cumin", "nutmeg", "bay leaves", "bay leaf", "stock cube",
+      "bouillon", "dressing", "salsa", "sriracha", "tabasco", "wasabi", "hot sauce", "bbq sauce", "vanilla",
+      "herbs"
+    ],
+    "snacks": [
+      "chocolate", "candy", "sweets", "biscuit", "cookie", "cracker", "chips", "crisps", "popcorn", "pretzel",
+      "nuts", "nut", "peanut", "almond", "cashew", "pistachio", "walnut", "hazelnut", "raisin", "dried fruit",
+      "trail mix", "gummy", "gummies", "jelly beans", "lollipop", "gum", "chewing gum", "marshmallow",
+      "candy bar", "snack", "tortilla chips", "rice cakes", "jerky", "wafer", "brownie", "dates"
+    ],
+    "drinks": [
+      "water", "sparkling water", "mineral water", "juice", "orange juice", "soda", "cola", "coke", "lemonade",
+      "smoothie", "energy drink", "iced tea", "tonic", "cordial", "kombucha", "drink", "soft drink", "pepsi",
+      "sprite", "fanta"
+    ],
+    "coffee_tea": [
+      "coffee", "espresso", "tea", "green tea", "herbal tea", "cocoa", "hot chocolate", "coffee beans",
+      "ground coffee", "instant coffee", "coffee pods", "coffee capsules", "matcha", "chai", "rooibos", "teabags",
+      "tea bags", "cappuccino"
+    ],
+    "alcohol": [
+      "beer", "wine", "red wine", "white wine", "vodka", "whisky", "whiskey", "rum", "gin", "tequila", "liqueur",
+      "champagne", "prosecco", "cider", "cava", "brandy", "cognac", "bourbon", "aperol", "vermouth", "sake",
+      "ale", "lager", "spirits", "martini"
+    ],
+    "frozen": [
+      "ice cream", "ice", "ice cubes", "fries", "french fries", "pizza", "nuggets", "chicken nuggets", "sorbet",
+      "gelato", "popsicle", "ice lolly", "dumplings", "pierogi"
+    ],
+    "household": [
+      "toilet paper", "toilet roll", "paper towels", "kitchen roll", "detergent", "laundry detergent",
+      "washing powder", "washing liquid", "fabric softener", "dish soap", "washing up liquid", "dishwasher tablets",
+      "dishwasher salt", "sponge", "cleaner", "bleach", "bin bags", "trash bags", "garbage bags", "bin liners",
+      "aluminium foil", "aluminum foil", "foil", "cling film", "plastic wrap", "baking paper", "parchment paper",
+      "light bulb", "bulb", "batteries", "battery", "candle", "matches", "lighter", "air freshener", "napkin",
+      "gloves", "mop", "broom", "cleaning", "laundry pods"
+    ],
+    "personal_care": [
+      "shampoo", "conditioner", "soap", "shower gel", "body wash", "toothpaste", "toothbrush", "floss",
+      "mouthwash", "deodorant", "lotion", "hand cream", "face cream", "sunscreen", "razor", "shaving foam",
+      "shaving cream", "tampons", "sanitary pads", "cotton pads", "cotton buds", "plasters", "band aids",
+      "tissues", "makeup", "lipstick", "perfume", "hair gel", "hand wash", "nail polish", "vitamins",
+      "painkillers", "ibuprofen", "paracetamol"
+    ],
+    "baby": [
+      "nappies", "nappy", "diapers", "diaper", "baby wipes", "baby food", "formula", "baby formula", "baby milk",
+      "pacifier", "dummy", "teether", "baby shampoo"
+    ],
+    "pets": [
+      "dog food", "cat food", "pet food", "cat litter", "litter", "dog treats", "cat treats", "for dogs",
+      "for cats", "kibble", "whiskas", "pedigree"
+    ]
+  },
+  "strong": {
+    "frozen": ["frozen"]
+  }
+}

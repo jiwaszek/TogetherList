@@ -123,7 +123,7 @@ struct CheckoutPaymentView: View {
             } header: {
                 Text("Total paid")
             } footer: {
-                Text("\(itemIDs.count) item\(itemIDs.count == 1 ? "" : "s") from “\(engine.list(id: listID)?.name ?? "")”. Change the currency in Settings.")
+                Text("\(itemIDs.count) items selected. Change the currency in Settings.")
             }
 
             if members.count > 1 {

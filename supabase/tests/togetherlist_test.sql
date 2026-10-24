@@ -471,6 +471,28 @@ begin
   raise notice 'ok - currency setting';
 end $$;
 
+-- ------------------------------------------------------- categories
+do $$
+declare v_version int;
+begin
+  perform tests.as_user('ffffffff-0000-0000-0000-00000000000f');
+  select version into v_version from public.items where id = '55555555-0000-0000-0000-000000000003';
+  update public.items set category = 'pantry' where id = '55555555-0000-0000-0000-000000000003';
+  assert (select category from public.items where id = '55555555-0000-0000-0000-000000000003') = 'pantry',
+    'member sets a category';
+  assert (select version from public.items where id = '55555555-0000-0000-0000-000000000003') = v_version + 1,
+    'category change bumps the version';
+  update public.items set category = null where id = '55555555-0000-0000-0000-000000000003';
+  perform tests.throws($q$update public.items set category = 'Not valid!' where id = '55555555-0000-0000-0000-000000000003'$q$,
+    'check constraint');
+  perform tests.as_user('99999999-0000-0000-0000-000000000009');
+  update public.items set category = 'pantry' where id = '55555555-0000-0000-0000-000000000003';
+  perform tests.as_admin();
+  assert (select category from public.items where id = '55555555-0000-0000-0000-000000000003') is null,
+    'non-members cannot change categories';
+  raise notice 'ok - item categories';
+end $$;
+
 -- --------------------------------------------- purchases: record + split
 do $$
 declare v_flat uuid := tests.get('flat')::uuid;

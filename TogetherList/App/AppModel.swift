@@ -36,6 +36,15 @@ final class AppModel {
 
     private(set) var phase: Phase = .launching
     var selectedTab: AppTab = .lists
+    /// App language (Settings). Changing it re-renders the UI in that language.
+    var language: AppLanguage = Localizer.shared.language {
+        didSet { Localizer.shared.language = language }
+    }
+    /// The locale every view gets through the environment.
+    var locale: Locale {
+        _ = language   // re-evaluated when the language changes
+        return Localizer.shared.locale
+    }
     var path: [Route] = []
     var presentedInvitation: InvitationRequest?
     var isScannerPresented = false
@@ -55,6 +64,7 @@ final class AppModel {
     private var started = false
     /// Invitations created this session, so reopening the share sheet doesn't mint new ones.
     private var invitationTickets: [UUID: InvitationTicket] = [:]
+    private var invitationRequests: [UUID: Task<InvitationTicket, any Error>] = [:]
 
     private static let pendingInvitationKey = "pendingInvitationToken"
 
@@ -190,8 +200,13 @@ final class AppModel {
         if let ticket = invitationTickets[listID], ticket.expiresAt.timeIntervalSinceNow > 3600 {
             return ticket
         }
+        // The Share screen and AirDrop can ask at the same moment: share one request.
+        if let pending = invitationRequests[listID] { return try await pending.value }
         guard let backend else { throw AppError.notAuthenticated }
-        let ticket = try await backend.createInvitation(listID: listID)
+        let request = Task { try await backend.createInvitation(listID: listID) }
+        invitationRequests[listID] = request
+        defer { invitationRequests[listID] = nil }
+        let ticket = try await request.value
         invitationTickets[listID] = ticket
         return ticket
     }

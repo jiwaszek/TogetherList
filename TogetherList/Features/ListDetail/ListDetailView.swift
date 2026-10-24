@@ -18,6 +18,7 @@ struct ListDetailView: View {
     @State private var confirmLeave = false
     @State private var errorMessage: String?
     @State private var addedCount = 0
+    @AppStorage("groupByCategory") private var groupByCategory = true
 
     private var list: ShoppingList? { engine.list(id: listID) }
     private var items: [ShoppingItem] { engine.items(in: listID) }
@@ -66,10 +67,21 @@ struct ListDetailView: View {
             }
 
             if !unfinished.isEmpty {
-                Section {
-                    ForEach(unfinished) { item in row(item) }
-                } header: {
-                    Text("\(unfinished.count) to buy")
+                if groupByCategory {
+                    // Store order: vegetables first, then bakery, dairy… (see ProductCategory).
+                    ForEach(unfinished.groupedByCategory(), id: \.category) { group in
+                        Section {
+                            ForEach(group.items) { item in row(item) }
+                        } header: {
+                            Text(verbatim: "\(group.category.label) · \(group.items.count)")
+                        }
+                    }
+                } else {
+                    Section {
+                        ForEach(unfinished) { item in row(item) }
+                    } header: {
+                        Text("\(unfinished.count) to buy")
+                    }
                 }
             }
 
@@ -92,6 +104,8 @@ struct ListDetailView: View {
         .listStyle(.insetGrouped)
         .animation(.default, value: items.map(\.id))
         .animation(.default, value: items.map(\.isPurchased))
+        .animation(.default, value: items.map(\.category))
+        .animation(.default, value: groupByCategory)
         .safeAreaInset(edge: .top, spacing: 0) {
             VStack(spacing: 0) {
                 SyncStatusPill(engine: engine)
@@ -117,12 +131,15 @@ struct ListDetailView: View {
         .sheet(isPresented: $isCheckingOut) {
             CheckoutView(engine: engine, listID: listID)
         }
+        // Owners can invite someone standing next to them by bringing the iPhones
+        // together; the invitation is created only when it's actually sent.
+        .background(NearbyShareSource(configuration: isOwner ? nearbyInvitation(list) : nil))
         .sheet(isPresented: $isRenaming) {
             ListNameSheet(title: "Rename list", initialName: list.name) { name in
                 try engine.renameList(listID, to: name)
             }
         }
-        .confirmationDialog("Clear \(completed.count) completed item\(completed.count == 1 ? "" : "s")?",
+        .confirmationDialog("Clear \(completed.count) completed items?",
                             isPresented: $confirmClearCompleted, titleVisibility: .visible) {
             Button("Clear Completed", role: .destructive) { engine.clearCompleted(in: listID) }
         } message: {
@@ -154,7 +171,10 @@ struct ListDetailView: View {
         .sensoryFeedback(.success, trigger: addedCount)
         #if DEBUG
         // UI-test hook: `-DebugCheckout YES` opens checkout.
-        .onAppear { if UserDefaults.standard.bool(forKey: "DebugCheckout") { isCheckingOut = true } }
+        .onAppear {
+            if UserDefaults.standard.bool(forKey: "DebugCheckout") { isCheckingOut = true }
+            if UserDefaults.standard.bool(forKey: "DebugShare") { isSharing = true }   // `-DebugShare YES`
+        }
         #endif
     }
 
@@ -178,12 +198,19 @@ struct ListDetailView: View {
         }
     }
 
+    private func nearbyInvitation(_ list: ShoppingList) -> UIActivityItemsConfiguration {
+        InvitationSharing.lazyConfiguration(listName: list.name) { [app, listID] in
+            let ticket = try await app.invitation(for: listID)
+            return app.invitationLink.url(for: ticket.token)
+        }
+    }
+
     /// Shown once something is in the basket: the way into checkout.
     private var checkoutBar: some View {
         Button { isCheckingOut = true } label: {
             HStack {
                 Image(systemName: "cart.fill")
-                Text("Done shopping? Check out \(completed.count) item\(completed.count == 1 ? "" : "s")")
+                Text("Done shopping? Check out \(completed.count) items")
                     .fontWeight(.semibold)
                 Spacer()
                 Image(systemName: "chevron.right").font(.footnote.weight(.semibold))
@@ -238,6 +265,7 @@ struct ListDetailView: View {
             Menu {
                 Button("Check Out…", systemImage: "cart") { isCheckingOut = true }
                 Button("Members", systemImage: "person.2") { app.path.append(.members(listID)) }
+                Toggle("Group by Category", systemImage: "square.grid.2x2", isOn: $groupByCategory)
                 if isOwner {
                     Button("Share…", systemImage: "qrcode") { isSharing = true }
                     Button("Rename", systemImage: "pencil") { isRenaming = true }

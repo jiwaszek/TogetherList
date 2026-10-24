@@ -24,7 +24,7 @@ struct MembersView: View {
                         memberRow(member)
                     }
                 } header: {
-                    Text("\(list.members.count) member\(list.members.count == 1 ? "" : "s")")
+                    Text("\(list.members.count) members")
                 } footer: {
                     Text(isOwner
                          ? "Everyone can add, edit and check off items. Only you can invite or remove people, rename or delete the list."
@@ -91,7 +91,7 @@ struct MembersView: View {
             Avatar(name: member.displayName, id: member.userID, size: 40)
             VStack(alignment: .leading, spacing: 2) {
                 Text(member.userID == engine.userID ? "\(member.displayName) (you)" : member.displayName)
-                Text(member.role == .owner ? "Owner" : "Joined \(member.joinedAt.formatted(date: .abbreviated, time: .omitted))")
+                Text(member.role == .owner ? "Owner" : "Joined \(member.joinedAt.appFormatted(date: .abbreviated, time: .omitted))")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }

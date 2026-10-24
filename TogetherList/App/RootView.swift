@@ -25,6 +25,8 @@ struct RootView: View {
             }
         }
         .animation(.easeOut(duration: 0.3), value: isLaunching)
+        // SwiftUI text follows this; strings built in code use L() (Shared/Localization.swift).
+        .environment(\.locale, app.locale)
     }
 }
 
@@ -71,6 +73,9 @@ struct SignedInView: View {
                 .tabItem { Label("Balances", systemImage: "arrow.left.arrow.right") }
                 .tag(AppTab.balances)
         }
+        // Rebuild the tabs after a language change so strings built in code
+        // (L(), dates) are redone. The sheets below stay open.
+        .id(app.locale.identifier)
         #if DEBUG
         // UI-test hook: `-DebugTab history|balances` opens that tab.
         .onAppear {
@@ -79,6 +84,8 @@ struct SignedInView: View {
             case "balances": app.selectedTab = .balances
             default: break
             }
+            // `-DebugSettings YES` opens Settings.
+            if UserDefaults.standard.bool(forKey: "DebugSettings") { app.isSettingsPresented = true }
         }
         #endif
         .sheet(isPresented: $app.isScannerPresented) {

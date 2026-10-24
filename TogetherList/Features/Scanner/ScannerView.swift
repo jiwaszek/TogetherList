@@ -78,7 +78,8 @@ struct ScannerView: View {
         }
     }
 
-    private func placeholder(icon: String, title: String, text: String, action: (String, () -> Void)?) -> some View {
+    private func placeholder(icon: String, title: LocalizedStringKey, text: LocalizedStringKey,
+                             action: (LocalizedStringKey, () -> Void)?) -> some View {
         VStack(spacing: 12) {
             Image(systemName: icon).font(.largeTitle).foregroundStyle(.secondary)
             Text(title).font(.headline)
@@ -130,7 +131,7 @@ struct ScannerView: View {
 
     private func handle(scanned code: String) {
         guard let token = InvitationLink.token(from: code) else {
-            withAnimation { scanMessage = "That isn't a TogetherList invitation." }
+            withAnimation { scanMessage = L("That isn't a TogetherList invitation.") }
             return
         }
         scanMessage = nil

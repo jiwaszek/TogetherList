@@ -293,7 +293,7 @@ public enum Money {
         amount > 0 && amount < maximum && Decimal(cents(amount)) / 100 == amount
     }
 
-    public static func format(_ amount: Decimal, currency: String, locale: Locale = .current) -> String {
+    public static func format(_ amount: Decimal, currency: String, locale: Locale = Localizer.shared.locale) -> String {
         amount.formatted(.currency(code: currency).locale(locale))
     }
 }

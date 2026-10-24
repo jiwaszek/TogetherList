@@ -13,7 +13,7 @@ struct BalancesView: View {
     @State private var errorMessage: String?
 
     private func name(_ userID: UUID) -> String {
-        userID == engine.userID ? "You" : engine.displayName(for: userID) ?? "Former member"
+        userID == engine.userID ? L("You") : engine.displayName(for: userID) ?? L("Former member")
     }
 
     private var summary: [(currency: String, owed: Decimal, owe: Decimal)] {
@@ -147,8 +147,14 @@ struct BalancesView: View {
                             .font(.title2)
                             .foregroundStyle(.tint)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("\(name(settlement.fromUser)) paid \(settlement.toUser == engine.userID ? "you" : name(settlement.toUser))")
-                            Text(settlement.createdAt.formatted(date: .abbreviated, time: .omitted))
+                            if settlement.fromUser == engine.userID {
+                                Text("You paid \(name(settlement.toUser))")
+                            } else if settlement.toUser == engine.userID {
+                                Text("\(name(settlement.fromUser)) paid you")
+                            } else {
+                                Text("\(name(settlement.fromUser)) paid \(name(settlement.toUser))")
+                            }
+                            Text(settlement.createdAt.appFormatted(date: .abbreviated, time: .omitted))
                                 .font(.footnote)
                                 .foregroundStyle(.secondary)
                         }
@@ -170,7 +176,7 @@ struct BalancesView: View {
 }
 
 private struct SummaryTile: View {
-    let title: String
+    let title: LocalizedStringKey
     let amount: String
     let tint: Color
 
@@ -224,7 +230,7 @@ private struct PayerRow: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Text(name)
-                Text("· \(total.purchases) purchase\(total.purchases == 1 ? "" : "s")")
+                Text("· \(total.purchases) purchases")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                 Spacer()
@@ -264,9 +270,9 @@ struct SettleUpSheet: View {
             Form {
                 Section {
                     HStack(spacing: 14) {
-                        Avatar(name: theyPay ? otherName : "You", id: theyPay ? balance.userID : engine.userID, size: 44)
+                        Avatar(name: theyPay ? otherName : L("You"), id: theyPay ? balance.userID : engine.userID, size: 44)
                         Image(systemName: "arrow.right").foregroundStyle(.secondary)
-                        Avatar(name: theyPay ? "You" : otherName, id: theyPay ? engine.userID : balance.userID, size: 44)
+                        Avatar(name: theyPay ? L("You") : otherName, id: theyPay ? engine.userID : balance.userID, size: 44)
                         VStack(alignment: .leading, spacing: 2) {
                             Text(theyPay ? "\(otherName) owes you" : "You owe \(otherName)")
                                 .font(.headline)
@@ -326,7 +332,7 @@ struct SettleUpSheet: View {
                 dismiss()
             } catch {
                 errorMessage = AppError.wrap(error) == .offline
-                    ? "You need to be online to record a payment."
+                    ? L("You need to be online to record a payment.")
                     : error.userMessage
             }
         }

@@ -16,12 +16,15 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 profileSection
+                languageSection
                 currencySection
                 connectionsSection
                 syncSection
                 accountSection
             }
-            .navigationTitle("Settings")
+            // A resolved string, not a key: the navigation bar only updates its
+            // title when the value changes, e.g. after picking another language here.
+            .navigationTitle(L("Settings"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
@@ -36,7 +39,7 @@ struct SettingsView: View {
                 }
             } message: {
                 if engine.pendingCount > 0 {
-                    Text("\(engine.pendingCount) change\(engine.pendingCount == 1 ? " hasn't" : "s haven't") synced yet and will be lost. Connect to the internet first to keep them.")
+                    Text("\(engine.pendingCount) changes haven't synced yet and will be lost. Connect to the internet first to keep them.")
                 } else {
                     Text("Your lists stay safe in your account. Data saved on this device will be removed.")
                 }
@@ -83,6 +86,26 @@ struct SettingsView: View {
         } header: {
             Text("Profile")
         }
+    }
+
+    private var languageSection: some View {
+        @Bindable var app = app
+        return Section {
+            Picker("Language", selection: $app.language) {
+                Text("System (\(Self.systemLanguageName))").tag(AppLanguage.system)
+                ForEach(AppLanguage.allCases.filter { $0 != .system }, id: \.self) { language in
+                    Text(verbatim: language.nativeName ?? language.rawValue).tag(language)
+                }
+            }
+        } footer: {
+            Text("Changes the app right away. Screens drawn by iOS, like the share sheet, follow the next time you open the app.")
+        }
+    }
+
+    /// What "System" currently resolves to, named in that language.
+    static var systemLanguageName: String {
+        let code = Bundle.preferredLocalizations(from: Localizer.supported, forPreferences: Locale.preferredLanguages).first ?? "en"
+        return AppLanguage(rawValue: code)?.nativeName ?? code
     }
 
     private var currencySection: some View {
@@ -206,7 +229,7 @@ struct ConnectionDetailView: View {
                     Avatar(name: connection.displayName, id: connection.userID, size: 64)
                     VStack(alignment: .leading, spacing: 4) {
                         Text(connection.displayName).font(.title2.bold())
-                        Text("Connected since \(connection.connectedAt.formatted(date: .abbreviated, time: .omitted))")
+                        Text("Connected since \(connection.connectedAt.appFormatted(date: .abbreviated, time: .omitted))")
                             .font(.subheadline).foregroundStyle(.secondary)
                     }
                 }
@@ -256,27 +279,35 @@ struct ConnectionDetailView: View {
     }
 
     private func ownerLabel(_ list: ShoppingList) -> String {
-        if list.ownerID == engine.userID { return "Your list" }
-        if list.ownerID == connection.userID { return "\(connection.displayName)'s list" }
-        let owner = list.members.first { $0.role == .owner }?.displayName ?? "someone else"
-        return "Owned by \(owner)"
+        if list.ownerID == engine.userID { return L("Your list") }
+        guard let owner = list.members.first(where: { $0.role == .owner })?.displayName else { return L("Someone else's list") }
+        return L("Owner: %@", owner)
     }
 
     private var disconnectExplanation: String {
-        var text = "You'll no longer be connected."
+        var text = L("You'll no longer be connected.")
         let mine = affected.filter { $0.ownerID == engine.userID }.map(\.name)
         let theirs = affected.filter { $0.ownerID == connection.userID }.map(\.name)
         if !mine.isEmpty {
-            text += " \(connection.displayName) will lose access to \(ListFormatter.localizedString(byJoining: mine.map { "“\($0)”" }))."
+            text += " " + L("%@ will lose access to %@.", connection.displayName, quoted(mine))
         }
         if !theirs.isEmpty {
-            text += " You'll lose access to \(ListFormatter.localizedString(byJoining: theirs.map { "“\($0)”" }))."
+            text += " " + L("You'll lose access to %@.", quoted(theirs))
         }
         if !unaffected.isEmpty {
-            text += " Lists owned by other people (\(ListFormatter.localizedString(byJoining: unaffected.map(\.name)))) aren't affected."
+            text += " " + L("Lists owned by other people (%@) aren't affected.", joined(unaffected.map(\.name)))
         }
-        text += " You can reconnect later with a new invitation."
+        text += " " + L("You can reconnect later with a new invitation.")
         return text
+    }
+
+    /// “Groceries” and “Party” — list names quoted and joined in the app's language.
+    private func quoted(_ names: [String]) -> String {
+        joined(names.map { L("QuotedListName %@", $0) })
+    }
+
+    private func joined(_ names: [String]) -> String {
+        names.formatted(.list(type: .and).locale(Localizer.shared.locale))
     }
 
     private func disconnect() {
@@ -311,7 +342,7 @@ struct CurrencyPickerView: View {
     static let suggested = ["PLN", "EUR", "USD", "GBP", "CHF", "CZK", "SEK", "NOK", "DKK", "UAH"]
 
     static func title(for code: String) -> String {
-        Locale.current.localizedString(forCurrencyCode: code).map { "\(code) – \($0)" } ?? code
+        Localizer.shared.locale.localizedString(forCurrencyCode: code).map { "\(code) – \($0)" } ?? code
     }
 
     private var others: [String] {
@@ -371,7 +402,7 @@ struct CurrencyPickerView: View {
                 dismiss()
             } catch {
                 errorMessage = AppError.wrap(error) == .offline
-                    ? "You need to be online to change the currency."
+                    ? L("You need to be online to change the currency.")
                     : error.userMessage
             }
         }

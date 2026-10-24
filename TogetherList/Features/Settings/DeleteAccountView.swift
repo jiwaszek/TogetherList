@@ -78,7 +78,7 @@ struct DeleteAccountView: View {
             Button("Delete Account", role: .destructive, action: delete)
         } message: {
             Text(deletedCount > 0
-                 ? "\(deletedCount) list\(deletedCount == 1 ? "" : "s") will be deleted. This can't be undone."
+                 ? "\(deletedCount) lists will be deleted. This can't be undone."
                  : "This can't be undone.")
         }
         .errorAlert($errorMessage)

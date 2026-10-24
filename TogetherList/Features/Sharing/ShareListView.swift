@@ -116,6 +116,8 @@ struct ShareListView: View {
                         message: Text("Join my “\(list?.name ?? "shopping")” list on TogetherList:")
                     ) {
                         Label("Share link", systemImage: "square.and.arrow.up")
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
@@ -131,6 +133,8 @@ struct ShareListView: View {
                     .sensoryFeedback(.success, trigger: copied)
                 }
                 .controlSize(.large)
+
+                nearbyCard(InvitationSharing.configuration(url: url, listName: list?.name ?? ""))
 
                 Button("Cancel this invitation", role: .destructive) {
                     Task { await revoke() }
@@ -148,6 +152,44 @@ struct ShareListView: View {
         .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 
+    /// AirDrop for someone standing next to you: bring the iPhones together, or
+    /// pick them in the AirDrop sheet.
+    private func nearbyCard(_ configuration: UIActivityItemsConfiguration) -> some View {
+        VStack(spacing: 14) {
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: "iphone.radiowaves.left.and.right")
+                    .font(.title2)
+                    .foregroundStyle(Color.accentColor)
+                    .frame(width: 32)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Nearby? Bring your iPhones together")
+                        .font(.subheadline.weight(.semibold))
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text("Keep this screen open and hold your iPhone near theirs, both unlocked. Tap Share when it appears — the invitation opens in TogetherList on their iPhone.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .accessibilityElement(children: .combine)
+
+            Button {
+                AirDropSheet.present(configuration)
+            } label: {
+                Label("Send with AirDrop", systemImage: "dot.radiowaves.left.and.right")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.large)
+        }
+        .padding(14)
+        .background(Color(.tertiarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        // While this is on screen, bringing iPhones together AirDrops the invitation.
+        .background(NearbyShareSource(configuration: configuration))
+    }
+
     private func load() async {
         state = .loading
         do {
@@ -155,7 +197,7 @@ struct ShareListView: View {
             state = .ready(ticket, app.invitationLink.url(for: ticket.token))
         } catch {
             let appError = AppError.wrap(error)
-            state = .failed(appError == .offline ? "You need to be online to create an invitation." : appError.localizedDescription)
+            state = .failed(appError == .offline ? L("You need to be online to create an invitation.") : appError.localizedDescription)
         }
     }
 

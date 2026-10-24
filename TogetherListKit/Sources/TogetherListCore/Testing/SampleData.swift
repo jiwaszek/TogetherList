@@ -91,7 +91,12 @@ public enum SampleData {
 
         let groceries = UUID()
         try await a.createList(id: groceries, name: "Groceries")
-        for (name, qty, unit) in [("Oat milk", Decimal(2), "l"), ("Bananas", Decimal(6), ""), ("Coffee beans", Decimal(500), "g")] {
+        let entries: [(String, Decimal?, String)] = [
+            ("Oat milk", 2, "l"), ("Bananas", 6, ""), ("Coffee beans", 500, "g"),
+            ("Chleb", nil, ""), ("Bułki", 4, ""), ("Tortilla", nil, ""), ("Ogórek", 2, ""), ("Pomidory", 1, "kg"),
+            ("Szynka", nil, ""), ("Papier toaletowy", nil, ""),
+        ]
+        for (name, qty, unit) in entries {
             try await a.insertItem(ItemDraft(listID: groceries, name: name, quantity: qty, unit: unit.nilIfBlank))
         }
         let eggs = ItemDraft(listID: groceries, name: "Eggs", quantity: 12, isPurchased: true)

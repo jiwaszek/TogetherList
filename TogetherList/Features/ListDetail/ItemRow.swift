@@ -65,7 +65,7 @@ struct ItemRow: View {
     private var detail: String? {
         var parts: [String] = []
         if let note = item.note?.nilIfBlank { parts.append(note) }
-        if let addedBy { parts.append("Added by \(addedBy)") }
+        if let addedBy { parts.append(L("Added by %@", addedBy)) }
         return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 
@@ -73,7 +73,7 @@ struct ItemRow: View {
         var parts = [item.name]
         if let q = item.quantityText { parts.append(q) }
         if let note = item.note?.nilIfBlank { parts.append(note) }
-        if isPending { parts.append("waiting to sync") }
+        if isPending { parts.append(L("waiting to sync")) }
         return parts.joined(separator: ", ")
     }
 }

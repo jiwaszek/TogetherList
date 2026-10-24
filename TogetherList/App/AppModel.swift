@@ -8,6 +8,11 @@ enum Route: Hashable {
     case members(UUID)
 }
 
+/// Top-level tabs of the signed-in app.
+enum AppTab: Hashable {
+    case lists, history, balances
+}
+
 /// Wraps an invitation token so it can drive `.sheet(item:)`.
 struct InvitationRequest: Identifiable, Hashable {
     let token: String
@@ -30,6 +35,7 @@ final class AppModel {
     }
 
     private(set) var phase: Phase = .launching
+    var selectedTab: AppTab = .lists
     var path: [Route] = []
     var presentedInvitation: InvitationRequest?
     var isScannerPresented = false
@@ -148,6 +154,7 @@ final class AppModel {
     }
 
     private func resetNavigation() {
+        selectedTab = .lists
         path = []
         presentedInvitation = nil
         isScannerPresented = false
@@ -175,6 +182,7 @@ final class AppModel {
 
     func showList(_ listID: UUID) {
         presentedInvitation = nil
+        selectedTab = .lists
         path = [.list(listID)]
     }
 

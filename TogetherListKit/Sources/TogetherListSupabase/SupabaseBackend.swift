@@ -103,7 +103,7 @@ public final class SupabaseBackend: BackendService {
     public func fetchProfile() async throws -> UserProfile {
         try await mapErrors {
             let row: ProfileRow = try await client.from("profiles")
-                .select("id,display_name")
+                .select(ProfileRow.columns)
                 .eq("id", value: try userID())
                 .single()
                 .execute().value
@@ -116,7 +116,19 @@ public final class SupabaseBackend: BackendService {
             let row: ProfileRow = try await client.from("profiles")
                 .update(["display_name": name])
                 .eq("id", value: try userID())
-                .select("id,display_name")
+                .select(ProfileRow.columns)
+                .single()
+                .execute().value
+            return row.model
+        }
+    }
+
+    public func updateCurrency(_ code: String) async throws -> UserProfile {
+        try await mapErrors {
+            let row: ProfileRow = try await client.from("profiles")
+                .update(["currency": code])
+                .eq("id", value: try userID())
+                .select(ProfileRow.columns)
                 .single()
                 .execute().value
             return row.model
@@ -314,6 +326,56 @@ public final class SupabaseBackend: BackendService {
         try? await client.auth.signOut(scope: .local)
     }
 
+    // MARK: - Purchases and settling up
+
+    public func fetchExpenses() async throws -> [Expense] {
+        try await mapErrors {
+            var result: [Expense] = []
+            var offset = 0
+            while true {
+                let page: [ExpenseRow] = try await client.from("expenses")
+                    .select(ExpenseRow.columns)
+                    .order("created_at", ascending: false).order("id")
+                    .range(from: offset, to: offset + Self.pageSize - 1)
+                    .execute().value
+                result += page.map(\.model)
+                if page.count < Self.pageSize { break }
+                offset += Self.pageSize
+            }
+            return result
+        }
+    }
+
+    public func recordPurchase(_ draft: PurchaseDraft) async throws {
+        try await mapErrors {
+            try await client.rpc("record_purchase", params: RecordPurchaseParams(draft)).execute()
+        }
+    }
+
+    public func deleteExpense(id: UUID) async throws {
+        try await rpc("delete_expense", ["p_id": id])
+    }
+
+    public func fetchSettlements() async throws -> [Settlement] {
+        try await mapErrors {
+            let rows: [SettlementRow] = try await client.from("settlements")
+                .select(SettlementRow.columns)
+                .order("created_at", ascending: false)
+                .execute().value
+            return rows.map(\.model)
+        }
+    }
+
+    public func recordSettlement(_ draft: SettlementDraft) async throws {
+        try await mapErrors {
+            try await client.rpc("record_settlement", params: RecordSettlementParams(draft)).execute()
+        }
+    }
+
+    public func deleteSettlement(id: UUID) async throws {
+        try await rpc("delete_settlement", ["p_id": id])
+    }
+
     // MARK: - Realtime
 
     public func realtimeChanges() -> AsyncStream<RemoteChange> {
@@ -322,7 +384,7 @@ public final class SupabaseBackend: BackendService {
             let channel = client.channel("togetherlist-\(UUID().uuidString.lowercased())")
             // RLS on `items` limits INSERT/UPDATE rows to lists the user belongs to.
             let items = channel.postgresChange(AnyAction.self, schema: "public", table: "items")
-            let others = ["lists", "list_members", "connections", "profiles"].map {
+            let others = ["lists", "list_members", "connections", "profiles", "expenses", "settlements"].map {
                 channel.postgresChange(AnyAction.self, schema: "public", table: $0)
             }
             let statuses = channel.statusChange

@@ -43,6 +43,32 @@ public enum SampleData {
                 createdBy: e.5, createdAt: created, updatedBy: e.5, updatedAt: created, version: 1)
             state.snapshot.items[item.id] = item
         }
+
+        func purchase(_ amount: Decimal, by payer: UserProfile, split people: [UserProfile], list: ShoppingList,
+                      daysAgo: Double, note: String?, items: [String]) -> Expense {
+            Expense(
+                id: UUID(), listID: list.id, listName: list.name, amount: amount, currency: "PLN",
+                paidBy: payer.id, payerName: payer.displayName, createdBy: payer.id, note: note,
+                createdAt: now.addingTimeInterval(-86_400 * daysAgo),
+                shares: Ledger.split(amount, among: people.map(\.id)).map { id, share in
+                    ExpenseShare(userID: id, displayName: people.first { $0.id == id }?.displayName, amount: share)
+                },
+                items: items.map { ExpenseItem(itemID: UUID(), name: $0) })
+        }
+        for expense in [
+            purchase(Decimal(string: "86.40")!, by: alice, split: [alice, bob], list: groceries, daysAgo: 2,
+                     note: "Biedronka", items: ["Milk", "Tomatoes", "Pasta", "Parmesan"]),
+            purchase(30, by: bob, split: [alice, bob], list: groceries, daysAgo: 6,
+                     note: nil, items: ["Bread", "Butter"]),
+            purchase(Decimal(string: "129.99")!, by: alice, split: [alice], list: hardware, daysAgo: 9,
+                     note: "Castorama", items: ["Drill bits", "Wall plugs"]),
+        ] {
+            state.snapshot.expenses[expense.id] = expense
+        }
+        let payment = Settlement(id: UUID(), fromUser: bob.id, toUser: alice.id, fromName: bob.displayName,
+                                 toName: alice.displayName, amount: 10, currency: "PLN", createdBy: bob.id,
+                                 createdAt: now.addingTimeInterval(-86_400))
+        state.snapshot.settlements[payment.id] = payment
         return state
     }
 
@@ -77,5 +103,13 @@ public enum SampleData {
         let ticket = try await a.createInvitation(listID: groceries)
         _ = try await b.acceptInvitation(token: ticket.token)
         try await b.insertItem(ItemDraft(listID: groceries, name: "Sourdough bread"))
+
+        let aliceID = try await a.fetchProfile().id
+        let bobID = try await b.fetchProfile().id
+        try await a.recordPurchase(PurchaseDraft(listID: groceries, amount: Decimal(string: "23.40")!, currency: "PLN",
+                                                 paidBy: aliceID, participants: [aliceID, bobID], itemIDs: [eggs.id],
+                                                 note: "Biedronka"))
+        try await b.recordPurchase(PurchaseDraft(listID: groceries, amount: Decimal(string: "58.10")!, currency: "PLN",
+                                                 paidBy: bobID, participants: [aliceID, bobID], itemIDs: []))
     }
 }

@@ -440,11 +440,179 @@ begin
   raise notice 'ok - account deletion with transfer';
 end $$;
 
+-- ------------------------------------------------- purchases: setup
+-- E = Eve (owner of "Flat"), F = Frank (member), G = Grace (outsider)
+do $$
+declare v_flat uuid; v_token text;
+begin
+  perform tests.as_admin();
+  insert into auth.users (id, email, raw_user_meta_data) values
+    ('eeeeeeee-0000-0000-0000-00000000000e', 'e@example.com', '{"display_name":"Eve"}'),
+    ('ffffffff-0000-0000-0000-00000000000f', 'f@example.com', '{"display_name":"Frank"}'),
+    ('99999999-0000-0000-0000-000000000009', 'g@example.com', '{"display_name":"Grace"}');
+
+  perform tests.as_user('eeeeeeee-0000-0000-0000-00000000000e');
+  assert (select currency from public.profiles where id = auth.uid()) = 'PLN', 'default currency is PLN';
+  update public.profiles set currency = 'EUR' where id = auth.uid();
+  assert (select currency from public.profiles where id = auth.uid()) = 'EUR', 'currency can be changed';
+  perform tests.throws($q$update public.profiles set currency = 'euro' where id = auth.uid()$q$, 'check constraint');
+  update public.profiles set currency = 'PLN' where id = auth.uid();
+
+  insert into public.lists (name, owner_id) values ('Flat', auth.uid()) returning id into v_flat;
+  perform tests.put('flat', v_flat::text);
+  insert into public.items (id, list_id, name, quantity, unit) values
+    ('55555555-0000-0000-0000-000000000001', v_flat, 'Milk', 2, 'l'),
+    ('55555555-0000-0000-0000-000000000002', v_flat, 'Bread', null, null),
+    ('55555555-0000-0000-0000-000000000003', v_flat, 'Soap', null, null);
+  select token into v_token from public.create_invitation(v_flat);
+
+  perform tests.as_user('ffffffff-0000-0000-0000-00000000000f');
+  perform public.accept_invitation(v_token);
+  raise notice 'ok - currency setting';
+end $$;
+
+-- --------------------------------------------- purchases: record + split
+do $$
+declare v_flat uuid := tests.get('flat')::uuid;
+begin
+  perform tests.as_user('ffffffff-0000-0000-0000-00000000000f');
+  perform public.record_purchase(
+    '66666666-0000-0000-0000-000000000001', v_flat, 100.00, 'PLN',
+    'ffffffff-0000-0000-0000-00000000000f',
+    array['eeeeeeee-0000-0000-0000-00000000000e', 'ffffffff-0000-0000-0000-00000000000f']::uuid[],
+    array['55555555-0000-0000-0000-000000000001', '55555555-0000-0000-0000-000000000002']::uuid[],
+    '  Weekly shop  ');
+  -- retried request: no error, no duplicate
+  perform public.record_purchase(
+    '66666666-0000-0000-0000-000000000001', v_flat, 100.00, 'PLN',
+    'ffffffff-0000-0000-0000-00000000000f',
+    array['eeeeeeee-0000-0000-0000-00000000000e', 'ffffffff-0000-0000-0000-00000000000f']::uuid[],
+    array['55555555-0000-0000-0000-000000000001']::uuid[]);
+
+  assert (select count(*) from public.expenses) = 1, 'one expense after a retry';
+  assert (select list_name || '|' || amount || '|' || currency || '|' || note from public.expenses)
+    = 'Flat|100.00|PLN|Weekly shop', 'expense fields stored and note trimmed';
+  assert (select created_by from public.expenses) = auth.uid(), 'creator set by the server';
+  assert (select array_agg(amount order by user_id) from public.expense_shares) = array[50.00, 50.00]::numeric[],
+    'equal split';
+  assert (select array_agg(name order by name) from public.expense_items) = array['Bread', 'Milk'],
+    'item snapshot';
+  assert (select count(*) from public.items where list_id = v_flat and deleted_at is not null) = 2,
+    'bought items leave the list';
+  assert (select deleted_at from public.items where id = '55555555-0000-0000-0000-000000000003') is null,
+    'unselected items stay';
+
+  -- leftover cents: 0.05 between two people -> 0.03 + 0.02 (lowest id gets the extra cent)
+  perform public.record_purchase(
+    '66666666-0000-0000-0000-000000000002', v_flat, 0.05, 'PLN',
+    'eeeeeeee-0000-0000-0000-00000000000e',
+    array['ffffffff-0000-0000-0000-00000000000f', 'eeeeeeee-0000-0000-0000-00000000000e',
+          'eeeeeeee-0000-0000-0000-00000000000e']::uuid[]);
+  assert (select array_agg(amount order by user_id) from public.expense_shares
+          where expense_id = '66666666-0000-0000-0000-000000000002') = array[0.03, 0.02]::numeric[],
+    'cents distributed, duplicates ignored';
+  raise notice 'ok - record purchase, split, idempotency';
+end $$;
+
+-- ------------------------------------------- purchases: validation + RLS
+do $$
+declare v_flat uuid := tests.get('flat')::uuid;
+begin
+  perform tests.as_user('eeeeeeee-0000-0000-0000-00000000000e');
+  perform tests.throws(format($q$select public.record_purchase(gen_random_uuid(), %L, 0, 'PLN', auth.uid(), array[auth.uid()])$q$, v_flat), 'invalid_amount');
+  perform tests.throws(format($q$select public.record_purchase(gen_random_uuid(), %L, 1.234, 'PLN', auth.uid(), array[auth.uid()])$q$, v_flat), 'invalid_amount');
+  perform tests.throws(format($q$select public.record_purchase(gen_random_uuid(), %L, 5, 'zl', auth.uid(), array[auth.uid()])$q$, v_flat), 'invalid_currency');
+  perform tests.throws(format($q$select public.record_purchase(gen_random_uuid(), %L, 5, 'PLN', auth.uid(), '{}')$q$, v_flat), 'invalid_participants');
+  perform tests.throws(format($q$select public.record_purchase(gen_random_uuid(), %L, 5, 'PLN', auth.uid(), array['99999999-0000-0000-0000-000000000009'::uuid])$q$, v_flat), 'participant_not_member');
+  perform tests.throws(format($q$select public.record_purchase(gen_random_uuid(), %L, 5, 'PLN', '99999999-0000-0000-0000-000000000009', array[auth.uid()])$q$, v_flat), 'participant_not_member');
+  perform tests.throws($q$insert into public.expenses (id, list_name, amount, currency) values (gen_random_uuid(), 'x', 1, 'PLN')$q$, 'permission denied');
+  perform tests.throws($q$update public.expense_shares set amount = 0$q$, 'permission denied');
+  assert (select count(*) from public.expenses) = 2, 'members see the list''s expenses';
+
+  perform tests.as_user('99999999-0000-0000-0000-000000000009');
+  perform tests.throws(format($q$select public.record_purchase(gen_random_uuid(), %L, 5, 'PLN', auth.uid(), array[auth.uid()])$q$, v_flat), 'not_list_member');
+  assert (select count(*) from public.expenses) = 0, 'outsider sees no expenses';
+  assert (select count(*) from public.expense_shares) = 0, 'outsider sees no shares';
+  assert (select count(*) from public.expense_items) = 0, 'outsider sees no items';
+  perform tests.throws($q$select public.delete_expense('66666666-0000-0000-0000-000000000001')$q$, 'expense_not_found');
+  raise notice 'ok - purchase validation and visibility';
+end $$;
+
+-- ------------------------------------------------------- settlements
+do $$ begin
+  perform tests.as_user('eeeeeeee-0000-0000-0000-00000000000e');
+  -- Eve records that Frank paid her back
+  perform public.record_settlement('77777777-0000-0000-0000-000000000001',
+    'ffffffff-0000-0000-0000-00000000000f', 'eeeeeeee-0000-0000-0000-00000000000e', 50, 'PLN');
+  perform public.record_settlement('77777777-0000-0000-0000-000000000001',
+    'ffffffff-0000-0000-0000-00000000000f', 'eeeeeeee-0000-0000-0000-00000000000e', 50, 'PLN');
+  assert (select count(*) from public.settlements) = 1, 'settlement idempotent';
+  perform tests.throws($q$select public.record_settlement(gen_random_uuid(), 'ffffffff-0000-0000-0000-00000000000f', 'cccccccc-0000-0000-0000-00000000000c', 5, 'PLN')$q$, 'not_settlement_party');
+  perform tests.throws($q$select public.record_settlement(gen_random_uuid(), auth.uid(), auth.uid(), 5, 'PLN')$q$, 'invalid_participants');
+  perform tests.throws($q$select public.record_settlement(gen_random_uuid(), auth.uid(), 'ffffffff-0000-0000-0000-00000000000f', -5, 'PLN')$q$, 'invalid_amount');
+
+  perform tests.as_user('ffffffff-0000-0000-0000-00000000000f');
+  assert (select count(*) from public.settlements) = 1, 'the other party sees it';
+  perform tests.throws($q$select public.delete_settlement('77777777-0000-0000-0000-000000000001')$q$, 'settlement_not_found');
+
+  perform tests.as_user('99999999-0000-0000-0000-000000000009');
+  assert (select count(*) from public.settlements) = 0, 'outsider sees no settlements';
+  perform tests.throws($q$select public.record_settlement(gen_random_uuid(), auth.uid(), 'eeeeeeee-0000-0000-0000-00000000000e', 5, 'PLN')$q$, 'not_connected');
+
+  perform tests.as_user('eeeeeeee-0000-0000-0000-00000000000e');
+  perform public.delete_settlement('77777777-0000-0000-0000-000000000001');
+  assert (select count(*) from public.settlements) = 0, 'creator deletes settlement';
+  raise notice 'ok - settlements';
+end $$;
+
+-- ------------------------------- purchases survive leaving and list deletion
+do $$
+declare v_flat uuid := tests.get('flat')::uuid;
+begin
+  perform tests.as_user('ffffffff-0000-0000-0000-00000000000f');
+  perform public.leave_list(v_flat);
+  assert (select count(*) from public.expenses) = 2, 'participant still sees their expenses after leaving';
+  assert (select display_name from public.profiles where id = 'eeeeeeee-0000-0000-0000-00000000000e') = 'Eve',
+    'names stay visible through shared expenses';
+  perform public.record_settlement(gen_random_uuid(),
+    auth.uid(), 'eeeeeeee-0000-0000-0000-00000000000e', 10, 'PLN');
+
+  perform tests.as_user('eeeeeeee-0000-0000-0000-00000000000e');
+  perform tests.throws($q$select public.delete_expense('66666666-0000-0000-0000-000000000001')$q$, 'expense_not_found');
+  delete from public.lists where id = v_flat;
+  assert (select count(*) from public.expenses where list_id is null and list_name = 'Flat') = 2,
+    'expenses outlive the list';
+
+  perform tests.as_user('ffffffff-0000-0000-0000-00000000000f');
+  perform public.delete_expense('66666666-0000-0000-0000-000000000001');
+  assert (select count(*) from public.expenses) = 1, 'payer deletes an expense';
+  perform tests.as_admin();
+  assert not exists (select 1 from public.expense_shares where expense_id = '66666666-0000-0000-0000-000000000001'),
+    'shares deleted with the expense';
+  raise notice 'ok - purchases outlive membership and lists';
+end $$;
+
+-- ------------------------------------ account deletion and purchases
+do $$ begin
+  perform tests.as_user('ffffffff-0000-0000-0000-00000000000f');
+  perform public.delete_account();
+  perform tests.as_user('eeeeeeee-0000-0000-0000-00000000000e');
+  assert (select count(*) from public.expenses) = 1, 'a purchase that still involves Eve stays';
+  assert (select count(*) from public.expense_shares) = 1, 'the deleted user''s share is gone';
+  assert (select count(*) from public.settlements) = 0, 'settlements with the deleted user are gone';
+  perform public.delete_account();
+  perform tests.as_admin();
+  assert (select count(*) from public.expenses where list_name = 'Flat') = 0, 'orphaned purchases are deleted';
+  raise notice 'ok - account deletion cleans up purchases';
+end $$;
+
 -- ------------------------------------------------------- anonymous
 do $$ begin
   perform set_config('role', 'anon', true);
   perform tests.throws('select * from public.lists', 'permission denied');
   perform tests.throws($q$select * from public.preview_invitation('x')$q$, 'permission denied');
+  perform tests.throws($q$select public.delete_expense(gen_random_uuid())$q$, 'permission denied');
+  perform tests.throws('select * from public.expenses', 'permission denied');
   perform tests.as_admin();
   -- authenticated role without a user id
   perform set_config('role', 'authenticated', true);

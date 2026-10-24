@@ -83,6 +83,13 @@ final class LossyBackend: BackendService, @unchecked Sendable {
     func signOut() async throws { try await base.signOut() }
     func fetchProfile() async throws -> UserProfile { try await base.fetchProfile() }
     func updateDisplayName(_ name: String) async throws -> UserProfile { try await base.updateDisplayName(name) }
+    func updateCurrency(_ code: String) async throws -> UserProfile { try await base.updateCurrency(code) }
+    func fetchExpenses() async throws -> [Expense] { try await base.fetchExpenses() }
+    func recordPurchase(_ draft: PurchaseDraft) async throws { try await base.recordPurchase(draft) }
+    func deleteExpense(id: UUID) async throws { try await base.deleteExpense(id: id) }
+    func fetchSettlements() async throws -> [Settlement] { try await base.fetchSettlements() }
+    func recordSettlement(_ draft: SettlementDraft) async throws { try await base.recordSettlement(draft) }
+    func deleteSettlement(id: UUID) async throws { try await base.deleteSettlement(id: id) }
     func fetchLists() async throws -> [ShoppingList] { try await base.fetchLists() }
     func createList(id: UUID, name: String) async throws { try await base.createList(id: id, name: name) }
     func renameList(id: UUID, name: String) async throws { try await base.renameList(id: id, name: name) }

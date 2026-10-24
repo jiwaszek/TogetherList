@@ -14,10 +14,186 @@ struct DeletedRow: Decodable {
 }
 
 struct ProfileRow: Decodable {
+    static let columns = "id,display_name,currency"
     let id: UUID
     let displayName: String
-    enum CodingKeys: String, CodingKey { case id, displayName = "display_name" }
-    var model: UserProfile { UserProfile(id: id, displayName: displayName) }
+    let currency: String?
+    enum CodingKeys: String, CodingKey { case id, displayName = "display_name", currency }
+    var model: UserProfile { UserProfile(id: id, displayName: displayName, currency: currency ?? Money.defaultCurrency) }
+}
+
+/// Embedded `profiles(display_name)`; nil when RLS hides the profile.
+struct NameRow: Decodable {
+    let displayName: String
+    enum CodingKeys: String, CodingKey { case displayName = "display_name" }
+}
+
+/// numeric arrives as a JSON number from PostgREST (or a string from Realtime).
+/// Money is rounded to cents so binary floating point never leaks in.
+func decodeMoney<K: CodingKey>(_ c: KeyedDecodingContainer<K>, _ key: K) throws -> Decimal {
+    let raw: Decimal
+    if let d = try? c.decode(Decimal.self, forKey: key) {
+        raw = d
+    } else {
+        let s = try c.decode(String.self, forKey: key)
+        guard let d = Decimal(string: s, locale: Locale(identifier: "en_US_POSIX")) else {
+            throw DecodingError.dataCorruptedError(forKey: key, in: c, debugDescription: "Invalid amount \(s)")
+        }
+        raw = d
+    }
+    return Decimal(Money.cents(raw)) / 100
+}
+
+struct ExpenseRow: Decodable {
+    static let columns = "id,list_id,list_name,amount,currency,paid_by,created_by,note,created_at,"
+        + "payer:profiles!expenses_paid_by_fkey(display_name),"
+        + "expense_shares(user_id,amount,profile:profiles(display_name)),"
+        + "expense_items(item_id,name,quantity,unit)"
+
+    struct Share: Decodable {
+        let userId: UUID
+        let amount: Decimal
+        let profile: NameRow?
+        enum CodingKeys: String, CodingKey { case userId = "user_id", amount, profile }
+        init(from decoder: any Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            userId = try c.decode(UUID.self, forKey: .userId)
+            amount = try decodeMoney(c, .amount)
+            profile = try c.decodeIfPresent(NameRow.self, forKey: .profile)
+        }
+    }
+
+    struct Item: Decodable {
+        let itemId: UUID
+        let name: String
+        let quantity: Decimal?
+        let unit: String?
+        enum CodingKeys: String, CodingKey { case itemId = "item_id", name, quantity, unit }
+    }
+
+    let id: UUID
+    let listId: UUID?
+    let listName: String
+    let amount: Decimal
+    let currency: String
+    let paidBy: UUID?
+    let createdBy: UUID?
+    let note: String?
+    let createdAt: Date
+    let payer: NameRow?
+    let expenseShares: [Share]
+    let expenseItems: [Item]
+
+    enum CodingKeys: String, CodingKey {
+        case id, listId = "list_id", listName = "list_name", amount, currency, paidBy = "paid_by",
+             createdBy = "created_by", note, createdAt = "created_at", payer,
+             expenseShares = "expense_shares", expenseItems = "expense_items"
+    }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        listId = try c.decodeIfPresent(UUID.self, forKey: .listId)
+        listName = try c.decode(String.self, forKey: .listName)
+        amount = try decodeMoney(c, .amount)
+        currency = try c.decode(String.self, forKey: .currency)
+        paidBy = try c.decodeIfPresent(UUID.self, forKey: .paidBy)
+        createdBy = try c.decodeIfPresent(UUID.self, forKey: .createdBy)
+        note = try c.decodeIfPresent(String.self, forKey: .note)
+        createdAt = try c.decode(Date.self, forKey: .createdAt)
+        payer = try c.decodeIfPresent(NameRow.self, forKey: .payer)
+        expenseShares = try c.decodeIfPresent([Share].self, forKey: .expenseShares) ?? []
+        expenseItems = try c.decodeIfPresent([Item].self, forKey: .expenseItems) ?? []
+    }
+
+    var model: Expense {
+        Expense(
+            id: id, listID: listId, listName: listName, amount: amount, currency: currency,
+            paidBy: paidBy, payerName: payer?.displayName, createdBy: createdBy, note: note, createdAt: createdAt,
+            shares: expenseShares
+                .map { ExpenseShare(userID: $0.userId, displayName: $0.profile?.displayName, amount: $0.amount) }
+                .sorted { $0.userID.uuidString < $1.userID.uuidString },
+            items: expenseItems
+                .map { ExpenseItem(itemID: $0.itemId, name: $0.name, quantity: $0.quantity, unit: $0.unit) }
+                .sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending })
+    }
+}
+
+struct SettlementRow: Decodable {
+    static let columns = "id,from_user,to_user,amount,currency,created_by,created_at,"
+        + "sender:profiles!settlements_from_user_fkey(display_name),"
+        + "receiver:profiles!settlements_to_user_fkey(display_name)"
+
+    let id: UUID
+    let fromUser: UUID
+    let toUser: UUID
+    let amount: Decimal
+    let currency: String
+    let createdBy: UUID?
+    let createdAt: Date
+    let sender: NameRow?
+    let receiver: NameRow?
+
+    enum CodingKeys: String, CodingKey {
+        case id, fromUser = "from_user", toUser = "to_user", amount, currency,
+             createdBy = "created_by", createdAt = "created_at", sender, receiver
+    }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        fromUser = try c.decode(UUID.self, forKey: .fromUser)
+        toUser = try c.decode(UUID.self, forKey: .toUser)
+        amount = try decodeMoney(c, .amount)
+        currency = try c.decode(String.self, forKey: .currency)
+        createdBy = try c.decodeIfPresent(UUID.self, forKey: .createdBy)
+        createdAt = try c.decode(Date.self, forKey: .createdAt)
+        sender = try c.decodeIfPresent(NameRow.self, forKey: .sender)
+        receiver = try c.decodeIfPresent(NameRow.self, forKey: .receiver)
+    }
+
+    var model: Settlement {
+        Settlement(id: id, fromUser: fromUser, toUser: toUser, fromName: sender?.displayName, toName: receiver?.displayName,
+                   amount: amount, currency: currency, createdBy: createdBy, createdAt: createdAt)
+    }
+}
+
+struct RecordPurchaseParams: Encodable {
+    let p_id: UUID
+    let p_list_id: UUID
+    let p_amount: Decimal
+    let p_currency: String
+    let p_paid_by: UUID
+    let p_participants: [UUID]
+    let p_item_ids: [UUID]
+    let p_note: String?
+
+    init(_ d: PurchaseDraft) {
+        p_id = d.id
+        p_list_id = d.listID
+        p_amount = d.amount
+        p_currency = d.currency
+        p_paid_by = d.paidBy
+        p_participants = d.participants
+        p_item_ids = d.itemIDs
+        p_note = d.note
+    }
+}
+
+struct RecordSettlementParams: Encodable {
+    let p_id: UUID
+    let p_from: UUID
+    let p_to: UUID
+    let p_amount: Decimal
+    let p_currency: String
+
+    init(_ d: SettlementDraft) {
+        p_id = d.id
+        p_from = d.fromUser
+        p_to = d.toUser
+        p_amount = d.amount
+        p_currency = d.currency
+    }
 }
 
 struct ListRow: Decodable {

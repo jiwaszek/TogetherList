@@ -68,3 +68,12 @@ extension URLError {
         .secureConnectionFailed, .cannotLoadFromNetwork,
     ]
 }
+
+extension AppError {
+    // Validation messages shared by the server mapping, the in-memory backend and the engine.
+    public static let invalidAmount = AppError.validation("Enter an amount greater than zero, with at most two decimal places.")
+    public static let invalidCurrency = AppError.validation("Choose a valid currency.")
+    public static let invalidParticipants = AppError.validation("Choose who the cost is split between.")
+    public static let participantNotMember = AppError.validation("Everyone in the split must be on the list.")
+    public static let notConnected = AppError.validation("You can only do this with people you're connected with.")
+}

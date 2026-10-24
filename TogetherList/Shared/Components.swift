@@ -134,3 +134,55 @@ extension Error {
         AppError.wrap(self).localizedDescription
     }
 }
+
+/// Opens Settings from any tab.
+struct SettingsToolbarButton: ToolbarContent {
+    @Environment(AppModel.self) private var app
+
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button { app.isSettingsPresented = true } label: {
+                Image(systemName: "person.crop.circle")
+            }
+            .accessibilityLabel("Settings and connections")
+        }
+    }
+}
+
+extension Decimal {
+    /// "45,50 zł" in the user's locale.
+    func money(_ currency: String) -> String { Money.format(self, currency: currency) }
+
+    /// "45,50" — for prefilling an amount field in the user's locale.
+    var plainAmount: String { formatted(.number.precision(.fractionLength(2)).grouping(.never)) }
+}
+
+/// The text field used for amounts: big digits, the currency symbol, decimal keyboard.
+struct AmountField: View {
+    let title: String
+    @Binding var text: String
+    let currency: String
+    var focus: FocusState<Bool>.Binding
+
+    private var symbol: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = currency
+        return formatter.currencySymbol ?? currency
+    }
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            TextField(title, text: $text)
+                .keyboardType(.decimalPad)
+                .font(.system(.largeTitle, design: .rounded).weight(.semibold).monospacedDigit())
+                .focused(focus)
+                .accessibilityLabel("\(title) in \(currency)")
+            Text(symbol)
+                .font(.title2.weight(.medium))
+                .foregroundStyle(.secondary)
+                .accessibilityHidden(true)
+        }
+        .padding(.vertical, 4)
+    }
+}

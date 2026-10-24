@@ -45,6 +45,13 @@ public final class SyncEngine {
     public private(set) var itemsByList: [UUID: [ShoppingItem]] = [:]
     public private(set) var connections: [Connection] = []
     public private(set) var profile: UserProfile?
+    /// Purchases, newest first (including ones not yet synced).
+    public private(set) var expenses: [Expense] = []
+    /// Payments between you and others, newest first.
+    public private(set) var settlements: [Settlement] = []
+    /// Net amounts with each person (positive: they owe you).
+    public private(set) var balances: [PersonBalance] = []
+    public private(set) var pendingExpenseIDs: Set<UUID> = []
     /// Overall sync activity for subtle status UI.
     public var activity: Activity {
         if !isNetworkAvailable || lastAttemptWasOffline { return .offline }
@@ -166,8 +173,23 @@ public final class SyncEngine {
         for list in lists {
             if let m = list.members.first(where: { $0.userID == userID }) { return m.displayName }
         }
-        return connections.first { $0.userID == userID }?.displayName
+        if let name = connections.first(where: { $0.userID == userID })?.displayName { return name }
+        // People you no longer share a list with, but still share purchases or payments with.
+        for expense in expenses {
+            if expense.paidBy == userID, let name = expense.payerName { return name }
+            if let name = expense.shares.first(where: { $0.userID == userID })?.displayName { return name }
+        }
+        for s in settlements {
+            if s.fromUser == userID, let name = s.fromName { return name }
+            if s.toUser == userID, let name = s.toName { return name }
+        }
+        return nil
     }
+
+    /// Currency for new purchases and payments (Settings). Defaults to Polish złoty.
+    public var currency: String { profile?.currency ?? Money.defaultCurrency }
+
+    public func expense(id: UUID) -> Expense? { expenses.first { $0.id == id } }
 
     public var ownedLists: [ShoppingList] { lists.filter { $0.ownerID == userID } }
 
@@ -228,7 +250,68 @@ public final class SyncEngine {
         deleteItems(items(in: listID).filter(\.isPurchased))
     }
 
+    // MARK: - Purchases (offline-capable)
+
+    /// Checkout: records what was spent and who paid, splits it equally between
+    /// `participants`, and takes the bought items off the list. Works offline.
+    @discardableResult
+    public func recordPurchase(
+        in listID: UUID, itemIDs: [UUID], amount: Decimal, paidBy: UUID,
+        participants: [UUID], note: String? = nil
+    ) throws -> UUID {
+        guard let list = list(id: listID) else { throw AppError.notFound }
+        guard Money.isValidAmount(amount) else { throw AppError.invalidAmount }
+        let people = Set(participants)
+        guard !people.isEmpty else { throw AppError.invalidParticipants }
+        let memberIDs = Set(list.members.map(\.userID))
+        guard people.union([paidBy]).isSubset(of: memberIDs) else { throw AppError.participantNotMember }
+        if let note, note.count > 200 { throw AppError.validation("Notes can be up to 200 characters.") }
+        let draft = PurchaseDraft(
+            listID: listID, amount: amount, currency: currency, paidBy: paidBy,
+            participants: people.sorted { $0.uuidString < $1.uuidString },
+            itemIDs: itemIDs, note: note?.nilIfBlank)
+        enqueue(.recordPurchase(draft))
+        return draft.id
+    }
+
     // MARK: - Online-only actions
+
+    public func deleteExpense(_ id: UUID) async throws {
+        try await perform { try await $0.deleteExpense(id: id) }
+        snapshot.expenses[id] = nil
+        persist()
+        recompute()
+        scheduleRefresh()
+    }
+
+    /// Records that `from` paid `to` back.
+    public func recordSettlement(from: UUID, to: UUID, amount: Decimal, currency: String) async throws {
+        guard from == userID || to == userID, from != to else { throw AppError.invalidParticipants }
+        guard Money.isValidAmount(amount) else { throw AppError.invalidAmount }
+        let draft = SettlementDraft(fromUser: from, toUser: to, amount: amount, currency: currency)
+        try await perform { try await $0.recordSettlement(draft) }
+        snapshot.settlements[draft.id] = Settlement(
+            id: draft.id, fromUser: from, toUser: to, fromName: displayName(for: from), toName: displayName(for: to),
+            amount: amount, currency: currency, createdBy: userID, createdAt: clock())
+        persist()
+        recompute()
+        scheduleRefresh()
+    }
+
+    public func deleteSettlement(_ id: UUID) async throws {
+        try await perform { try await $0.deleteSettlement(id: id) }
+        snapshot.settlements[id] = nil
+        persist()
+        recompute()
+        scheduleRefresh()
+    }
+
+    public func updateCurrency(_ code: String) async throws {
+        guard Money.isValidCurrency(code) else { throw AppError.invalidCurrency }
+        profile = try await perform { try await $0.updateCurrency(code) }
+        persist()
+        recompute()
+    }
 
     public func leaveList(_ listID: UUID) async throws {
         try await perform { try await $0.leaveList(listID: listID) }
@@ -390,6 +473,7 @@ public final class SyncEngine {
         case let .insertItem(draft): try await backend.insertItem(draft)
         case let .updateItem(id, _, patch): try await backend.updateItem(id: id, patch: patch)
         case let .deleteItems(_, ids): try await backend.deleteItems(ids: ids)
+        case let .recordPurchase(draft): try await backend.recordPurchase(draft)
         }
     }
 
@@ -403,6 +487,7 @@ public final class SyncEngine {
         let now = clock()
         acknowledgedAt[op.mutation.listID] = now
         for id in op.mutation.itemIDs { acknowledgedAt[id] = now }
+        if case let .recordPurchase(draft) = op.mutation { acknowledgedAt[draft.id] = now }
         persist()
         recompute()
     }
@@ -466,6 +551,8 @@ public final class SyncEngine {
         do {
             async let profileResult = backend.fetchProfile()
             async let connectionsResult = backend.fetchConnections()
+            async let expensesResult = backend.fetchExpenses()
+            async let settlementsResult = backend.fetchSettlements()
             let serverLists = try await backend.fetchLists()
 
             let previous = snapshot.lists
@@ -479,9 +566,12 @@ public final class SyncEngine {
             let serverItems = try await backend.fetchItems(since: since)
             let fetchedProfile = try await profileResult
             let fetchedConnections = try await connectionsResult
+            let fetchedExpenses = try await expensesResult
+            let fetchedSettlements = try await settlementsResult
 
             applyLists(serverLists, previous: previous, startedAt: startedAt)
             applyItems(serverItems, full: fullFetch, startedAt: startedAt)
+            applyExpenses(fetchedExpenses, settlements: fetchedSettlements, startedAt: startedAt)
             profile = fetchedProfile
             connections = fetchedConnections
             lastSyncedAt = clock()
@@ -558,6 +648,20 @@ public final class SyncEngine {
         snapshot.tombstones = snapshot.tombstones.filter { $0.value > cutoff }
     }
 
+    /// Expenses and settlements are small: always a full replace, except for
+    /// purchases acknowledged after this pull began.
+    private func applyExpenses(_ serverExpenses: [Expense], settlements serverSettlements: [Settlement], startedAt: Date) {
+        var next: [UUID: Expense] = [:]
+        for e in serverExpenses { next[e.id] = e }
+        for (id, local) in snapshot.expenses where next[id] == nil {
+            if let ack = acknowledgedAt[id], ack > startedAt { next[id] = local }
+        }
+        snapshot.expenses = next
+        var nextSettlements: [UUID: Settlement] = [:]
+        for s in serverSettlements { nextSettlements[s.id] = s }
+        snapshot.settlements = nextSettlements
+    }
+
     // MARK: - Realtime
 
     private func startRealtime() {
@@ -615,8 +719,16 @@ public final class SyncEngine {
             grouped[item.listID, default: []].append(item)
         }
         itemsByList = grouped.mapValues { $0.sortedForDisplay() }
+        expenses = view.expenses.values.sorted {
+            $0.createdAt != $1.createdAt ? $0.createdAt > $1.createdAt : $0.id.uuidString < $1.id.uuidString
+        }
+        settlements = view.settlements.values.sorted { $0.createdAt > $1.createdAt }
+        balances = Ledger.balances(for: userID, expenses: expenses, settlements: settlements)
         pendingItemIDs = outbox.pendingItemIDs
-        pendingListIDs = Set(outbox.operations.filter { $0.mutation.itemIDs.isEmpty }.map(\.mutation.listID))
+        pendingListIDs = Set(outbox.operations.filter(\.mutation.isListMutation).map(\.mutation.listID))
+        pendingExpenseIDs = Set(outbox.operations.compactMap {
+            if case let .recordPurchase(draft) = $0.mutation { draft.id } else { nil }
+        })
         pendingCount = outbox.count
     }
 

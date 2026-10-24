@@ -11,6 +11,7 @@ struct ListDetailView: View {
     @FocusState private var isAddFieldFocused: Bool
     @State private var editingItem: ShoppingItem?
     @State private var isSharing = false
+    @State private var isCheckingOut = false
     @State private var isRenaming = false
     @State private var confirmClearCompleted = false
     @State private var confirmDelete = false
@@ -98,7 +99,13 @@ struct ListDetailView: View {
             }
             .animation(.default, value: engine.activity)
         }
-        .safeAreaInset(edge: .bottom, spacing: 0) { quickAddBar }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            VStack(spacing: 0) {
+                if !completed.isEmpty { checkoutBar }
+                quickAddBar
+            }
+            .animation(.default, value: completed.isEmpty)
+        }
         .refreshable { await engine.refresh() }
         .toolbar { toolbar(list) }
         .sheet(item: $editingItem) { item in
@@ -106,6 +113,9 @@ struct ListDetailView: View {
         }
         .sheet(isPresented: $isSharing) {
             ShareListView(engine: engine, listID: listID)
+        }
+        .sheet(isPresented: $isCheckingOut) {
+            CheckoutView(engine: engine, listID: listID)
         }
         .sheet(isPresented: $isRenaming) {
             ListNameSheet(title: "Rename list", initialName: list.name) { name in
@@ -142,6 +152,10 @@ struct ListDetailView: View {
         }
         .errorAlert($errorMessage)
         .sensoryFeedback(.success, trigger: addedCount)
+        #if DEBUG
+        // UI-test hook: `-DebugCheckout YES` opens checkout.
+        .onAppear { if UserDefaults.standard.bool(forKey: "DebugCheckout") { isCheckingOut = true } }
+        #endif
     }
 
     private func row(_ item: ShoppingItem) -> some View {
@@ -162,6 +176,29 @@ struct ListDetailView: View {
             }
             .tint(.accentColor)
         }
+    }
+
+    /// Shown once something is in the basket: the way into checkout.
+    private var checkoutBar: some View {
+        Button { isCheckingOut = true } label: {
+            HStack {
+                Image(systemName: "cart.fill")
+                Text("Done shopping? Check out \(completed.count) item\(completed.count == 1 ? "" : "s")")
+                    .fontWeight(.semibold)
+                Spacer()
+                Image(systemName: "chevron.right").font(.footnote.weight(.semibold))
+            }
+            .padding(.horizontal, 16)
+            .frame(minHeight: 48)
+            .foregroundStyle(.white)
+            .background(Color.accentColor, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal)
+        .padding(.top, 10)
+        .background(.bar)
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+        .accessibilityHint("Enter the total and who paid. The items move to History.")
     }
 
     private var quickAddBar: some View {
@@ -199,6 +236,7 @@ struct ListDetailView: View {
                     .accessibilityLabel("Share list")
             }
             Menu {
+                Button("Check Out…", systemImage: "cart") { isCheckingOut = true }
                 Button("Members", systemImage: "person.2") { app.path.append(.members(listID)) }
                 if isOwner {
                     Button("Share…", systemImage: "qrcode") { isSharing = true }

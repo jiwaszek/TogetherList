@@ -16,10 +16,23 @@ public struct AuthUser: Codable, Hashable, Sendable {
 public struct UserProfile: Codable, Hashable, Identifiable, Sendable {
     public var id: UUID
     public var displayName: String
+    /// ISO 4217 code used for new purchases. Synced with the account.
+    public var currency: String
 
-    public init(id: UUID, displayName: String) {
+    public init(id: UUID, displayName: String, currency: String = Money.defaultCurrency) {
         self.id = id
         self.displayName = displayName
+        self.currency = currency
+    }
+
+    private enum CodingKeys: String, CodingKey { case id, displayName, currency }
+
+    // Profiles cached before currencies existed decode with the default.
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        displayName = try c.decode(String.self, forKey: .displayName)
+        currency = try c.decodeIfPresent(String.self, forKey: .currency) ?? Money.defaultCurrency
     }
 }
 
@@ -120,7 +133,9 @@ public struct ShoppingItem: Codable, Hashable, Identifiable, Sendable {
     public var isDeleted: Bool { deletedAt != nil }
 
     /// "2 kg", "3", "kg" or nil.
-    public var quantityText: String? {
+    public var quantityText: String? { Self.quantityText(quantity: quantity, unit: unit) }
+
+    public static func quantityText(quantity: Decimal?, unit: String?) -> String? {
         let q = quantity.map { NSDecimalNumber(decimal: $0).stringValue }
         switch (q, unit?.nilIfBlank) {
         case let (q?, u?): return "\(q) \(u)"

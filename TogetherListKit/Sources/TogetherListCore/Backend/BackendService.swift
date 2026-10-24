@@ -17,6 +17,7 @@ public protocol BackendService: Sendable {
     // MARK: Profile
     func fetchProfile() async throws -> UserProfile
     func updateDisplayName(_ name: String) async throws -> UserProfile
+    func updateCurrency(_ code: String) async throws -> UserProfile
 
     // MARK: Lists (direct table access, RLS-protected)
     func fetchLists() async throws -> [ShoppingList]
@@ -55,6 +56,21 @@ public protocol BackendService: Sendable {
     /// Returns the number of list memberships that were revoked.
     @discardableResult
     func disconnect(userID: UUID) async throws -> Int
+
+    // MARK: Purchases and settling up
+    /// Every purchase the user can see (paid, created, in the split, or on the list).
+    func fetchExpenses() async throws -> [Expense]
+    /// Idempotent on `draft.id`. Atomically stores the purchase and its split and
+    /// takes the bought items off the list.
+    func recordPurchase(_ draft: PurchaseDraft) async throws
+    /// Only the creator or the payer may delete.
+    func deleteExpense(id: UUID) async throws
+    /// Payments the user sent or received.
+    func fetchSettlements() async throws -> [Settlement]
+    /// Idempotent on `draft.id`. The caller must be the sender or the receiver.
+    func recordSettlement(_ draft: SettlementDraft) async throws
+    /// Only the creator may delete.
+    func deleteSettlement(id: UUID) async throws
 
     // MARK: Account
     /// `transfers` maps owned list id -> new owner id. Other owned lists are deleted.

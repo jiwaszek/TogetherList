@@ -49,6 +49,7 @@ final class EventRecorder: @unchecked Sendable {
     }
 
     func contains(_ predicate: (RemoteChange) -> Bool) -> Bool { lock.withLock { events.contains(where: predicate) } }
+    func count(of event: RemoteChange) -> Int { lock.withLock { events.filter { $0 == event }.count } }
     func stop() { task?.cancel() }
 }
 
@@ -141,8 +142,9 @@ struct LiveSupabaseTests {
             // Realtime: Alice listens before Bob joins
             let aliceEvents = EventRecorder(alice.realtimeChanges())
             defer { aliceEvents.stop() }
-            try await waitUntil("Alice's realtime channel to connect") {
-                aliceEvents.contains { $0 == .connected }
+            // Two signals: the channel joined, then Realtime confirmed Postgres Changes are flowing.
+            try await waitUntil("Alice's realtime channel to connect and Postgres Changes to start", timeout: .seconds(45)) {
+                aliceEvents.count(of: .connected) >= 2
             }
 
             // Accept: atomic, idempotent, exposes only the invited list
@@ -191,6 +193,52 @@ struct LiveSupabaseTests {
             try await alice.renameList(id: sharedID, name: "Weekend groceries")
             #expect(try await bob.fetchLists().first?.name == "Weekend groceries")
 
+            // Checkout: Alice pays for the bread and splits it with Bob
+            #expect(try await alice.fetchProfile().currency == "PLN")
+            let purchase = PurchaseDraft(listID: sharedID, amount: Decimal(string: "45.50")!, currency: "PLN",
+                                         paidBy: aliceUser.id, participants: [aliceUser.id, bobUser.id],
+                                         itemIDs: [bread.id], note: "Biedronka")
+            try await alice.recordPurchase(purchase)
+            try await alice.recordPurchase(purchase)   // retried request
+            #expect(try await alice.fetchItems(since: nil).isEmpty, "bought items leave the list")
+            let bobExpenses = try await bob.fetchExpenses()
+            #expect(bobExpenses.count == 1)
+            let seen = try #require(bobExpenses.first)
+            #expect(seen.amount == Decimal(string: "45.50"))
+            #expect(seen.payerName == "Alice Live")
+            #expect(seen.note == "Biedronka")
+            #expect(seen.listName == "Weekend groceries")
+            #expect(seen.items.map(\.name) == ["Bread"])
+            #expect(seen.shares.map(\.amount) == [Decimal(string: "22.75")!, Decimal(string: "22.75")!])
+            #expect(seen.shares.compactMap(\.displayName).sorted() == ["Alice Live", "Bob L."])
+            #expect(Ledger.balances(for: bobUser.id, expenses: bobExpenses, settlements: [])
+                    == [PersonBalance(userID: aliceUser.id, currency: "PLN", amount: Decimal(string: "-22.75")!)])
+            await expectAppError(.participantNotMember, "split with a stranger") {
+                try await alice.recordPurchase(PurchaseDraft(listID: sharedID, amount: 5, currency: "PLN",
+                                                             paidBy: aliceUser.id, participants: [UUID()], itemIDs: []))
+            }
+            await expectAppError(.invalidAmount, "three decimal places") {
+                try await alice.recordPurchase(PurchaseDraft(listID: sharedID, amount: Decimal(string: "1.234")!, currency: "PLN",
+                                                             paidBy: aliceUser.id, participants: [aliceUser.id], itemIDs: []))
+            }
+            await expectAppError(.notFound, "a participant deletes someone else's purchase") {
+                try await bob.deleteExpense(id: purchase.id)
+            }
+
+            // Settling up
+            try await bob.recordSettlement(SettlementDraft(fromUser: bobUser.id, toUser: aliceUser.id,
+                                                           amount: Decimal(string: "22.75")!, currency: "PLN"))
+            let aliceSettlements = try await alice.fetchSettlements()
+            #expect(aliceSettlements.first?.fromName == "Bob L.")
+            #expect(Ledger.balances(for: aliceUser.id, expenses: try await alice.fetchExpenses(),
+                                    settlements: aliceSettlements).isEmpty)
+
+            // Currency follows the account
+            #expect(try await alice.updateCurrency("EUR").currency == "EUR")
+            await expectAppError(AppError.validation("Some of the values aren't allowed."), "invalid currency code") {
+                _ = try await alice.updateCurrency("euro")
+            }
+
             // Revoked invitation
             try await alice.revokeInvitation(id: ticket.invitationID)
             #expect(try await bob.previewInvitation(token: ticket.token).status == .revoked)
@@ -202,8 +250,9 @@ struct LiveSupabaseTests {
             #expect(try await bob.fetchLists().isEmpty)
             #expect(try await bob.fetchItems(since: nil).isEmpty)
             #expect(try await alice.fetchConnections().isEmpty)
-            // Bob's item stays in Alice's list.
-            #expect(try await alice.fetchItems(since: nil).map(\.name) == ["Bread"])
+            // Purchases outlive the shared access; Bob still sees his debts and payments.
+            #expect(try await bob.fetchExpenses().count == 1)
+            #expect(try await bob.fetchSettlements().count == 1)
         } catch {
             Issue.record(error, "Live scenario failed")
         }

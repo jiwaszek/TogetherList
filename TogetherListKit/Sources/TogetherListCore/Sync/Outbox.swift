@@ -8,12 +8,15 @@ public enum Mutation: Codable, Hashable, Sendable {
     case insertItem(ItemDraft)
     case updateItem(id: UUID, listID: UUID, patch: ItemPatch)
     case deleteItems(listID: UUID, ids: [UUID])
+    /// Checkout: records the purchase and takes the bought items off the list.
+    case recordPurchase(PurchaseDraft)
 
     public var listID: UUID {
         switch self {
         case let .createList(id, _), let .renameList(id, _), let .deleteList(id): id
         case let .insertItem(draft): draft.listID
         case let .updateItem(_, listID, _), let .deleteItems(listID, _): listID
+        case let .recordPurchase(draft): draft.listID
         }
     }
 
@@ -23,7 +26,16 @@ public enum Mutation: Codable, Hashable, Sendable {
         case let .insertItem(draft): [draft.id]
         case let .updateItem(id, _, _): [id]
         case let .deleteItems(_, ids): ids
+        case let .recordPurchase(draft): draft.itemIDs
         default: []
+        }
+    }
+
+    /// Creates, renames or deletes a list (as opposed to changing its contents).
+    public var isListMutation: Bool {
+        switch self {
+        case .createList, .renameList, .deleteList: true
+        default: false
         }
     }
 }
@@ -48,8 +60,22 @@ public struct SyncSnapshot: Codable, Equatable, Sendable {
     public var items: [UUID: ShoppingItem] = [:]
     /// Item ids known to be deleted, so stale events can never bring them back.
     public var tombstones: [UUID: Date] = [:]
+    public var expenses: [UUID: Expense] = [:]
+    public var settlements: [UUID: Settlement] = [:]
 
     public init() {}
+
+    private enum CodingKeys: String, CodingKey { case lists, items, tombstones, expenses, settlements }
+
+    // Caches written before purchases existed decode with empty expenses.
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        lists = try c.decode([UUID: ShoppingList].self, forKey: .lists)
+        items = try c.decode([UUID: ShoppingItem].self, forKey: .items)
+        tombstones = try c.decode([UUID: Date].self, forKey: .tombstones)
+        expenses = try c.decodeIfPresent([UUID: Expense].self, forKey: .expenses) ?? [:]
+        settlements = try c.decodeIfPresent([UUID: Settlement].self, forKey: .settlements) ?? [:]
+    }
 }
 
 /// An ordered queue of pending mutations with coalescing.
@@ -108,7 +134,7 @@ public struct Outbox: Codable, Equatable, Sendable {
             return
 
         case let .renameList(listID, name):
-            if let index = operations.lastIndex(where: { $0.mutation.listID == listID && $0.mutation.itemIDs.isEmpty }),
+            if let index = operations.lastIndex(where: { $0.mutation.listID == listID && $0.mutation.isListMutation }),
                editable(operations[index]) {
                 switch operations[index].mutation {
                 case .createList:
@@ -126,10 +152,16 @@ public struct Outbox: Codable, Equatable, Sendable {
             let createdOffline = operations.contains {
                 if case let .createList(id, _) = $0.mutation { id == listID && editable($0) } else { false }
             }
-            operations.removeAll { $0.mutation.listID == listID && editable($0) }
+            // A purchase on a list that exists on the server is still recorded
+            // (it outlives the list); everything else for the list is moot.
+            operations.removeAll {
+                guard $0.mutation.listID == listID, editable($0) else { return false }
+                if case .recordPurchase = $0.mutation { return createdOffline }
+                return true
+            }
             if createdOffline { return }
 
-        case .createList, .insertItem:
+        case .createList, .insertItem, .recordPurchase:
             break
         }
         operations.append(PendingOperation(mutation: mutation, enqueuedAt: date))
@@ -211,6 +243,29 @@ extension SyncSnapshot {
                 items[id] = nil
                 tombstones[id] = date
             }
+
+        case let .recordPurchase(draft):
+            var bought: [ExpenseItem] = []
+            for id in draft.itemIDs {
+                if let item = items[id], item.listID == draft.listID {
+                    bought.append(ExpenseItem(itemID: id, name: item.name, quantity: item.quantity, unit: item.unit))
+                }
+                items[id] = nil
+                tombstones[id] = date
+            }
+            guard expenses[draft.id] == nil else { return }
+            let members = lists[draft.listID]?.members ?? []
+            func name(_ id: UUID) -> String? {
+                id == user.id ? user.displayName : members.first { $0.userID == id }?.displayName
+            }
+            let shares = Ledger.split(draft.amount, among: draft.participants)
+                .map { ExpenseShare(userID: $0.key, displayName: name($0.key), amount: $0.value) }
+                .sorted { $0.userID.uuidString < $1.userID.uuidString }
+            expenses[draft.id] = Expense(
+                id: draft.id, listID: draft.listID, listName: lists[draft.listID]?.name ?? "",
+                amount: draft.amount, currency: draft.currency, paidBy: draft.paidBy,
+                payerName: name(draft.paidBy), createdBy: user.id, note: draft.note,
+                createdAt: date, shares: shares, items: bought)
         }
     }
 

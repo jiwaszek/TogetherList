@@ -16,6 +16,7 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 profileSection
+                currencySection
                 connectionsSection
                 syncSection
                 accountSection
@@ -81,6 +82,22 @@ struct SettingsView: View {
             }
         } header: {
             Text("Profile")
+        }
+    }
+
+    private var currencySection: some View {
+        Section {
+            NavigationLink {
+                CurrencyPickerView(engine: engine)
+            } label: {
+                LabeledContent("Currency") {
+                    Text(CurrencyPickerView.title(for: engine.currency))
+                }
+            }
+        } header: {
+            Text("Shopping")
+        } footer: {
+            Text("Used for new purchases and payments. Amounts already recorded keep their currency.")
         }
     }
 
@@ -280,4 +297,83 @@ struct ConnectionDetailView: View {
     let engine = SampleData.previewEngine()
     SettingsView(engine: engine)
         .environment(AppModel(previewEngine: engine))
+}
+
+/// All ISO currencies, with the common ones for Polish households first.
+struct CurrencyPickerView: View {
+    @Environment(\.dismiss) private var dismiss
+    let engine: SyncEngine
+
+    @State private var search = ""
+    @State private var saving: String?
+    @State private var errorMessage: String?
+
+    static let suggested = ["PLN", "EUR", "USD", "GBP", "CHF", "CZK", "SEK", "NOK", "DKK", "UAH"]
+
+    static func title(for code: String) -> String {
+        Locale.current.localizedString(forCurrencyCode: code).map { "\(code) – \($0)" } ?? code
+    }
+
+    private var others: [String] {
+        Locale.commonISOCurrencyCodes
+            .filter { !Self.suggested.contains($0) }
+            .sorted()
+    }
+
+    private func matches(_ code: String) -> Bool {
+        guard let query = search.nilIfBlank else { return true }
+        return Self.title(for: code).localizedCaseInsensitiveContains(query)
+    }
+
+    var body: some View {
+        List {
+            Section("Suggested") {
+                ForEach(Self.suggested.filter(matches), id: \.self, content: row)
+            }
+            Section("All currencies") {
+                ForEach(others.filter(matches), id: \.self, content: row)
+            }
+        }
+        .navigationTitle("Currency")
+        .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $search, prompt: "Search currencies")
+        .errorAlert($errorMessage)
+    }
+
+    private func row(_ code: String) -> some View {
+        Button {
+            select(code)
+        } label: {
+            HStack {
+                Text(Self.title(for: code)).foregroundStyle(.primary)
+                Spacer()
+                if saving == code {
+                    ProgressView()
+                } else if engine.currency == code {
+                    Image(systemName: "checkmark").foregroundStyle(Color.accentColor).fontWeight(.semibold)
+                }
+            }
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(saving != nil)
+        .accessibilityAddTraits(engine.currency == code ? [.isButton, .isSelected] : .isButton)
+    }
+
+    private func select(_ code: String) {
+        guard code != engine.currency else { dismiss(); return }
+        saving = code
+        Task {
+            defer { saving = nil }
+            do {
+                try await engine.updateCurrency(code)
+                dismiss()
+            } catch {
+                errorMessage = AppError.wrap(error) == .offline
+                    ? "You need to be online to change the currency."
+                    : error.userMessage
+            }
+        }
+    }
 }

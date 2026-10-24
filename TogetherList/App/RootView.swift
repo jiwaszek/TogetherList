@@ -21,22 +21,44 @@ struct RootView: View {
     }
 }
 
-/// The signed-in experience: lists stack plus app-wide sheets.
+/// The signed-in experience: Lists, History and Balances tabs plus app-wide sheets.
 struct SignedInView: View {
     @Environment(AppModel.self) private var app
     let engine: SyncEngine
 
     var body: some View {
         @Bindable var app = app
-        NavigationStack(path: $app.path) {
-            ListsView(engine: engine)
-                .navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case let .list(id): ListDetailView(engine: engine, listID: id)
-                    case let .members(id): MembersView(engine: engine, listID: id)
+        TabView(selection: $app.selectedTab) {
+            NavigationStack(path: $app.path) {
+                ListsView(engine: engine)
+                    .navigationDestination(for: Route.self) { route in
+                        switch route {
+                        case let .list(id): ListDetailView(engine: engine, listID: id)
+                        case let .members(id): MembersView(engine: engine, listID: id)
+                        }
                     }
-                }
+            }
+            .tabItem { Label("Lists", systemImage: "checklist") }
+            .tag(AppTab.lists)
+
+            HistoryView(engine: engine)
+                .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
+                .tag(AppTab.history)
+
+            BalancesView(engine: engine)
+                .tabItem { Label("Balances", systemImage: "arrow.left.arrow.right") }
+                .tag(AppTab.balances)
         }
+        #if DEBUG
+        // UI-test hook: `-DebugTab history|balances` opens that tab.
+        .onAppear {
+            switch UserDefaults.standard.string(forKey: "DebugTab") {
+            case "history": app.selectedTab = .history
+            case "balances": app.selectedTab = .balances
+            default: break
+            }
+        }
+        #endif
         .sheet(isPresented: $app.isScannerPresented) {
             ScannerView()
         }

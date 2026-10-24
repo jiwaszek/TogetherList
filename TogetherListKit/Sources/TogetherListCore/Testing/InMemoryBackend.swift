@@ -30,6 +30,8 @@ public actor InMemoryServer {
     var items: [UUID: ShoppingItem] = [:]
     var invitations: [UUID: InvitationRow] = [:]
     var connections: [Pair: Date] = [:]
+    var expenses: [UUID: Expense] = [:]
+    var settlements: [UUID: Settlement] = [:]
     var subscribers: [UUID: Subscriber] = [:]
     private var timeOffset: TimeInterval = 0
     private var tick: TimeInterval = 0
@@ -73,6 +75,14 @@ public actor InMemoryServer {
     func updateDisplayName(_ uid: UUID, _ name: String) throws -> UserProfile {
         guard accounts[uid] != nil else { throw AppError.notAuthenticated }
         accounts[uid]!.profile.displayName = name
+        broadcastResync()
+        return accounts[uid]!.profile
+    }
+
+    func updateCurrency(_ uid: UUID, _ code: String) throws -> UserProfile {
+        guard accounts[uid] != nil else { throw AppError.notAuthenticated }
+        guard Money.isValidCurrency(code) else { throw AppError.invalidCurrency }
+        accounts[uid]!.profile.currency = code
         broadcastResync()
         return accounts[uid]!.profile
     }
@@ -135,6 +145,7 @@ public actor InMemoryServer {
     }
 
     func deleteListRow(_ id: UUID) {
+        for (expenseID, expense) in expenses where expense.listID == id { expenses[expenseID]!.listID = nil }
         lists[id] = nil
         members[id] = nil
         items = items.filter { $0.value.listID != id }
@@ -310,6 +321,103 @@ public actor InMemoryServer {
         return revoked
     }
 
+    // MARK: Purchases
+
+    func canSeeExpense(_ uid: UUID, _ e: Expense) -> Bool {
+        e.paidBy == uid || e.createdBy == uid || e.listID.map { isMember(uid, $0) } == true
+            || e.shares.contains { $0.userID == uid }
+    }
+
+    /// Mirrors private.can_see_profile: self, connected, a shared list, expense or settlement.
+    func canSeeProfile(_ uid: UUID, _ other: UUID) -> Bool {
+        if uid == other || connected(uid, other) { return true }
+        if members.values.contains(where: { $0[uid] != nil && $0[other] != nil }) { return true }
+        if expenses.values.contains(where: { e in
+            let inSplit = Set(e.shares.map(\.userID))
+            return (inSplit.contains(uid) && inSplit.contains(other))
+                || (e.paidBy == other && inSplit.contains(uid)) || (e.paidBy == uid && inSplit.contains(other))
+        }) { return true }
+        return settlements.values.contains { Set([$0.fromUser, $0.toUser]) == Set([uid, other]) }
+    }
+
+    func visibleName(_ uid: UUID, _ other: UUID?) -> String? {
+        guard let other, canSeeProfile(uid, other) else { return nil }
+        return accounts[other]?.profile.displayName
+    }
+
+    func fetchExpenses(_ uid: UUID) -> [Expense] {
+        expenses.values.filter { canSeeExpense(uid, $0) }.map { e in
+            var copy = e
+            copy.payerName = visibleName(uid, e.paidBy)
+            copy.shares = e.shares.map { ExpenseShare(userID: $0.userID, displayName: visibleName(uid, $0.userID), amount: $0.amount) }
+            return copy
+        }
+    }
+
+    func recordPurchase(_ uid: UUID, _ d: PurchaseDraft) throws {
+        guard expenses[d.id] == nil else { return }               // idempotent retry
+        guard let list = lists[d.listID], isMember(uid, d.listID) else { throw AppError.permissionDenied }
+        guard Money.isValidAmount(d.amount) else { throw AppError.invalidAmount }
+        guard Money.isValidCurrency(d.currency) else { throw AppError.invalidCurrency }
+        let people = Set(d.participants)
+        guard !people.isEmpty else { throw AppError.invalidParticipants }
+        guard people.union([d.paidBy]).allSatisfy({ isMember($0, d.listID) }) else { throw AppError.participantNotMember }
+
+        var bought: [ExpenseItem] = []
+        for id in d.itemIDs {
+            guard var item = items[id], item.listID == d.listID, item.deletedAt == nil else { continue }
+            bought.append(ExpenseItem(itemID: id, name: item.name, quantity: item.quantity, unit: item.unit))
+            let t = now()
+            item.deletedAt = t
+            item.updatedAt = t
+            item.updatedBy = uid
+            item.version += 1
+            items[id] = item
+            broadcast(item)
+        }
+        let shares = Ledger.split(d.amount, among: Array(people))
+            .map { ExpenseShare(userID: $0.key, amount: $0.value) }
+            .sorted { $0.userID.uuidString < $1.userID.uuidString }
+        expenses[d.id] = Expense(
+            id: d.id, listID: d.listID, listName: list.name, amount: d.amount, currency: d.currency,
+            paidBy: d.paidBy, createdBy: uid, note: d.note?.nilIfBlank, createdAt: now(),
+            shares: shares, items: bought)
+        broadcastResync()
+    }
+
+    func deleteExpense(_ uid: UUID, id: UUID) throws {
+        guard let e = expenses[id], e.canDelete(uid) else { throw AppError.notFound }
+        expenses[id] = nil
+        broadcastResync()
+    }
+
+    func fetchSettlements(_ uid: UUID) -> [Settlement] {
+        settlements.values.filter { $0.fromUser == uid || $0.toUser == uid }.map { s in
+            var copy = s
+            copy.fromName = visibleName(uid, s.fromUser)
+            copy.toName = visibleName(uid, s.toUser)
+            return copy
+        }
+    }
+
+    func recordSettlement(_ uid: UUID, _ d: SettlementDraft) throws {
+        guard settlements[d.id] == nil else { return }
+        guard uid == d.fromUser || uid == d.toUser else { throw AppError.permissionDenied }
+        guard d.fromUser != d.toUser else { throw AppError.invalidParticipants }
+        guard Money.isValidAmount(d.amount) else { throw AppError.invalidAmount }
+        guard Money.isValidCurrency(d.currency) else { throw AppError.invalidCurrency }
+        guard canSeeProfile(uid, uid == d.fromUser ? d.toUser : d.fromUser) else { throw AppError.notConnected }
+        settlements[d.id] = Settlement(id: d.id, fromUser: d.fromUser, toUser: d.toUser, amount: d.amount,
+                                       currency: d.currency, createdBy: uid, createdAt: now())
+        broadcastResync()
+    }
+
+    func deleteSettlement(_ uid: UUID, id: UUID) throws {
+        guard settlements[id]?.createdBy == uid else { throw AppError.notFound }
+        settlements[id] = nil
+        broadcastResync()
+    }
+
     // MARK: Account
 
     func deleteAccount(_ uid: UUID, transfers: [UUID: UUID]) throws {
@@ -327,6 +435,13 @@ public actor InMemoryServer {
         for (id, row) in lists where row.ownerID == uid { deleteListRow(id) }
         for listID in members.keys { members[listID]![uid] = nil }
         connections = connections.filter { $0.key.other(than: uid) == nil }
+        for (id, expense) in expenses {
+            if expense.paidBy == uid { expenses[id]!.paidBy = nil }
+            if expense.createdBy == uid { expenses[id]!.createdBy = nil }
+            expenses[id]!.shares.removeAll { $0.userID == uid }
+        }
+        settlements = settlements.filter { $0.value.fromUser != uid && $0.value.toUser != uid }
+        expenses = expenses.filter { $0.value.paidBy != nil || $0.value.createdBy != nil || !$0.value.shares.isEmpty }
         for (id, item) in items {
             if item.createdBy == uid { items[id]!.createdBy = nil }
             if item.updatedBy == uid { items[id]!.updatedBy = nil }
@@ -449,6 +564,9 @@ public final class InMemoryBackend: BackendService, @unchecked Sendable {
     public func updateDisplayName(_ name: String) async throws -> UserProfile {
         try await server.updateDisplayName(uid(), name)
     }
+    public func updateCurrency(_ code: String) async throws -> UserProfile {
+        try await server.updateCurrency(uid(), code)
+    }
 
     // MARK: Lists
 
@@ -497,6 +615,15 @@ public final class InMemoryBackend: BackendService, @unchecked Sendable {
 
     public func fetchConnections() async throws -> [Connection] { try await server.fetchConnections(uid()) }
     public func disconnect(userID: UUID) async throws -> Int { try await server.disconnect(uid(), from: userID) }
+
+    // MARK: Purchases
+
+    public func fetchExpenses() async throws -> [Expense] { try await server.fetchExpenses(uid()) }
+    public func recordPurchase(_ draft: PurchaseDraft) async throws { try await server.recordPurchase(uid(), draft) }
+    public func deleteExpense(id: UUID) async throws { try await server.deleteExpense(uid(), id: id) }
+    public func fetchSettlements() async throws -> [Settlement] { try await server.fetchSettlements(uid()) }
+    public func recordSettlement(_ draft: SettlementDraft) async throws { try await server.recordSettlement(uid(), draft) }
+    public func deleteSettlement(id: UUID) async throws { try await server.deleteSettlement(uid(), id: id) }
 
     // MARK: Account
 

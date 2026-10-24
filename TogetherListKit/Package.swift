@@ -23,5 +23,14 @@ let package = Package(
             ]
         ),
         .testTarget(name: "TogetherListCoreTests", dependencies: ["TogetherListCore"]),
+        // Live checks against a real project; skipped unless configured (scripts/test-live.sh).
+        .testTarget(
+            name: "TogetherListSupabaseTests",
+            dependencies: [
+                "TogetherListCore",
+                "TogetherListSupabase",
+                .product(name: "Supabase", package: "supabase-swift"),
+            ]
+        ),
     ]
 )

@@ -112,7 +112,7 @@ on sign-out.
 ## Backend setup
 
 1. **Create a Supabase project** at https://supabase.com/dashboard.
-2. **Apply the schema.** Either paste `supabase/migrations/20261024000000_togetherlist.sql` into the dashboard's SQL editor and run it, or use the CLI: `supabase link --project-ref <ref>` then `supabase db push`.
+2. **Apply the schema.** Either run each file in `supabase/migrations/` (in filename order) in the dashboard's SQL editor, or use the CLI: `supabase link --project-ref <ref>` then `supabase db push`. The second migration moves the RLS helper functions into a `private` schema the Data API doesn't serve, and indexes the remaining foreign keys.
 3. **Set up auth** under Authentication → Providers → Email: enable Email.
    - For quick two-device testing, turn **off** "Confirm email". Otherwise new users must click the email link before signing in. The app shows that message and keeps any pending invitation until they do.
 4. **Check Realtime.** The migration adds the tables to the `supabase_realtime` publication. Under Database → Publications, confirm `items`, `lists`, `list_members`, `connections` and `profiles` are listed.
@@ -125,7 +125,7 @@ on sign-out.
 
 Until step 5 is done, the app shows a "Backend not configured" screen.
 
-**Local stack instead:** run `supabase init` and `supabase start`, copy the migration
+**Local stack instead:** run `supabase init` and `supabase start`, copy the migrations
 into the generated `supabase/migrations/`, and point `SUPABASE_URL` at
 `http:/$()/127.0.0.1:54321`. The Info.plist already allows local networking.
 
@@ -164,7 +164,8 @@ sign-up and app restarts, and the preview opens right after sign-in.
 | Suite | How to run | What it covers |
 |---|---|---|
 | `supabase/tests/togetherlist_test.sql` | `scripts/test-backend.sh` (uses local Postgres binaries if on PATH, otherwise installs the embedded `pgserver` wheel into `.build/`) | Real SQL against PostgreSQL 16 with Supabase-equivalent roles and default privileges: RLS isolation; private lists stay private; invitation preview, accept, idempotency, use counting, expiry, cancellation and self-invitation; three users on one invitation; owner-only operations; column-level grants; server-owned timestamps and authorship; per-field last-write-wins; delete wins and no resurrection; leave, remove and disconnect semantics (including unrelated lists); ownership transfer; account deletion with transfer; anonymous access denied. |
-| `TogetherListKit/Tests` | `cd TogetherListKit && swift test`, or ⌘U in Xcode (shared scheme) | 39 Swift Testing tests: outbox coalescing, link parsing, quick-entry parsing, two- and three-device collaboration, realtime delivery, offline queue and reconnect, lost-response no-duplicate, field merge, last-write-wins, delete wins, stale events, clear completed, revoked-while-offline, offline list creation, persistence across relaunch, restore on a new device. These use `InMemoryBackend`, which mirrors the SQL rules. |
+| `TogetherListKit/Tests/TogetherListCoreTests` | `cd TogetherListKit && swift test`, or ⌘U in Xcode (shared scheme) | 39 Swift Testing tests: outbox coalescing, link parsing, quick-entry parsing, two- and three-device collaboration, realtime delivery, offline queue and reconnect, lost-response no-duplicate, field merge, last-write-wins, delete wins, stale events, clear completed, revoked-while-offline, offline list creation, persistence across relaunch, restore on a new device. These use `InMemoryBackend`, which mirrors the SQL rules. |
+| `TogetherListKit/Tests/TogetherListSupabaseTests` | `scripts/test-live.sh` (reads `Config/Secrets.xcconfig`; skipped by a plain `swift test`) | The real `SupabaseBackend` against your project, with two throwaway accounts that are deleted at the end: sign-up and profile trigger, display-name update, idempotent list and item creation, RLS isolation, invitation preview (valid, own, invalid), own-invitation rejection, atomic idempotent accept, only the invited list exposed, connections, Realtime delivery of the other user's item, per-field merge of concurrent edits, delete wins, no resurrection on a retried insert, tombstones in delta sync, member can't rename or delete, revoked invitation, sharing a second list with a connection, disconnect, account deletion. Needs "Confirm email" off. |
 
 You can also try the UI without a backend. Enable the `-UseInMemoryBackend` and
 `-DebugSignIn alice@example.com` launch arguments in the scheme. This works in
@@ -174,10 +175,9 @@ DEBUG builds only, and the data is seeded fake data that resets on every launch.
 - ✅ The SQL suite passes on PostgreSQL 16.2, with a stub standing in for Supabase's `auth.users` and `auth.uid()`.
 - ✅ All 39 Swift tests pass, both on macOS (`swift test`) and on the iOS 26.5 simulator (`xcodebuild test`).
 - ✅ The app builds with no warnings in our code. The lists screen, the list detail screen in light and dark mode, and the `togetherlist://` link handoff were checked in the simulator using the in-memory backend.
-- ❌ **Not yet run against a real Supabase project**, because no credentials were available. `SupabaseBackend` compiles against the SDK, but its queries, the Realtime subscription and the auth flows haven't been run end to end. The things most worth checking first:
-  - the members embed `profiles!list_members_user_id_fkey`
-  - the `upsert(ignoreDuplicates:)` inserts under RLS
-  - the timestamp format in Realtime payloads
+- ✅ Both migrations applied to a real Supabase project (Postgres 17.11). Supabase's security advisor reports only the 11 intended RPC functions (each checks `auth.uid()` and ownership); the performance advisor reports only "unused index" on an empty database.
+- ✅ The live suite (`scripts/test-live.sh`) passes against that project: auth, every query and RPC in `SupabaseBackend`, and Realtime delivery between two signed-in users. The first run on a cold project missed one Realtime event while Realtime was starting its replication slot; the client now re-pulls when Realtime confirms Postgres Changes are active.
+- ✅ The iOS app built with the real configuration launches to the Welcome screen in the simulator. Sign-up and the rest of the UI against the live backend were not driven by automation.
 - ❌ Not run on physical devices: camera scanning, universal links, and two real phones syncing.
 
 ## Product decisions and assumptions

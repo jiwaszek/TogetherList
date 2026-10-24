@@ -10,11 +10,15 @@ public struct SupabaseConfiguration: Sendable {
     public var publishableKey: String
     /// Where email-confirmation links should send the user back to (optional).
     public var authRedirectURL: URL?
+    /// Where the session is persisted. `nil` uses the keychain (the app's default).
+    public var authStorage: (any AuthLocalStorage)?
 
-    public init(url: URL, publishableKey: String, authRedirectURL: URL? = nil) {
+    public init(url: URL, publishableKey: String, authRedirectURL: URL? = nil,
+                authStorage: (any AuthLocalStorage)? = nil) {
         self.url = url
         self.publishableKey = publishableKey
         self.authRedirectURL = authRedirectURL
+        self.authStorage = authStorage
     }
 }
 
@@ -28,6 +32,7 @@ public final class SupabaseBackend: BackendService {
             supabaseKey: configuration.publishableKey,
             options: SupabaseClientOptions(
                 auth: .init(
+                    storage: configuration.authStorage ?? AuthClient.Configuration.defaultLocalStorage,
                     redirectToURL: configuration.authRedirectURL,
                     // Offline launch: treat the stored session as signed in; it is
                     // refreshed automatically once the network is back.
@@ -321,6 +326,11 @@ public final class SupabaseBackend: BackendService {
                 channel.postgresChange(AnyAction.self, schema: "public", table: $0)
             }
             let statuses = channel.statusChange
+            // Postgres Changes start flowing a moment after the channel itself is
+            // subscribed (seconds on a cold start). Realtime announces that with a
+            // system message; treat it as a second "connected" so the engine
+            // re-pulls anything written in between.
+            let system = channel.system()
 
             do {
                 try await channel.subscribeWithError()
@@ -352,6 +362,12 @@ public final class SupabaseBackend: BackendService {
                         case .unsubscribed: continuation.yield(.disconnected)
                         default: break
                         }
+                    }
+                }
+                group.addTask {
+                    for await message in system
+                    where message.payload["extension"]?.stringValue == "postgres_changes" {
+                        continuation.yield(message.status == .ok ? .connected : .disconnected)
                     }
                 }
             }

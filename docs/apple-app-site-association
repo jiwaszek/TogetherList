@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["TEAMID.your.bundle.identifier"],
+        "components": [
+          { "/": "/invite/*", "comment": "TogetherList invitation links" }
+        ]
+      }
+    ]
+  }
+}

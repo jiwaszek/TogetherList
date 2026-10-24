@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Xcode
+xcuserdata/
+DerivedData/
+*.xcuserstate
+build/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+TogetherListKit/.build/
+TogetherListKit/.swiftpm/
+
+# Local backend secrets
+Config/Secrets.xcconfig
+supabase/.temp/
+supabase/.branches/
+
+# Claude Code per-user settings (project settings, skills and .mcp.json are shared)
+.claude/settings.local.json

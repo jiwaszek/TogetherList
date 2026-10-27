@@ -1,0 +1,1 @@
+Pierwsza wersja TogetherList: wspólne listy zakupów synchronizowane na bieżąco, automatyczne grupowanie według działów, zaproszenia kodem QR, linkiem lub przez AirDrop oraz dzielenie kosztów po zakupach. Po polsku i po angielsku.

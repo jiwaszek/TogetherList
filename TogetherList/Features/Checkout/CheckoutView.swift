@@ -10,6 +10,7 @@ struct CheckoutView: View {
 
     @State private var selected: Set<UUID> = []
     @State private var didPreselect = false
+    @State private var debugShowPayment = false
 
     private var items: [ShoppingItem] { engine.items(in: listID) }
     private var inBasket: [ShoppingItem] { items.filter(\.isPurchased) }
@@ -49,6 +50,13 @@ struct CheckoutView: View {
                 guard !didPreselect else { return }
                 didPreselect = true
                 selected = Set(inBasket.map(\.id))
+                #if DEBUG
+                // Screenshot hook: `-DebugCheckoutAmount 54.90` jumps to the payment step.
+                if UserDefaults.standard.string(forKey: "DebugCheckoutAmount") != nil { debugShowPayment = true }
+                #endif
+            }
+            .navigationDestination(isPresented: $debugShowPayment) {
+                CheckoutPaymentView(engine: engine, listID: listID, itemIDs: orderedSelection) { dismiss() }
             }
         }
     }
@@ -189,6 +197,12 @@ struct CheckoutPaymentView: View {
             if paidBy == nil { paidBy = engine.userID }
             if participants.isEmpty { participants = Set(members.map(\.userID)) }
             if participants.isEmpty { participants = [engine.userID] }
+            #if DEBUG
+            if let amount = UserDefaults.standard.string(forKey: "DebugCheckoutAmount") {
+                amountText = amount   // screenshot: no keyboard
+                return
+            }
+            #endif
             amountFocused = true
         }
         .sensoryFeedback(.success, trigger: saved)

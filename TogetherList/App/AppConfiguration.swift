@@ -45,6 +45,13 @@ enum DebugBackend {
         let server = InMemoryServer()
         let backend = InMemoryBackend(server: server, latency: .milliseconds(150))
         Task {
+            // `-ScreenshotSeed en|pl`: the App Store demo household, signed in.
+            if let language = UserDefaults.standard.string(forKey: "ScreenshotSeed") {
+                try? await SampleData.seedScreenshots(server, polish: language == "pl")
+                _ = try? await backend.signIn(email: language == "pl" ? "ania@example.com" : "emma@example.com",
+                                              password: "password")
+                return
+            }
             try? await SampleData.seed(server)
             if let email = UserDefaults.standard.string(forKey: "DebugSignIn") {
                 _ = try? await backend.signIn(email: email, password: "password")

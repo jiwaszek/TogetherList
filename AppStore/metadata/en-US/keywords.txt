@@ -1,1 +1,1 @@
-grocery,groceries,family,household,couple,roommates,expenses,budget,checklist,shop,todo,costs
+shopping,supermarket,family,household,couple,roommates,expenses,budget,checklist,food,todo,costs

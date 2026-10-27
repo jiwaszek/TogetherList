@@ -290,9 +290,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Config/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TogetherList;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareMeList;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSCameraUsageDescription = "TogetherList uses the camera to scan invitation QR codes so you can join shared shopping lists.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "ShareMeList uses the camera to scan invitation QR codes so you can join shared shopping lists.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -339,9 +339,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Config/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TogetherList;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareMeList;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSCameraUsageDescription = "TogetherList uses the camera to scan invitation QR codes so you can join shared shopping lists.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "ShareMeList uses the camera to scan invitation QR codes so you can join shared shopping lists.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

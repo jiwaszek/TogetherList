@@ -60,7 +60,7 @@ struct ScannerView: View {
                         .padding(48)
                         .accessibilityHidden(true)
                 }
-                .accessibilityLabel("Camera viewfinder. Point at a TogetherList QR code.")
+                .accessibilityLabel("Camera viewfinder. Point at a ShareMeList QR code.")
         case .denied:
             placeholder(
                 icon: "camera.fill",
@@ -131,7 +131,7 @@ struct ScannerView: View {
 
     private func handle(scanned code: String) {
         guard let token = InvitationLink.token(from: code) else {
-            withAnimation { scanMessage = L("That isn't a TogetherList invitation.") }
+            withAnimation { scanMessage = L("That isn't a ShareMeList invitation.") }
             return
         }
         scanMessage = nil

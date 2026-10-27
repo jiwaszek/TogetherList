@@ -1,4 +1,4 @@
-TogetherList to lista zakupów, którą dzielisz z domownikami. Dodajesz coś na swoim telefonie, a to od razu pojawia się na ich telefonach. Po zakupach TogetherList pamięta, kto płacił i kto komu ile oddaje.
+ShareMeList to lista zakupów, którą dzielisz z domownikami. Dodajesz coś na swoim telefonie, a to od razu pojawia się na ich telefonach. Po zakupach ShareMeList pamięta, kto płacił i kto komu ile oddaje.
 
 ZAKUPY RAZEM
 • Wspólne listy, które synchronizują się na bieżąco u wszystkich
@@ -24,4 +24,4 @@ WSZYSTKO POD KONTROLĄ
 • Opuść listę, usuń kogoś albo się rozłącz, kiedy chcesz
 • Usuń konto i swoje dane bezpośrednio w aplikacji
 
-TogetherList jest dostępny po polsku i po angielsku.
+ShareMeList jest dostępny po polsku i po angielsku.

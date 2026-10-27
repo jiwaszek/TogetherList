@@ -1,48 +1,48 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "CFBundleDisplayName" : {
-      "comment" : "Bundle display name",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "TogetherList"
+  "sourceLanguage": "en",
+  "strings": {
+    "CFBundleDisplayName": {
+      "comment": "Bundle display name",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "ShareMeList"
           }
         }
       }
     },
-    "CFBundleName" : {
-      "comment" : "Bundle name",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "TogetherList"
+    "CFBundleName": {
+      "comment": "Bundle name",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "ShareMeList"
           }
         }
       }
     },
-    "NSCameraUsageDescription" : {
-      "comment" : "Camera permission prompt",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TogetherList uses the camera to scan invitation QR codes so you can join shared shopping lists."
+    "NSCameraUsageDescription": {
+      "comment": "Camera permission prompt",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ShareMeList uses the camera to scan invitation QR codes so you can join shared shopping lists."
           }
         },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TogetherList używa aparatu do skanowania kodów QR z zaproszeniami do wspólnych list zakupów."
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ShareMeList używa aparatu do skanowania kodów QR z zaproszeniami do wspólnych list zakupów."
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

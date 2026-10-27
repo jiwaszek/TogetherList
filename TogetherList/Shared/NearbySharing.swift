@@ -37,13 +37,13 @@ enum InvitationSharing {
     }
 
     private static func addMetadata(to configuration: UIActivityItemsConfiguration, url: URL?, listName: String) {
-        let title = L("Join “%@” on TogetherList", listName)
+        let title = L("Join “%@” on ShareMeList", listName)
         configuration.metadataProvider = { key in
             switch key {
             case .title:
                 return title
             case .messageBody:
-                return L("Join my “%@” list on TogetherList:", listName)
+                return L("Join my “%@” list on ShareMeList:", listName)
             case .linkPresentationMetadata:
                 let metadata = LPLinkMetadata()
                 metadata.title = title

@@ -24,7 +24,7 @@ struct DeleteAccountView: View {
     var body: some View {
         Form {
             Section {
-                Text("Deleting your account removes your profile, connections and memberships from TogetherList's servers. This can't be undone.")
+                Text("Deleting your account removes your profile, connections and memberships from ShareMeList's servers. This can't be undone.")
             }
 
             if !ownedShared.isEmpty {

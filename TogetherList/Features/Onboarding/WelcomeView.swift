@@ -64,7 +64,7 @@ struct WelcomeView: View {
                 .frame(width: 112, height: 112)
                 .background(Color("LaunchBackground"), in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                 .accessibilityHidden(true)
-            Text("TogetherList")
+            Text("ShareMeList")
                 .font(.largeTitle.bold())
             Text("Shopping lists you share with the people you live with.")
                 .font(.title3)

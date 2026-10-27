@@ -696,12 +696,12 @@
         }
       }
     },
-    "Ask them to scan this with TogetherList or their iPhone camera.": {
+    "Ask them to scan this with ShareMeList or their iPhone camera.": {
       "localizations": {
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Poproś o zeskanowanie kodu w TogetherList albo aparatem iPhone’a."
+            "value": "Poproś o zeskanowanie kodu w ShareMeList albo aparatem iPhone’a."
           }
         }
       }
@@ -811,12 +811,12 @@
         }
       }
     },
-    "Camera viewfinder. Point at a TogetherList QR code.": {
+    "Camera viewfinder. Point at a ShareMeList QR code.": {
       "localizations": {
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Podgląd aparatu. Skieruj go na kod QR TogetherList."
+            "value": "Podgląd aparatu. Skieruj go na kod QR ShareMeList."
           }
         }
       }
@@ -1298,12 +1298,12 @@
         }
       }
     },
-    "Deleting your account removes your profile, connections and memberships from TogetherList's servers. This can't be undone.": {
+    "Deleting your account removes your profile, connections and memberships from ShareMeList's servers. This can't be undone.": {
       "localizations": {
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Usunięcie konta usuwa z serwerów TogetherList twój profil, połączenia i dostęp do list. Tego nie można cofnąć."
+            "value": "Usunięcie konta usuwa z serwerów ShareMeList twój profil, połączenia i dostęp do list. Tego nie można cofnąć."
           }
         }
       }
@@ -1795,34 +1795,34 @@
         }
       }
     },
-    "Join my list on TogetherList": {
+    "Join my list on ShareMeList": {
       "localizations": {
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dołącz do mojej listy w TogetherList"
+            "value": "Dołącz do mojej listy w ShareMeList"
           }
         }
       }
     },
-    "Join my “%@” list on TogetherList:": {
+    "Join my “%@” list on ShareMeList:": {
       "localizations": {
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dołącz do mojej listy „%@” w TogetherList:"
+            "value": "Dołącz do mojej listy „%@” w ShareMeList:"
           }
         }
       },
       "extractionState": "manual"
     },
-    "Join “%@” on TogetherList": {
+    "Join “%@” on ShareMeList": {
       "extractionState": "manual",
       "localizations": {
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dołącz do „%@” w TogetherList"
+            "value": "Dołącz do „%@” w ShareMeList"
           }
         }
       }
@@ -1847,12 +1847,12 @@
         }
       }
     },
-    "Keep this screen open and hold your iPhone near theirs, both unlocked. Tap Share when it appears — the invitation opens in TogetherList on their iPhone.": {
+    "Keep this screen open and hold your iPhone near theirs, both unlocked. Tap Share when it appears — the invitation opens in ShareMeList on their iPhone.": {
       "localizations": {
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nie zamykaj tego ekranu i zbliż swój iPhone do iPhone’a drugiej osoby (oba odblokowane). Stuknij Udostępnij, gdy się pojawi — zaproszenie otworzy się w TogetherList."
+            "value": "Nie zamykaj tego ekranu i zbliż swój iPhone do iPhone’a drugiej osoby (oba odblokowane). Stuknij Udostępnij, gdy się pojawi — zaproszenie otworzy się w ShareMeList."
           }
         }
       }
@@ -2895,6 +2895,26 @@
         }
       }
     },
+    "ShareMeList": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ShareMeList"
+          }
+        }
+      }
+    },
+    "ShareMeList %@": {
+      "localizations": {
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ShareMeList %@"
+          }
+        }
+      }
+    },
     "Shared": {
       "extractionState": "manual",
       "localizations": {
@@ -3247,13 +3267,13 @@
         }
       }
     },
-    "That isn't a TogetherList invitation.": {
+    "That isn't a ShareMeList invitation.": {
       "extractionState": "manual",
       "localizations": {
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "To nie jest zaproszenie TogetherList."
+            "value": "To nie jest zaproszenie ShareMeList."
           }
         }
       }
@@ -3475,26 +3495,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aby udostępnić inną swoją listę, otwórz ją i stuknij Udostępnij — %@ pojawi się w sekcji Twoje połączenia."
-          }
-        }
-      }
-    },
-    "TogetherList": {
-      "localizations": {
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "TogetherList"
-          }
-        }
-      }
-    },
-    "TogetherList %@": {
-      "localizations": {
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "TogetherList %@"
           }
         }
       }

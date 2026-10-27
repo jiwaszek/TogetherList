@@ -189,7 +189,7 @@ struct SettingsView: View {
         } header: {
             Text("Account")
         } footer: {
-            Text("TogetherList \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "")")
+            Text("ShareMeList \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "")")
         }
     }
 

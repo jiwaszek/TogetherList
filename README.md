@@ -1,4 +1,8 @@
-# TogetherList
+# ShareMeList
+
+The app is published as **ShareMeList**. Inside the code it is still called *TogetherList*: the Xcode project, the
+`TogetherListKit` package, the bundle ID, the `togetherlist://` invitation links and the GitHub Pages addresses.
+Renaming those wouldn't change anything users see, and it would break existing links and offline caches.
 
 A native iOS shopping-list app for sharing lists with a partner, family or friends.
 People connect once by scanning a QR code or opening an invitation link. They stay

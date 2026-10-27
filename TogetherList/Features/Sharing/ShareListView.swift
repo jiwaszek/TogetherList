@@ -89,7 +89,7 @@ struct ShareListView: View {
                 }
                 .frame(minHeight: 280)
             case let .ready(ticket, url):
-                Text("Ask them to scan this with TogetherList or their iPhone camera.")
+                Text("Ask them to scan this with ShareMeList or their iPhone camera.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -112,8 +112,8 @@ struct ShareListView: View {
                 HStack(spacing: 12) {
                     ShareLink(
                         item: url,
-                        subject: Text("Join my list on TogetherList"),
-                        message: Text("Join my “\(list?.name ?? "shopping")” list on TogetherList:")
+                        subject: Text("Join my list on ShareMeList"),
+                        message: Text("Join my “\(list?.name ?? "shopping")” list on ShareMeList:")
                     ) {
                         Label("Share link", systemImage: "square.and.arrow.up")
                             .lineLimit(1)
@@ -166,7 +166,7 @@ struct ShareListView: View {
                     Text("Nearby? Bring your iPhones together")
                         .font(.subheadline.weight(.semibold))
                         .fixedSize(horizontal: false, vertical: true)
-                    Text("Keep this screen open and hold your iPhone near theirs, both unlocked. Tap Share when it appears — the invitation opens in TogetherList on their iPhone.")
+                    Text("Keep this screen open and hold your iPhone near theirs, both unlocked. Tap Share when it appears — the invitation opens in ShareMeList on their iPhone.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)

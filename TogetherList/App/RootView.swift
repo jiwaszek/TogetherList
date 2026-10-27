@@ -39,7 +39,7 @@ struct SplashView: View {
         ZStack {
             Color("LaunchBackground")
             Image("LaunchLogo")
-                .accessibilityLabel("TogetherList")
+                .accessibilityLabel("ShareMeList")
         }
         .ignoresSafeArea()
     }

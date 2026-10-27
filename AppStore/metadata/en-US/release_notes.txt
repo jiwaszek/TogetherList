@@ -1,1 +1,1 @@
-The first version of TogetherList: shared shopping lists that sync in real time, automatic aisle sorting, invitations by QR code, link or AirDrop, and splitting the bill after you shop. In English and Polish.
+The first version of ShareMeList: shared shopping lists that sync in real time, automatic aisle sorting, invitations by QR code, link or AirDrop, and splitting the bill after you shop. In English and Polish.

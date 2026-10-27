@@ -1,4 +1,4 @@
-TogetherList is the shopping list you share with the people you live with. Add something on your phone and it appears on theirs straight away. When you're done shopping, TogetherList keeps track of who paid and who owes whom.
+ShareMeList is the shopping list you share with the people you live with. Add something on your phone and it appears on theirs straight away. When you're done shopping, ShareMeList keeps track of who paid and who owes whom.
 
 SHOP TOGETHER
 • Shared lists that sync in real time between everyone on the list
@@ -24,4 +24,4 @@ YOU'RE IN CONTROL
 • Leave a list, remove someone or disconnect whenever you like
 • Delete your account and your data from inside the app
 
-TogetherList is available in English and Polish.
+ShareMeList is available in English and Polish.

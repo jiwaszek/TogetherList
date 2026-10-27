@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
-# Captures App Store screenshots in English and Polish on the iPhone 6.9" and
-# iPad 13" simulators, using the DEBUG demo household (-ScreenshotSeed), then
-# adds the captions (scripts/compose-screenshots.swift).
+# Captures App Store screenshots in English and Polish on the iPhone 6.3",
+# iPhone 6.9" and iPad 13" simulators, using the DEBUG demo household
+# (-ScreenshotSeed), then adds the captions (scripts/compose-screenshots.swift).
 #
-#   scripts/appstore-screenshots.sh
+#   scripts/appstore-screenshots.sh                  # all sizes
+#   scripts/appstore-screenshots.sh iphone-6.3       # only some: iphone-6.3 iphone-6.9 ipad-13
+#
+# Sizes (portrait): iphone-6.3 1206 × 2622 (iPhone 17 Pro), iphone-6.9 1320 × 2868
+# (iPhone 17 Pro Max), ipad-13 2064 × 2752 (iPad Pro 13").
 #
 # Output: AppStore/screenshots/raw/<lang>/<device>/*.png   (plain captures)
 #         AppStore/screenshots/<lang>/<device>/*.png       (captioned, upload these)
@@ -11,8 +15,11 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-IPHONE="${IPHONE_SIM:-iPhone 17 Pro Max}"
+IPHONE_63="${IPHONE_63_SIM:-iPhone 17 Pro}"
+IPHONE_69="${IPHONE_69_SIM:-iPhone 17 Pro Max}"
 IPAD="${IPAD_SIM:-iPad Pro 13-inch (M5)}"
+SIZES=("${@:-iphone-6.3 iphone-6.9 ipad-13}")
+SIZES=(${SIZES[*]})
 DERIVED="$ROOT/.build/DerivedData"
 APP="$DERIVED/Build/Products/Debug-iphonesimulator/TogetherList.app"
 
@@ -20,7 +27,7 @@ udid() { xcrun simctl list devices available | grep -F "$1 (" | head -1 | sed -E
 
 echo "Building…"
 xcodebuild -project TogetherList.xcodeproj -scheme TogetherList -configuration Debug \
-  -destination "id=$(udid "$IPHONE")" -derivedDataPath "$DERIVED" build -quiet
+  -destination "id=$(udid "$IPHONE_63")" -derivedDataPath "$DERIVED" build -quiet
 BID=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Info.plist")
 
 capture() {   # device-name folder
@@ -58,8 +65,14 @@ capture() {   # device-name folder
   xcrun simctl status_bar "$sim" clear
 }
 
-echo "iPhone ($IPHONE)…"; capture "$IPHONE" iphone-6.9
-echo "iPad ($IPAD)…";     capture "$IPAD" ipad-13
+for size in "${SIZES[@]}"; do
+  case $size in
+    iphone-6.3) echo "iPhone 6.3\" ($IPHONE_63)…"; capture "$IPHONE_63" iphone-6.3 ;;
+    iphone-6.9) echo "iPhone 6.9\" ($IPHONE_69)…"; capture "$IPHONE_69" iphone-6.9 ;;
+    ipad-13)    echo "iPad 13\" ($IPAD)…";         capture "$IPAD" ipad-13 ;;
+    *) echo "Unknown size $size (use iphone-6.3, iphone-6.9 or ipad-13)"; exit 1 ;;
+  esac
+done
 
 echo "Adding captions…"
 swift "$ROOT/scripts/compose-screenshots.swift" "$ROOT/AppStore"
